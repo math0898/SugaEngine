@@ -99,4 +99,36 @@ public class Vector {
         this.y += vec.getY();
         this.z += vec.getZ();
     }
+
+    /**
+     * Scales each coordinate by the given scalar.
+     *
+     * @param cX The scalar for the x coordinate.
+     * @param cY The scalar for the y coordinate.
+     * @param cZ The scalar for the z coordinate.
+     */
+    public void scale (double cX, double cY, double cZ) {
+        x *= cX;
+        y *= cY;
+        z *= cZ;
+    }
+
+    /**
+     * Scales this vector by the given scalar.
+     *
+     * @param c The value to scale the vector by.
+     */
+    public void scale (double c) {
+        scale(c, c, c);
+    }
+
+    /**
+     * Converts this vector into a string.
+     *
+     * @return The string representation of this object.
+     */
+    @Override
+    public String toString () {
+        return "<" + x + ", " + y + ", " + z + ">";
+    }
 }

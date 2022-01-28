@@ -3,11 +3,12 @@ package animus;
 import animus.objects.FloatyCube;
 import sugaEngine.Game;
 import sugaEngine.GameKeyListener;
-import sugaEngine.KeyValues;
 import sugaEngine.Vector;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.threads.GameLogicThread;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -16,6 +17,12 @@ import java.util.Stack;
  * @author Sugaku
  */
 public class ProjectAnimusGame extends Game {
+
+    /**
+     * These are keys that are currently being held. That can be useful information in it of itself but this is used to
+     * ignore future key pressed messages.
+     */
+    List<Integer> pressedKeys = new ArrayList<>();
 
     /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
@@ -44,12 +51,25 @@ public class ProjectAnimusGame extends Game {
         Stack<Integer> keys = keyListener.getKeysPressed();
         while (keys.size() > 0) {
             int key = keys.pop();
-            System.out.println(key);
+            if (pressedKeys.contains(key)) continue;
+            else pressedKeys.add(key);
             switch (key) {
                 case 27 -> GameLogicThread.setPaused(!GameLogicThread.getPaused()); // ESC
                 case 40 -> objects.get("Floaty Cube").getAccel().add(new Vector(0, 0.1, 0)); // UP ARROW
                 case 39 -> objects.get("Floaty Cube").getAccel().add(new Vector(0.1, 0, 0)); // RIGHT ARROW
                 case 37 -> objects.get("Floaty Cube").getAccel().add(new Vector(-0.1, 0, 0)); // LEFT ARROW
+                case 38 -> objects.get("Floaty Cube").getAccel().add(new Vector(0, -0.1, 0)); // DOWN ARROW
+            }
+        }
+        keys = keyListener.getKeysDepressed();
+        while (keys.size() > 0) {
+            int key = keys.pop();
+            pressedKeys.remove((Integer) key); // Remove Object not Index
+            switch (key) {
+                case 40 -> objects.get("Floaty Cube").getAccel().add(new Vector(0, -0.1, 0)); // UP ARROW
+                case 39 -> objects.get("Floaty Cube").getAccel().add(new Vector(-0.1, 0, 0)); // RIGHT ARROW
+                case 37 -> objects.get("Floaty Cube").getAccel().add(new Vector(0.1, 0, 0)); // LEFT ARROW
+                case 38 -> objects.get("Floaty Cube").getAccel().add(new Vector(0, 0.1, 0)); // DOWN ARROW
             }
         }
     }

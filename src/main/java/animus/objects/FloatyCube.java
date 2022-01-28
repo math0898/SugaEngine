@@ -12,7 +12,7 @@ public class FloatyCube extends GameObject {
      * Creates a new FloatyCube game object.
      */
     public FloatyCube () {
-        pos = new Vector(0, 0, 0);
+        pos = new Vector(11, 11, 0);
         velocity = new Vector(-1, -1, 0);
         accel = new Vector(0,0,0);
     }
@@ -22,10 +22,8 @@ public class FloatyCube extends GameObject {
      */
     @Override
     public void runLogic () {
-        if (pos.getX() + 10 >= 1920) velocity.setX(-1);
-        else if (pos.getX() - 10 <= 0) velocity.setX(1);
-        if (pos.getY() + 10 >= 1080) velocity.setY(-1);
-        else if (pos.getY() - 10 <= 0) velocity.setY(1);
+        if (pos.getX() + 10 >= 1920 || pos.getX() - 10 <= 0) velocity.scale(-1, 1, 1);
+        if (pos.getY() + 10 >= 1080 || pos.getY() - 10 <= 0) velocity.scale(1, -1, 1);
         super.runLogic();
     }
 

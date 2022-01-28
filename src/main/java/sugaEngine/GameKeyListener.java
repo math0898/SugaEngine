@@ -17,6 +17,11 @@ public class GameKeyListener implements KeyListener {
     protected Stack<Integer> keysPressed = new Stack<>();
 
     /**
+     * A stack of keys that have been depressed and need to be handled by the game.
+     */
+    protected Stack<Integer> keysDepressed = new Stack<>();
+
+    /**
      * Invoked when a key has been typed.
      * See the class description for {@link KeyEvent} for a definition of
      * a key typed event.
@@ -49,7 +54,7 @@ public class GameKeyListener implements KeyListener {
      */
     @Override
     public void keyReleased (KeyEvent e) {
-
+        keysDepressed.add(e.getKeyCode());
     }
 
     /**
@@ -59,5 +64,14 @@ public class GameKeyListener implements KeyListener {
      */
     public Stack<Integer> getKeysPressed() {
         return keysPressed;
+    }
+
+    /**
+     * Accessor method for the stack of keys that have been depressed. Should be used by games to read key presses.
+     *
+     * @return The stack of keys that have been depressed.
+     */
+    public Stack<Integer> getKeysDepressed () {
+        return keysDepressed;
     }
 }
