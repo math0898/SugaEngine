@@ -23,12 +23,19 @@ public abstract class Game {
     protected GraphicsPanel panel;
 
     /**
+     * The key listener that is being used by this game.
+     */
+    protected GameKeyListener keyListener;
+
+    /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
      *
      * @param panel The panel that GameObjects should register as a listener to.
+     * @param listener The game key listener being used by this game object.
      */
-    public Game (GraphicsPanel panel) {
+    public Game (GraphicsPanel panel, GameKeyListener listener) {
         this.panel = panel;
+        keyListener = listener;
     }
 
     /**
@@ -36,6 +43,13 @@ public abstract class Game {
      */
     public void loop () {
         for (GameObject gO : objects.values()) gO.runLogic();
+    }
+
+    /**
+     * Processes inputs given by players. Is run during pause.
+     */
+    public void processInput () {
+
     }
 
     /**

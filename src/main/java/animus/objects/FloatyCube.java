@@ -4,6 +4,8 @@ import sugaEngine.GameObject;
 import sugaEngine.Vector;
 import sugaEngine.graphics.flat.Graphics2d;
 
+import java.awt.*;
+
 public class FloatyCube extends GameObject {
 
     /**
@@ -19,7 +21,7 @@ public class FloatyCube extends GameObject {
      * Called every logic frame to run the logic on this GameObject.
      */
     @Override
-    public void runLogic() {
+    public void runLogic () {
         if (pos.getX() + 10 >= 1920) velocity.setX(-1);
         else if (pos.getX() - 10 <= 0) velocity.setX(1);
         if (pos.getY() + 10 >= 1080) velocity.setY(-1);
@@ -36,6 +38,8 @@ public class FloatyCube extends GameObject {
      */
     @Override
     public void applyChanges (int width, int height, Graphics2d panel) {
-        // todo implement me!
+        for (int i = Math.max(0, (int) pos.getX() - 10); i < Math.min(width, pos.getX() + 10); i++)
+            for (int j = Math.max(0, (int) pos.getY() - 10); j < Math.min(height, pos.getY() + 10); j++)
+                panel.setPixel(i, j, Color.CYAN);
     }
 }

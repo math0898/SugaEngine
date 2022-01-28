@@ -27,7 +27,7 @@ public class GameLogicThread extends Thread {
     /**
      * Whether to simulate game logic or not.
      */
-    private boolean paused = false;
+    private static boolean paused = false;
 
     /**
      * The last time that the logic running finished.
@@ -50,8 +50,17 @@ public class GameLogicThread extends Thread {
      *
      * @param val Whether the logic thread should be paused or not.
      */
-    public void setPaused (boolean val) {
+    public static void setPaused (boolean val) {
         paused = val;
+    }
+
+    /**
+     * Accessor method for the current status of the GameLogicThread.
+     *
+     * @return Whether game logic is paused currently or not.
+     */
+    public static boolean getPaused () {
+        return paused;
     }
 
     /**
@@ -60,7 +69,6 @@ public class GameLogicThread extends Thread {
     @Override
     public void run () {
         while (!stopped) {
-            while (!paused) {
                 if (System.currentTimeMillis() - lastFinished < (1000 / LOGIC_RATE)) {
                     try {
                         //noinspection BusyWait
@@ -70,8 +78,8 @@ public class GameLogicThread extends Thread {
                     }
                 }
                 lastFinished = System.currentTimeMillis();
-                game.loop();
-            }
+                game.processInput();
+                if (!paused) game.loop();
         }
     }
 }
