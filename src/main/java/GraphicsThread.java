@@ -1,16 +1,21 @@
 import javax.swing.*;
 
 /**
- * A thread used to refresh the graphics of a panel once every 1/60th of a second.
+ * A thread used to refresh the graphics of a panel as fast as possible.
  *
  * @author Sugaku
  */
 public class GraphicsThread extends Thread {
 
     /**
-     *
+     * The panel that should be redrawn every frame.
      */
     private final JPanel panel;
+
+    /**
+     * Whether to exit the thread.
+     */
+    private boolean stop = false;
 
     /**
      * Creates a new graphics thread with the given panel.
@@ -22,19 +27,19 @@ public class GraphicsThread extends Thread {
     }
 
     /**
+     * Sets whether the graphics thread is stopped or not.
+     *
+     * @param val Whether the graphics thread should be stopped.
+     */
+    public void setStopped (boolean val) {
+        stop = val;
+    }
+
+    /**
      * Called to run the Graphics thread.
      */
     @Override
     public void run () {
-        while (!false) { // todo add stop condition.
-            try {
-                Thread.sleep(1);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (!false) { // todo add pause condition.
-                panel.repaint();
-            }
-        }
+        while (!stop) panel.repaint();
     }
 }
