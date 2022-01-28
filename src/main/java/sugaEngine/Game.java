@@ -1,6 +1,7 @@
 package sugaEngine;
 
 import sugaEngine.graphics.GraphicsPanel;
+import sugaEngine.physics.PhysicsEngine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +17,11 @@ public abstract class Game {
      * A list of game objects for this game. Their logic should be called every cycle.
      */
     protected Map<String, GameObject> objects = new HashMap<>();
+
+    /**
+     * The physics engine that will be used with this game.
+     */
+    protected PhysicsEngine physics = new PhysicsEngine();
 
     /**
      * The graphics panel that should be used to register draw listeners to.
@@ -42,6 +48,7 @@ public abstract class Game {
      * The main logic loop for the game. Will be called depending on the rate of the logic thread.
      */
     public void loop () {
+        physics.checkCollisions();
         for (GameObject gO : objects.values()) gO.runLogic();
     }
 
@@ -59,5 +66,6 @@ public abstract class Game {
     public void addGameObject (String name, GameObject object) {
         objects.put(name, object);
         panel.registerListener(object);
+        physics.addObject(object);
     }
 }

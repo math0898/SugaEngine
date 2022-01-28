@@ -20,12 +20,12 @@ public abstract class HitBox {
     /**
      * The width of the HitBox.
      */
-    private final double width;
+    protected final double width;
 
     /**
      * The height of the HitBox.
      */
-    private final double height;
+    protected final double height;
 
     /**
      * Creates a new HitBox with the given relative sizes in the horizontal and vertical directions.

@@ -1,5 +1,6 @@
 package animus;
 
+import animus.objects.BoxyBox;
 import animus.objects.FloatyCube;
 import sugaEngine.Game;
 import sugaEngine.GameKeyListener;
@@ -7,6 +8,7 @@ import sugaEngine.physics.Vector;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.threads.GameLogicThread;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -33,6 +35,8 @@ public class ProjectAnimusGame extends Game {
     public ProjectAnimusGame (GraphicsPanel panel, GameKeyListener listener) {
         super(panel, listener);
         addGameObject("Floaty Cube", new FloatyCube());
+        addGameObject("Boxy Box", new BoxyBox(new Vector(100, 100, 0), 50, 50, Color.GREEN.darker().darker().darker()));
+        addGameObject("Boxy Box2", new BoxyBox(new Vector(500, 700, 0), 500, 20, Color.RED.darker().darker()));
     }
 
     /**

@@ -1,6 +1,7 @@
 package animus.objects;
 
 import sugaEngine.GameObject;
+import sugaEngine.physics.Collidable;
 import sugaEngine.physics.Vector;
 import sugaEngine.graphics.flat.Graphics2d;
 
@@ -40,5 +41,15 @@ public class FloatyCube extends GameObject {
         for (int i = Math.max(0, (int) pos.getX() - 10); i < Math.min(width, pos.getX() + 10); i++)
             for (int j = Math.max(0, (int) pos.getY() - 10); j < Math.min(height, pos.getY() + 10); j++)
                 panel.setPixel(i, j, Color.CYAN);
+    }
+
+    /**
+     * Runs collision logic. Should not modify the object passed.
+     *
+     * @param obj The object that this collidable collided with.
+     */
+    @Override
+    public void collision(Collidable obj) {
+        velocity.scale(-1);
     }
 }

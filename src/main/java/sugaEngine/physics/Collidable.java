@@ -15,12 +15,12 @@ public abstract class Collidable extends HitBox {
     /**
      * The current velocity of the game object.
      */
-    protected Vector velocity;
+    protected Vector velocity = new Vector(0, 0, 0);
 
     /**
      * The current acceleration of the game object.
      */
-    protected Vector accel;
+    protected Vector accel = new Vector(0,0,0);
 
     /**
      * Creates a new Collidable object with the immutable property set to either true or false.
@@ -33,4 +33,12 @@ public abstract class Collidable extends HitBox {
         super(width, height);
         this.immutable = immutable;
     }
+
+
+    /**
+     * Runs collision logic. Should not modify the object passed.
+     *
+     * @param obj The object that this collidable collided with.
+     */
+    public abstract void collision (Collidable obj);
 }
