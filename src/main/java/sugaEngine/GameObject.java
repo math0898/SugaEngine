@@ -27,5 +27,35 @@ public abstract class GameObject implements DrawListener {
     /**
      * Called every logic frame to run the logic on this GameObject.
      */
-    public abstract void runLogic (); // todo run pos, vel, accel equations at this level.
+    public void runLogic () {
+        pos.add(velocity);
+        velocity.add(accel);
+    }
+
+    /**
+     * Accessor method for the position vector of the game object.
+     *
+     * @return The position vector.
+     */
+    public Vector getPos () {
+        return pos;
+    }
+
+    /**
+     * Accessor method for the velocity vector of the game object.
+     *
+     * @return The velocity vector.
+     */
+    public Vector getVelocity () {
+        return velocity;
+    }
+
+    /**
+     * Accessor method for the acceleration vector of the game object.
+     *
+     * @return The acceleration vector.
+     */
+    public Vector getAccel() {
+        return accel;
+    }
 }

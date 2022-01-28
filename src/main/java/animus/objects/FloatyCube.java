@@ -26,7 +26,7 @@ public class FloatyCube extends GameObject {
         else if (pos.getX() - 10 <= 0) velocity.setX(1);
         if (pos.getY() + 10 >= 1080) velocity.setY(-1);
         else if (pos.getY() - 10 <= 0) velocity.setY(1);
-        pos.add(velocity);
+        super.runLogic();
     }
 
     /**

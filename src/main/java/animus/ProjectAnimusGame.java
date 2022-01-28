@@ -4,6 +4,7 @@ import animus.objects.FloatyCube;
 import sugaEngine.Game;
 import sugaEngine.GameKeyListener;
 import sugaEngine.KeyValues;
+import sugaEngine.Vector;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.threads.GameLogicThread;
 
@@ -46,6 +47,9 @@ public class ProjectAnimusGame extends Game {
             System.out.println(key);
             switch (key) {
                 case 27 -> GameLogicThread.setPaused(!GameLogicThread.getPaused()); // ESC
+                case 40 -> objects.get("Floaty Cube").getAccel().add(new Vector(0, 0.1, 0)); // UP ARROW
+                case 39 -> objects.get("Floaty Cube").getAccel().add(new Vector(0.1, 0, 0)); // RIGHT ARROW
+                case 37 -> objects.get("Floaty Cube").getAccel().add(new Vector(-0.1, 0, 0)); // LEFT ARROW
             }
         }
     }
