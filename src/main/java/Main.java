@@ -1,5 +1,9 @@
-import graphics.flat.DrawListener;
-import graphics.flat.Graphics2d;
+import game.Game;
+import game.graphics.GraphicsPanel;
+import game.graphics.flat.DrawListener;
+import game.graphics.flat.Graphics2d;
+import game.threads.GameLogicThread;
+import game.threads.GraphicsThread;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +20,7 @@ public class Main {
      *
      * @author Sugaku
      */
-    public static class GeneralGame implements Game {
+    public static class GeneralGame extends Game {
 
         /**
          * The delta value for x.
@@ -39,9 +43,20 @@ public class Main {
         int y = 11;
 
         /**
+         * Creates a new game with the given panel used to register GameObjects as draw listeners to.
+         *
+         * @param panel The panel that GameObjects should register as a listener to.
+         */
+        public GeneralGame(GraphicsPanel panel) {
+            super(panel);
+        }
+
+        /**
          * The main logic loop for the game. Will be called depending on the rate of the logic thread.
          */
+        @Override
         public void loop () {
+            super.loop();
             if (x + 10 == 1920) dx = -1;
             else if (x - 10 == 0) dx = 1;
             if (y + 10 == 1080) dy = -1;
@@ -128,6 +143,6 @@ public class Main {
         frame.setUndecorated(true);
         frame.setVisible(true);
         new GraphicsThread(panel).start();
-        new GameLogicThread(new GeneralGame(), 60).start();
+        new GameLogicThread(new GeneralGame(panel), 60).start();
     }
 }

@@ -1,6 +1,4 @@
-package graphics.flat;
-
-import java.awt.*;
+package game.graphics.flat;
 
 /**
  * A DrawListener is registered with a Graphics system and called on every frame to check if something needs to be drawn.

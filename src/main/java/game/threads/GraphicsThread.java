@@ -1,3 +1,5 @@
+package game.threads;
+
 import javax.swing.*;
 
 /**

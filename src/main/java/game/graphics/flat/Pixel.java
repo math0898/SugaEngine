@@ -1,4 +1,4 @@
-package graphics.flat;
+package game.graphics.flat;
 
 import java.awt.*;
 
