@@ -1,5 +1,9 @@
 package sugaEngine.physics;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 /**
  * Every collidable object needs a HitBox. This is a box where if a test point overlaps with a box then a collision
  * occurs.
@@ -44,5 +48,19 @@ public abstract class HitBox {
         if (test.getX() >= pos.getX() - (width / 2.0) && test.getX() <= pos.getX() + (width / 2.0))
             return test.getY() >= pos.getY() - (height / 2.0) && test.getY() <= pos.getY() + (height / 2.0);
         return false;
+    }
+
+    /**
+     * Returns a collection of test points to determine if this HitBox is colliding with another.
+     *
+     * @return A list of test points to look for collisions at.
+     */
+    public Collection<Vector> getTestPoints () {
+        List<Vector> vectors = new ArrayList<>();
+        vectors.add(new Vector(pos.getX() + (width / 2.0), pos.getY() + (height / 2.0), pos.getZ()));
+        vectors.add(new Vector(pos.getX() + (width / 2.0), pos.getY() - (height / 2.0), pos.getZ()));
+        vectors.add(new Vector(pos.getX() - (width / 2.0), pos.getY() + (height / 2.0), pos.getZ()));
+        vectors.add(new Vector(pos.getX() - (width / 2.0), pos.getY() - (height / 2.0), pos.getZ()));
+        return  vectors;
     }
 }
