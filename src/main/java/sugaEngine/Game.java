@@ -48,9 +48,7 @@ public abstract class Game {
     /**
      * Processes inputs given by players. Is run during pause.
      */
-    public void processInput () {
-
-    }
+    public abstract void processInput ();
 
     /**
      * Adds a GameObject by the given name.

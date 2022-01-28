@@ -33,6 +33,13 @@ public class ProjectAnimusGame extends Game {
     @Override
     public void loop () {
         super.loop();
+    }
+
+    /**
+     * Processes inputs given by players. Is run during pause.
+     */
+    @Override
+    public void processInput () {
         Stack<Integer> keys = keyListener.getKeysPressed();
         while (keys.size() > 0) {
             int key = keys.pop();
