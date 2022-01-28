@@ -3,7 +3,6 @@ import graphics.flat.Graphics2d;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 /**
  * Main execution class for testing the Graphics Library.
@@ -17,18 +16,57 @@ public class Main {
      *
      * @author Sugaku
      */
-    public static class GeneralGame {
+    public static class GeneralGame implements Game {
+
+        /**
+         * The delta value for x.
+         */
+        int dx = 1;
+
+        /**
+         * The delta value for y.
+         */
+        int dy = 1;
+
+        /**
+         * The current x position of a box.
+         */
+        int x = 11;
+
+        /**
+         * The current y position of a box.
+         */
+        int y = 11;
+
+        /**
+         * The main logic loop for the game. Will be called depending on the rate of the logic thread.
+         */
+        public void loop () {
+            if (x + 10 == 1920) dx = -1;
+            else if (x - 10 == 0) dx = 1;
+            if (y + 10 == 1080) dy = -1;
+            else if (y - 10 == 0) dy = 1;
+            x += dx;
+            y += dy;
+            BoxDrawer.setBox(x, y);
+        }
 
         /**
          * A general drawing listener used for the sake of testing.
          *
          * @author Sugaku
          */
-        public static class GeneralListener implements DrawListener {
+        public static class BoxDrawer implements DrawListener {
 
             /**
-             * The current position of the box. Set by the game thread.
+             * The current x position of the box. Set by the game thread.
              */
+            static int x;
+
+            /**
+             * The current y position of the box. Set by the game thread.
+             */
+            static int y;
 
             /**
              * The number of frames that have completed since the last print.
@@ -39,6 +77,17 @@ public class Main {
              * The last time that the number of frames was printed.
              */
             long lastPrint = 0;
+
+            /**
+             * Sets the position of the box.
+             *
+             * @param x The x position of the box.
+             * @param y The y position of the box.
+             */
+            public static void setBox (int x, int y) {
+                BoxDrawer.x = x;
+                BoxDrawer.y = y;
+            }
 
             /**
              * Called every drawing frame so programs have a chance to make their voices heard on what gets drawn.
@@ -55,9 +104,6 @@ public class Main {
                     lastPrint = System.currentTimeMillis();
                 }
                 frames++;
-                Random rand = new Random();
-                int x = rand.nextInt(width);
-                int y = rand.nextInt(height);
                 for (int i = Math.max(0, x - 10); i < Math.min(width, x + 10); i++)
                     for (int j = Math.max(0, y - 10); j < Math.min(height, y + 10); j++)
                         panel.setPixel(i, j, Color.CYAN);
@@ -73,7 +119,7 @@ public class Main {
     public static void main (String[] args) {
         Graphics2d panel = new Graphics2d();
         panel.setBackground(Color.BLACK);
-        panel.registerListener(new GeneralGame.GeneralListener());
+        panel.registerListener(new GeneralGame.BoxDrawer());
         JFrame frame = new JFrame("Java Frame Title");
         frame.setSize(1920, 1080);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -82,5 +128,6 @@ public class Main {
         frame.setUndecorated(true);
         frame.setVisible(true);
         new GraphicsThread(panel).start();
+        new GameLogicThread(new GeneralGame(), 60).start();
     }
 }
