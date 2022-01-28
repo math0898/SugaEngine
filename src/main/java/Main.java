@@ -60,7 +60,7 @@ public class Main {
      */
     public static void main (String[] args) {
         Graphics2d panel = new Graphics2d();
-        panel.setBackground(Color.GREEN.darker().darker());
+        panel.setBackground(Color.BLACK);
         panel.registerListener(new GeneralListener());
         JFrame frame = new JFrame("Java Frame Title");
         frame.setSize(1920, 1080);

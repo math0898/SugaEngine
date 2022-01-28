@@ -23,12 +23,17 @@ public class Graphics2d extends JPanel {
     /**
      * A map of drawing listeners with their priority.
      */
-    private static final Map<DrawListener.Priorities, ArrayList<DrawListener>> drawingListeners = new HashMap<>();
+    private final Map<DrawListener.Priorities, ArrayList<DrawListener>> drawingListeners = new HashMap<>();
 
     /**
      * A 2d array of colors that each pixel should be in the graphics component.
      */
-    private static Color[][] pixels = new Color[1][1];
+    private Color[][] pixels = new Color[1][1];
+
+    /**
+     * A list of pixels that need to be updated in the next frame.
+     */
+    private ArrayList<Point> updatePoints = new ArrayList<>();
 
     /**
      * A helper method to initialize the array of pixels to a size being used in the graphics call.
@@ -38,10 +43,7 @@ public class Graphics2d extends JPanel {
      */
     public void initPixels (int width, int height) {
         pixels = new Color[height][];
-        for (int i = 0; i < height; i++) {
-            pixels[i] = new Color[width];
-            for (int j = 0; j < width; j++) pixels[i][j] = Color.BLACK;
-        }
+        for (int i = 0; i < height; i++) pixels[i] = new Color[width];
     }
 
     /**
@@ -52,8 +54,8 @@ public class Graphics2d extends JPanel {
      */
     public void drawing (int width, int height) {
         DrawListener.Priorities[] order = new DrawListener.Priorities[]{ DrawListener.Priorities.BACKGROUND, DrawListener.Priorities.FOREGROUND, DrawListener.Priorities.GUI };
-        for (int i = 0; i < order.length; i++) {
-            ArrayList<DrawListener> listeners = drawingListeners.get(order[i]);
+        for (DrawListener.Priorities priorities : order) {
+            ArrayList<DrawListener> listeners = drawingListeners.get(priorities);
             if (listeners != null) for (DrawListener l : listeners) l.applyChanges(width, height, this);
         }
     }
@@ -70,10 +72,11 @@ public class Graphics2d extends JPanel {
         int height = getHeight();
         initPixels(width, height);
         drawing(width, height);
-        for (int i = 0; i < width; i++) for (int j = 0; j < height; j++) {
-            graphics.setColor(pixels[j][i]);
-            graphics.fillRect(i, j, 1, 1);
+        for (Point p : updatePoints) {
+            graphics.setColor(pixels[p.y()][p.x()]);
+            graphics.fillRect(p.x(), p.y(), 1, 1);
         }
+        updatePoints = new ArrayList<>();
     }
 
     /**
@@ -105,5 +108,6 @@ public class Graphics2d extends JPanel {
      */
     public void setPixel (int x, int y, Color c) {
         pixels[y][x] = c;
+        updatePoints.add(new Point(x, y));
     }
 }
