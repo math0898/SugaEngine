@@ -3,6 +3,7 @@ import graphics.flat.Graphics2d;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Main execution class for testing the Graphics Library.
@@ -19,6 +20,16 @@ public class Main {
     static class GeneralListener implements DrawListener {
 
         /**
+         * The number of frames that have completed since the last print.
+         */
+        int frames = 0;
+
+        /**
+         * The last time that the number of frames was printed.
+         */
+        long lastPrint = 0;
+
+        /**
          * Called every drawing frame so programs have a chance to make their voices heard on what gets drawn.
          *
          * @param width  The width of the pixel map.
@@ -27,8 +38,18 @@ public class Main {
          */
         @Override
         public void applyChanges (int width, int height, Graphics2d panel) {
-            for (int i = 0; i < Math.min(width, height); i++) panel.setPixel(i, i, Color.CYAN);
-            System.out.println("Draw got called!");
+            if (System.currentTimeMillis() - 1000 >= lastPrint) {
+                System.out.println("Last second had " + frames + " frames:");
+                frames = 0;
+                lastPrint = System.currentTimeMillis();
+            }
+            frames++;
+            Random rand = new Random();
+            int x = rand.nextInt(width);
+            int y = rand.nextInt(height);
+            for (int i = Math.max(0, x - 10); i < Math.min(width, x + 10); i++)
+                for (int j = Math.max(0, y - 10); j < Math.min(height, y + 10); j++)
+                    panel.setPixel(i, j, Color.CYAN);
         }
     }
 

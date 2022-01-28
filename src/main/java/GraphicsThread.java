@@ -28,7 +28,7 @@ public class GraphicsThread extends Thread {
     public void run () {
         while (!false) { // todo add stop condition.
             try {
-                Thread.sleep(16);
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

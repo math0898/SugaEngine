@@ -99,11 +99,11 @@ public class Graphics2d extends JPanel {
     /**
      * Used to set the values of pixels.
      *
-     * @param i The row to set.
-     * @param j The column to set.
+     * @param x The x to set.
+     * @param y The y to set.
      * @param c The color to set the pixel to.
      */
-    public void setPixel (int i, int j, Color c) {
-        pixels[i][j] = c;
+    public void setPixel (int x, int y, Color c) {
+        pixels[y][x] = c;
     }
 }
