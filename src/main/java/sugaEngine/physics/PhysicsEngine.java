@@ -27,6 +27,7 @@ public class PhysicsEngine {
                 Collidable temp = objects.get(j);
                 boolean touching = false;
                 for (Vector v : temp.getTestPoints()) if (master.isInside(v)) touching = true;
+                for (Vector v : master.getTestPoints()) if (temp.isInside(v)) touching = true;
                 if (touching) {
                     master.collision(temp);
                     temp.collision(master);
