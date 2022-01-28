@@ -26,7 +26,7 @@ public class Main {
          * @param panel The panel to apply changes to.
          */
         @Override
-        public void applyChanges(int width, int height, Graphics2d panel) {
+        public void applyChanges (int width, int height, Graphics2d panel) {
             for (int i = 0; i < Math.min(width, height); i++) panel.setPixel(i, i, Color.CYAN);
             System.out.println("Draw got called!");
         }
@@ -48,5 +48,6 @@ public class Main {
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setUndecorated(true);
         frame.setVisible(true);
+        new GraphicsThread(panel).start();
     }
 }
