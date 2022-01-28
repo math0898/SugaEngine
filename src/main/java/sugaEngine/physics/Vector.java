@@ -1,4 +1,4 @@
-package sugaEngine;
+package sugaEngine.physics;
 
 /**
  * A vector can represent a velocity, acceleration, or position in 3d space.

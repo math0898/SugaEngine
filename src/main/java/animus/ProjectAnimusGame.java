@@ -3,7 +3,7 @@ package animus;
 import animus.objects.FloatyCube;
 import sugaEngine.Game;
 import sugaEngine.GameKeyListener;
-import sugaEngine.Vector;
+import sugaEngine.physics.Vector;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.threads.GameLogicThread;
 

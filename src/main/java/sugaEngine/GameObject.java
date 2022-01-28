@@ -1,28 +1,26 @@
 package sugaEngine;
 
 import sugaEngine.graphics.flat.DrawListener;
+import sugaEngine.physics.Collidable;
+import sugaEngine.physics.Vector;
 
 /**
  * A game object has its own physical position within the world, and a DrawListener to draw it each frame.
  *
  * @author Sugaku
  */
-public abstract class GameObject implements DrawListener {
+public abstract class GameObject extends Collidable implements DrawListener {
 
     /**
-     * The current position of the game object.
+     * Creates a new Collidable object with the immutable property set to either true or false.
+     *
+     * @param immutable Whether this object moves during collisions or not.
+     * @param width The width of the HitBox.
+     * @param height The height of the HitBox.
      */
-    protected Vector pos;
-
-    /**
-     * The current velocity of the game object.
-     */
-    protected Vector velocity;
-
-    /**
-     * The current acceleration of the game object.
-     */
-    protected Vector accel;
+    public GameObject (boolean immutable, double width, double height) {
+        super(immutable, width, height);
+    }
 
     /**
      * Called every logic frame to run the logic on this GameObject.

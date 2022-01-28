@@ -1,7 +1,7 @@
 package animus.objects;
 
 import sugaEngine.GameObject;
-import sugaEngine.Vector;
+import sugaEngine.physics.Vector;
 import sugaEngine.graphics.flat.Graphics2d;
 
 import java.awt.*;
@@ -12,6 +12,7 @@ public class FloatyCube extends GameObject {
      * Creates a new FloatyCube game object.
      */
     public FloatyCube () {
+        super(false, 20, 20);
         pos = new Vector(11, 11, 0);
         velocity = new Vector(-1, -1, 0);
         accel = new Vector(0,0,0);
