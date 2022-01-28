@@ -1,9 +1,9 @@
-import game.Game;
-import game.graphics.GraphicsPanel;
-import game.graphics.flat.DrawListener;
-import game.graphics.flat.Graphics2d;
-import game.threads.GameLogicThread;
-import game.threads.GraphicsThread;
+import sugaEngine.Game;
+import sugaEngine.graphics.GraphicsPanel;
+import sugaEngine.graphics.flat.DrawListener;
+import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.threads.GameLogicThread;
+import sugaEngine.threads.GraphicsThread;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,12 +57,7 @@ public class Main {
         @Override
         public void loop () {
             super.loop();
-            if (x + 10 == 1920) dx = -1;
-            else if (x - 10 == 0) dx = 1;
-            if (y + 10 == 1080) dy = -1;
-            else if (y - 10 == 0) dy = 1;
-            x += dx;
-            y += dy;
+
             BoxDrawer.setBox(x, y);
         }
 

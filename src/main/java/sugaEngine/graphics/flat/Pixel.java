@@ -1,4 +1,4 @@
-package game.graphics.flat;
+package sugaEngine.graphics.flat;
 
 import java.awt.*;
 

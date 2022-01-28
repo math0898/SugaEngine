@@ -1,6 +1,6 @@
-package game.graphics;
+package sugaEngine.graphics;
 
-import game.graphics.flat.DrawListener;
+import sugaEngine.graphics.flat.DrawListener;
 
 import javax.swing.*;
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
-package game;
+package sugaEngine;
 
-import game.graphics.GraphicsPanel;
+import sugaEngine.graphics.GraphicsPanel;
 
 import java.util.HashMap;
 import java.util.Map;

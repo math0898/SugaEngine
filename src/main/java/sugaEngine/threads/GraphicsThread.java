@@ -1,4 +1,4 @@
-package game.threads;
+package sugaEngine.threads;
 
 import javax.swing.*;
 

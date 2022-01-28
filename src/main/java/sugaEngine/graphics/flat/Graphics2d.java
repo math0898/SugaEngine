@@ -1,6 +1,6 @@
-package game.graphics.flat;
+package sugaEngine.graphics.flat;
 
-import game.graphics.GraphicsPanel;
+import sugaEngine.graphics.GraphicsPanel;
 
 import java.awt.*;
 import java.io.Serial;
