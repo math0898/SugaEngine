@@ -38,7 +38,6 @@ public class BoxyBox extends GameObject {
     @Override
     public void applyChanges (int width, int height, Graphics2d panel) {
         panel.setRectangle((int) pos.getX() - (int) (this.width / 2), (int) pos.getY() - (int) (this.height / 2), (int) this.width, (int) this.height, color);
-
     }
 
     /**
@@ -48,7 +47,7 @@ public class BoxyBox extends GameObject {
      */
     @Override
     public void collision (HitBox obj) {
-        obj.getPos().setY(obj.getPos().getY() - 1);
+        obj.getPos().setY((pos.getY() - (this.height / 2)) - (obj.getHeight() / 2));
     }
 
     /**

@@ -39,6 +39,24 @@ public abstract class HitBox {
     }
 
     /**
+     * Accessor method for the height of this HitBox.
+     *
+     * @return The height value of this HitBox.
+     */
+    public double getHeight () {
+        return height;
+    }
+
+    /**
+     * Accessor method for the width of this HitBox.
+     *
+     * @return The width value of this HitBox.
+     */
+    public double getWidth () {
+        return width;
+    }
+
+    /**
      * Tests whether the given point is within this HitBox or not.
      *
      * @param test The point to test. Represented in vector form.

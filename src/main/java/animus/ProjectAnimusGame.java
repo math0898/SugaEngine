@@ -78,6 +78,14 @@ public class ProjectAnimusGame extends Game {
                 case 39 -> objects.get("Floaty Cube").getAccel().add(new Vector(0.1, 0, 0)); // RIGHT ARROW
                 case 37 -> objects.get("Floaty Cube").getAccel().add(new Vector(-0.1, 0, 0)); // LEFT ARROW
                 case 38 -> objects.get("Floaty Cube").getAccel().add(new Vector(0, -0.1, 0)); // DOWN ARROW
+                case 65 -> objects.get("Player Character").getAccel().add(new Vector(-0.1, 0, 0)); // A
+                case 68 -> objects.get("Player Character").getAccel().add(new Vector(0.1, 0, 0)); // D
+                case 87 -> ((PlayerCharacter) objects.get("Player Character")).jump(); // W
+                case 76 -> {
+                    System.out.println("Accel => " + objects.get("Player Character").getAccel().toString());
+                    System.out.println("Vel => " + objects.get("Player Character").getVelocity().toString());
+                    System.out.println("Pos => " + objects.get("Player Character").getPos().toString());
+                }
             }
         }
         keys = keyListener.getKeysDepressed();
@@ -89,6 +97,8 @@ public class ProjectAnimusGame extends Game {
                 case 39 -> objects.get("Floaty Cube").getAccel().add(new Vector(-0.1, 0, 0)); // RIGHT ARROW
                 case 37 -> objects.get("Floaty Cube").getAccel().add(new Vector(0.1, 0, 0)); // LEFT ARROW
                 case 38 -> objects.get("Floaty Cube").getAccel().add(new Vector(0, 0.1, 0)); // DOWN ARROW
+                case 65 -> objects.get("Player Character").getAccel().add(new Vector(0.1, 0, 0)); // A
+                case 68 -> objects.get("Player Character").getAccel().add(new Vector(-0.1, 0, 0)); // D
             }
         }
     }

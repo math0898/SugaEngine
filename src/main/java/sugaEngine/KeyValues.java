@@ -13,9 +13,19 @@ public enum KeyValues {
     ESC(27),
 
     /**
+     * The left key maps to keycode 37.
+     */
+    ARROW_LEFT(37),
+
+    /**
      * The up key maps to keycode 38.
      */
     ARROW_UP(38),
+
+    /**
+     * The right key maps to keycode 39.
+     */
+    ARROW_RIGHT(39),
 
     /**
      * The down key maps to keycode 40.
@@ -23,14 +33,29 @@ public enum KeyValues {
     ARROW_DOWN(40),
 
     /**
-     * The left key maps to keycode 37.
+     * The 'a' key maps to keycode 65.
      */
-    ARROW_LEFT(37),
+    A(65),
 
     /**
-     * The right key maps to keycode 39.
+     * The 'd' key maps to keycode 68.
      */
-    ARROW_RIGHT(39);
+    D(68),
+
+    /**
+     * The 'l' key maps to keycode 76.
+     */
+    L(76),
+
+    /**
+     * The 's' key maps to keycode 83.
+     */
+    S(83),
+
+    /**
+     * The 'w' key maps to keycode 87.
+     */
+    W(87);
 
     /**
      * The integer value of the integer value.

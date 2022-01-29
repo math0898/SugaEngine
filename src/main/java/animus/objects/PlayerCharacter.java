@@ -15,6 +15,11 @@ import java.awt.*;
 public class PlayerCharacter extends GameObject {
 
     /**
+     * Jump status of the player. 0 - Jump available, 1 - Jump used, acceleration applied, 2 - Jump used, acceleration removed.
+     */
+    private int jump = 0;
+
+    /**
      * Creates a new Collidable object with the immutable property set to either true or false.
      */
     public PlayerCharacter () {
@@ -29,9 +34,13 @@ public class PlayerCharacter extends GameObject {
     @Override
     public void runLogic () {
         pos.add(velocity);
-        if (velocity.getX() > 0) velocity.setX(velocity.getX() - 0.05);
-        else if (velocity.getX() < 0) velocity.setX(velocity.getX() + 0.05);
+        if (accel.getX() == 0) {
+            if (velocity.getX() > 0) velocity.setX(velocity.getX() - 0.1);
+            else if (velocity.getX() < 0) velocity.setX(velocity.getX() + 0.1);
+        }
         velocity.add(accel);
+        if (jump > 0) jump++;
+        if (jump == 5) accel.add(new Vector(0, 1, 0));
     }
 
     /**
@@ -53,7 +62,7 @@ public class PlayerCharacter extends GameObject {
      */
     @Override
     public void collision (HitBox obj) {
-        velocity = new Vector(0, 0, 0);
+        if (velocity.getY() > 0) velocity.setY(0);
     }
 
     /**
@@ -63,6 +72,17 @@ public class PlayerCharacter extends GameObject {
      */
     @Override
     public void touch (HitBox obj) {
-        velocity.setY(0);
+        if (velocity.getY() > 0) velocity.setY(0);
+        if (jump >= 15) jump = 0;
+    }
+
+    /**
+     * Makes the player jump.
+     */
+    public void jump () {
+        if (jump == 0) {
+            jump = 1;
+            accel.add(new Vector(0, -1, 0));
+        }
     }
 }
