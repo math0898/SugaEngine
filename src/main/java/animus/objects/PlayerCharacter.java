@@ -24,7 +24,7 @@ public class PlayerCharacter extends GameObject {
      */
     public PlayerCharacter () {
         super(false, 20, 60);
-        accel = new Vector(0, 0.05, 0);
+        accel = new Vector(0, 0.08, 0);
         pos = new Vector(100, 10, 0);
     }
 
@@ -35,10 +35,14 @@ public class PlayerCharacter extends GameObject {
     public void runLogic () {
         pos.add(velocity);
         if (accel.getX() == 0) {
-            if (velocity.getX() > 0) velocity.setX(velocity.getX() - 0.1);
+            if (Math.abs(velocity.getX()) < 0.1) velocity.setX(0);
+            else if (velocity.getX() > 0) velocity.setX(velocity.getX() - 0.1);
             else if (velocity.getX() < 0) velocity.setX(velocity.getX() + 0.1);
         }
-        velocity.add(accel);
+        if (velocity.getX() > 2.0) velocity.setX(2.0);
+        else if (velocity.getX() < -2.0) velocity.setX(-2.0);
+        else velocity.setX(velocity.getX() + accel.getX());
+        velocity.setY(velocity.getY() + accel.getY());
         if (jump > 0) jump++;
         if (jump == 5) accel.add(new Vector(0, 1, 0));
     }
