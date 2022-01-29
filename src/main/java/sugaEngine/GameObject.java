@@ -31,15 +31,6 @@ public abstract class GameObject extends Collidable implements DrawListener {
     }
 
     /**
-     * Accessor method for the position vector of the game object.
-     *
-     * @return The position vector.
-     */
-    public Vector getPos () {
-        return pos;
-    }
-
-    /**
      * Accessor method for the velocity vector of the game object.
      *
      * @return The velocity vector.

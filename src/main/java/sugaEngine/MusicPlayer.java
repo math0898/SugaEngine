@@ -41,6 +41,5 @@ public class MusicPlayer {
     public void setVolume (float val) { // todo make actual volume changes.
         if (clip.isRunning()) clip.stop();
         else clip.start();
-
     }
 }

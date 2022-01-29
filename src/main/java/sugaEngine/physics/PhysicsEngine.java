@@ -26,11 +26,24 @@ public class PhysicsEngine {
                 if (i == j) continue;
                 Collidable temp = objects.get(j);
                 boolean touching = false;
-                for (Vector v : temp.getTestPoints()) if (master.isInside(v)) touching = true;
-                for (Vector v : master.getTestPoints()) if (temp.isInside(v)) touching = true;
-                if (touching) {
+                boolean colliding = false;
+                for (Vector v : temp.getTestPoints()) {
+                    if (colliding) break;
+                    if (master.isInside(v)) colliding = true;
+                    else if (master.touching(v)) touching = true;
+                }
+                for (Vector v : master.getTestPoints()) {
+                    if (colliding) break;
+                    if (temp.isInside(v)) colliding = true;
+                    else if (temp.touching(v)) touching = true;
+                }
+                if (colliding) {
                     master.collision(temp);
                     temp.collision(master);
+                }
+                if (touching) {
+                    master.touch(temp);
+                    temp.touch(master);
                 }
             }
         }

@@ -45,6 +45,18 @@ public abstract class HitBox {
      * @return True if and only if the test point is inside this HitBox.
      */
     public boolean isInside (Vector test) {
+        if (test.getX() > pos.getX() - (width / 2.0) && test.getX() < pos.getX() + (width / 2.0))
+            return test.getY() > pos.getY() - (height / 2.0) && test.getY() < pos.getY() + (height / 2.0);
+        return false;
+    }
+
+    /**
+     * Tests whether the given point is touching this HitBox or not.
+     *
+     * @param test The point to test. Represented in vector form.
+     * @return True if and only if the test point is on the boundary of this HitBox.
+     */
+    public boolean touching (Vector test) {
         if (test.getX() >= pos.getX() - (width / 2.0) && test.getX() <= pos.getX() + (width / 2.0))
             return test.getY() >= pos.getY() - (height / 2.0) && test.getY() <= pos.getY() + (height / 2.0);
         return false;
@@ -62,5 +74,14 @@ public abstract class HitBox {
         vectors.add(new Vector(pos.getX() - (width / 2.0), pos.getY() + (height / 2.0), pos.getZ()));
         vectors.add(new Vector(pos.getX() - (width / 2.0), pos.getY() - (height / 2.0), pos.getZ()));
         return  vectors;
+    }
+
+    /**
+     * Accessor method for the position of the HitBox.
+     *
+     * @return Returns the current position of this HitBox.
+     */
+    public Vector getPos () {
+        return pos;
     }
 }

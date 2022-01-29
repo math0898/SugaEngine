@@ -1,7 +1,7 @@
 package animus.objects;
 
 import sugaEngine.GameObject;
-import sugaEngine.physics.Collidable;
+import sugaEngine.physics.HitBox;
 import sugaEngine.physics.Vector;
 import sugaEngine.graphics.flat.Graphics2d;
 
@@ -49,7 +49,17 @@ public class FloatyCube extends GameObject {
      * @param obj The object that this collidable collided with.
      */
     @Override
-    public void collision(Collidable obj) {
+    public void collision (HitBox obj) {
+        velocity.scale(-1);
+    }
+
+    /**
+     * Runs touching logic. May modify the object passed.
+     *
+     * @param obj The object that this collidable is touching.
+     */
+    @Override
+    public void touch(HitBox obj) {
         velocity.scale(-1);
     }
 }

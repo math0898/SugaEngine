@@ -36,9 +36,16 @@ public abstract class Collidable extends HitBox {
 
 
     /**
-     * Runs collision logic. Should not modify the object passed.
+     * Runs collision logic. May, but in general should not modify the object passed.
      *
      * @param obj The object that this collidable collided with.
      */
-    public abstract void collision (Collidable obj);
+    public abstract void collision (HitBox obj);
+
+    /**
+     * Runs touching logic. May modify the object passed.
+     *
+     * @param obj The object that this collidable is touching.
+     */
+    public abstract void touch (HitBox obj);
 }

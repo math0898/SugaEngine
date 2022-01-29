@@ -2,6 +2,7 @@ package animus;
 
 import animus.objects.BoxyBox;
 import animus.objects.FloatyCube;
+import animus.objects.PlayerCharacter;
 import sugaEngine.Game;
 import sugaEngine.GameKeyListener;
 import sugaEngine.MusicPlayer;
@@ -43,8 +44,9 @@ public class ProjectAnimusGame extends Game {
         musicPlayer = new MusicPlayer("/media/music/Itro & Tobu - Cloud 9.wav");
         panel.registerListener(new GameUI());
         addGameObject("Floaty Cube", new FloatyCube());
-        addGameObject("Boxy Box", new BoxyBox(new Vector(100, 100, 0), 50, 50, Color.GREEN.darker().darker().darker()));
-        addGameObject("Boxy Box2", new BoxyBox(new Vector(500, 700, 0), 500, 20, Color.RED.darker().darker()));
+        addGameObject("Boxy Box", new BoxyBox(new Vector(540, 100, 0), 50, 50, Color.GREEN.darker().darker().darker()));
+        addGameObject("Floor", new BoxyBox(new Vector(960, 1080, 0), 1920, 60, Color.decode("#99cfe0")));
+        addGameObject("Player Character", new PlayerCharacter());
     }
 
     /**

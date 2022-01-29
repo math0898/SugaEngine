@@ -7,25 +7,31 @@ import sugaEngine.physics.Vector;
 
 import java.awt.*;
 
-public class BoxyBox extends GameObject {
-
-    /**
-     * The color of this cube.
-     */
-    private final Color color;
+/**
+ * The main character for this ProjectAnimus.
+ *
+ * @author Sugaku
+ */
+public class PlayerCharacter extends GameObject {
 
     /**
      * Creates a new Collidable object with the immutable property set to either true or false.
-     *
-     * @param pos       The position of the object.
-     * @param width     The width of the HitBox.
-     * @param height    The height of the HitBox.
-     * @param color     The color of the box.
      */
-    public BoxyBox (Vector pos, double width, double height, Color color) {
-        super(false, width, height);
-        this.pos = pos;
-        this.color = color;
+    public PlayerCharacter () {
+        super(false, 20, 60);
+        accel = new Vector(0, 0.05, 0);
+        pos = new Vector(100, 10, 0);
+    }
+
+    /**
+     * Called every logic frame to run the logic on this GameObject.
+     */
+    @Override
+    public void runLogic () {
+        pos.add(velocity);
+        if (velocity.getX() > 0) velocity.setX(velocity.getX() - 0.05);
+        else if (velocity.getX() < 0) velocity.setX(velocity.getX() + 0.05);
+        velocity.add(accel);
     }
 
     /**
@@ -37,8 +43,7 @@ public class BoxyBox extends GameObject {
      */
     @Override
     public void applyChanges (int width, int height, Graphics2d panel) {
-        panel.setRectangle((int) pos.getX() - (int) (this.width / 2), (int) pos.getY() - (int) (this.height / 2), (int) this.width, (int) this.height, color);
-
+        panel.setRectangle((int) pos.getX() - (int) (this.width / 2), (int) pos.getY() - (int) (this.height / 2), (int) this.width, (int) this.height, Color.decode("#288654"));
     }
 
     /**
@@ -48,7 +53,7 @@ public class BoxyBox extends GameObject {
      */
     @Override
     public void collision (HitBox obj) {
-        obj.getPos().setY(obj.getPos().getY() - 1);
+        velocity = new Vector(0, 0, 0);
     }
 
     /**
@@ -58,6 +63,6 @@ public class BoxyBox extends GameObject {
      */
     @Override
     public void touch (HitBox obj) {
-
+        velocity.setY(0);
     }
 }
