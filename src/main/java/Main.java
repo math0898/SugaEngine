@@ -22,7 +22,7 @@ public class Main {
     public static void main (String[] args) {
         Graphics2d panel = new Graphics2d();
         panel.setBackground(Color.BLACK);
-        JFrame frame = new JFrame("Java Frame Title");
+        JFrame frame = new JFrame("Project Animus");
         frame.setSize(1920, 1080);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(panel, BorderLayout.CENTER);

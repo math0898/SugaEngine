@@ -34,6 +34,7 @@ public class ProjectAnimusGame extends Game {
      */
     public ProjectAnimusGame (GraphicsPanel panel, GameKeyListener listener) {
         super(panel, listener);
+        panel.registerListener(new GameUI());
         addGameObject("Floaty Cube", new FloatyCube());
         addGameObject("Boxy Box", new BoxyBox(new Vector(100, 100, 0), 50, 50, Color.GREEN.darker().darker().darker()));
         addGameObject("Boxy Box2", new BoxyBox(new Vector(500, 700, 0), 500, 20, Color.RED.darker().darker()));

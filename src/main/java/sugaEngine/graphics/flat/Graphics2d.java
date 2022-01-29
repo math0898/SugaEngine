@@ -67,4 +67,19 @@ public class Graphics2d extends GraphicsPanel {
     public void setPixel (int x, int y, Color c) {
         updatePoints.add(new Pixel(x, y, c));
     }
+
+    /**
+     * Used to create a rectangle of pixels assigned to a particular color.
+     *
+     * @param x The top left most corner of the rectangle.
+     * @param y The top left most corner of the rectangle.
+     * @param width How wide the rectangle is.
+     * @param height How tall the rectangle is.
+     * @param c The color to set the rectangle to.
+     */
+    public void setRectangle (int x, int y, int width, int height, Color c) {
+        for (int i = x; i < width + x; i++)
+            for (int j = y; j < height + y; j++)
+                updatePoints.add(new Pixel(i, j, c));
+    }
 }
