@@ -131,4 +131,13 @@ public class Vector {
     public String toString () {
         return "<" + x + ", " + y + ", " + z + ">";
     }
+
+    /**
+     * Returns the magnitude of the vector.
+     *
+     * @return The magnitude of the vector.
+     */
+    public double magnitude () {
+        return Math.sqrt((x * x) + (y * y) + (z * z));
+    }
 }

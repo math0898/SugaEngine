@@ -27,7 +27,7 @@ public abstract class GameObject extends Collidable implements DrawListener {
      */
     public void runLogic () {
         pos.add(velocity);
-        velocity.add(accel);
+        if (velocity.magnitude() < 25 && accel.magnitude() > 0 || velocity.magnitude() > 25 && accel.magnitude() < 0) velocity.add(accel);
     }
 
     /**
