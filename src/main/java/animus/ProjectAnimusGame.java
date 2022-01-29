@@ -4,6 +4,7 @@ import animus.objects.BoxyBox;
 import animus.objects.FloatyCube;
 import sugaEngine.Game;
 import sugaEngine.GameKeyListener;
+import sugaEngine.MusicPlayer;
 import sugaEngine.physics.Vector;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.threads.GameLogicThread;
@@ -34,6 +35,7 @@ public class ProjectAnimusGame extends Game {
      */
     public ProjectAnimusGame (GraphicsPanel panel, GameKeyListener listener) {
         super(panel, listener);
+        new MusicPlayer("/media/music/Itro & Tobu - Cloud 9.wav");
         panel.registerListener(new GameUI());
         addGameObject("Floaty Cube", new FloatyCube());
         addGameObject("Boxy Box", new BoxyBox(new Vector(100, 100, 0), 50, 50, Color.GREEN.darker().darker().darker()));
