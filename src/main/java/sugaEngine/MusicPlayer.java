@@ -1,8 +1,7 @@
 package sugaEngine;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
+import java.util.Objects;
 
 /**
  * The MusicPlayer class is meant to play music at varying volume levels with the possibility to pause or resume
@@ -24,12 +23,24 @@ public class MusicPlayer {
      */
     public MusicPlayer (String file) {
         try {
-            AudioInputStream inputStream = AudioSystem.getAudioInputStream(MusicPlayer.class.getResourceAsStream(file));
+            AudioInputStream inputStream = AudioSystem.getAudioInputStream(Objects.requireNonNull(MusicPlayer.class.getResourceAsStream(file)));
             clip = AudioSystem.getClip();
             clip.open(inputStream);
             clip.loop(Clip.LOOP_CONTINUOUSLY);
+            clip.start();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Sets the volume of the music to the given value.
+     *
+     * @param val The volume level to set the music to.
+     */
+    public void setVolume (float val) { // todo make actual volume changes.
+        if (clip.isRunning()) clip.stop();
+        else clip.start();
+
     }
 }

@@ -28,6 +28,11 @@ public class ProjectAnimusGame extends Game {
     List<Integer> pressedKeys = new ArrayList<>();
 
     /**
+     * The music player for the ProjectAnimusGame.
+     */
+    MusicPlayer musicPlayer;
+
+    /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
      *
      * @param panel The panel that GameObjects should register as a listener to.
@@ -35,7 +40,7 @@ public class ProjectAnimusGame extends Game {
      */
     public ProjectAnimusGame (GraphicsPanel panel, GameKeyListener listener) {
         super(panel, listener);
-        new MusicPlayer("/media/music/Itro & Tobu - Cloud 9.wav");
+        musicPlayer = new MusicPlayer("/media/music/Itro & Tobu - Cloud 9.wav");
         panel.registerListener(new GameUI());
         addGameObject("Floaty Cube", new FloatyCube());
         addGameObject("Boxy Box", new BoxyBox(new Vector(100, 100, 0), 50, 50, Color.GREEN.darker().darker().darker()));
@@ -61,7 +66,12 @@ public class ProjectAnimusGame extends Game {
             if (pressedKeys.contains(key)) continue;
             else pressedKeys.add(key);
             switch (key) {
-                case 27 -> GameLogicThread.setPaused(!GameLogicThread.getPaused()); // ESC
+                case 27 -> { // ESC
+                    boolean paused = GameLogicThread.getPaused();
+                    if (paused) musicPlayer.setVolume(1.0f);
+                    else musicPlayer.setVolume(-0.5f);
+                    GameLogicThread.setPaused(!GameLogicThread.getPaused());
+                }
                 case 40 -> objects.get("Floaty Cube").getAccel().add(new Vector(0, 0.1, 0)); // UP ARROW
                 case 39 -> objects.get("Floaty Cube").getAccel().add(new Vector(0.1, 0, 0)); // RIGHT ARROW
                 case 37 -> objects.get("Floaty Cube").getAccel().add(new Vector(-0.1, 0, 0)); // LEFT ARROW
