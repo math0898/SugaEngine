@@ -18,7 +18,7 @@ public class PongGame extends Game {
      * @param listener The game key listener being used by this game object.
      */
     public PongGame (GraphicsPanel panel, GameKeyListener listener) {
-        super(panel, listener);
+        super(panel, listener, null);
     }
 
     /**

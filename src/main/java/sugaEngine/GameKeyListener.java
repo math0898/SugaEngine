@@ -1,5 +1,6 @@
 package sugaEngine;
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Stack;
@@ -20,6 +21,15 @@ public class GameKeyListener implements KeyListener {
      * A stack of keys that have been depressed and need to be handled by the game.
      */
     protected Stack<Integer> keysDepressed = new Stack<>();
+
+    /**
+     * Creates a new GameKeyListener for use in a game.
+     *
+     * @param frame The JFrame that this KeyListener is using.
+     */
+    public GameKeyListener (JFrame frame) {
+        frame.addKeyListener(this);
+    }
 
     /**
      * Invoked when a key has been typed.

@@ -51,14 +51,21 @@ public abstract class Game {
     protected GameKeyListener keyListener;
 
     /**
+     * The mouse listener that is being used by this game.
+     */
+    protected GameMouseListener mouseListener;
+
+    /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
      *
      * @param panel The panel that GameObjects should register as a listener to.
      * @param listener The game key listener being used by this game object.
+     * @param mouseListener The mouse listener being using by this game object.
      */
-    public Game (GraphicsPanel panel, GameKeyListener listener) {
+    public Game (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
         this.panel = panel;
         keyListener = listener;
+        this.mouseListener = mouseListener;
     }
 
     /**

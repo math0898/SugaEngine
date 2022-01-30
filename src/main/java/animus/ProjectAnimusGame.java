@@ -5,12 +5,14 @@ import animus.objects.FloatyCube;
 import animus.objects.PlayerCharacter;
 import sugaEngine.Game;
 import sugaEngine.GameKeyListener;
+import sugaEngine.GameMouseListener;
 import sugaEngine.MusicPlayer;
 import sugaEngine.physics.Vector;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.threads.GameLogicThread;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -38,9 +40,10 @@ public class ProjectAnimusGame extends Game {
      *
      * @param panel The panel that GameObjects should register as a listener to.
      * @param listener The game key listener being used by this game object.
+     * @param mouseListener The mouse listener being using by this game object.
      */
-    public ProjectAnimusGame (GraphicsPanel panel, GameKeyListener listener) {
-        super(panel, listener);
+    public ProjectAnimusGame (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
+        super(panel, listener, mouseListener);
         musicPlayer = new MusicPlayer("/media/music/Itro & Tobu - Cloud 9.wav");
         panel.registerListener(new GameUI());
         addGameObject("Floaty Cube", new FloatyCube());
@@ -62,6 +65,8 @@ public class ProjectAnimusGame extends Game {
      */
     @Override
     public void processInput () {
+        Stack<MouseEvent> mice = mouseListener.getEvents();
+        while (mice.size() > 0) mice.pop();
         Stack<Integer> keys = keyListener.getKeysPressed();
         while (keys.size() > 0) {
             int key = keys.pop();
