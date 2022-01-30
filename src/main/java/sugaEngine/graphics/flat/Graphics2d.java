@@ -82,4 +82,16 @@ public class Graphics2d extends GraphicsPanel {
             for (int j = y; j < height + y; j++)
                 updatePoints.add(new Pixel(i, j, c));
     }
+
+    /**
+     * Used to set a block of pixels with the given radius.
+     *
+     * @param x The x position to center this 'big pixel'.
+     * @param y The y position to center this 'big pixel'.
+     * @param r The radius of this 'big pixel'.
+     * @param c The color to set these pixels to.
+     */
+    public void setBigPixel (int x, int y, int r, Color c) {
+        setRectangle(x - r, y - r, r, r, c);
+    }
 }

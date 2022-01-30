@@ -1,6 +1,9 @@
 package sugaEngine;
 
 import sugaEngine.graphics.GraphicsPanel;
+import sugaEngine.graphics.flat.DrawListener;
+import sugaEngine.input.GameKeyListener;
+import sugaEngine.input.GameMouseListener;
 import sugaEngine.physics.PhysicsEngine;
 
 import java.util.ArrayList;
@@ -101,6 +104,16 @@ public abstract class Game {
      */
     public void addAgent (AIAgent agent) {
         agents.add(agent);
+    }
+
+    /**
+     * Registers a new DrawingListener. This will not register anything beyond the draw method. Usually used by UI,
+     * hence the name.
+     *
+     * @param listener The draw listener that should be registered to this panel.
+     */
+    public void addDrawingListener (DrawListener listener) {
+        panel.registerListener(listener);
     }
 
     /**

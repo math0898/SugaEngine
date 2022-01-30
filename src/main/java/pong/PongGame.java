@@ -1,8 +1,8 @@
 package pong;
 
 import sugaEngine.Game;
-import sugaEngine.GameKeyListener;
-import sugaEngine.GameMouseListener;
+import sugaEngine.input.GameKeyListener;
+import sugaEngine.input.GameMouseListener;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.threads.GameLogicThread;
 import sugaEngine.threads.GraphicsThread;
@@ -34,6 +34,7 @@ public class PongGame extends Game {
      */
     public PongGame (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
         super(panel, listener, mouseListener);
+        addDrawingListener(new DividingLine());
     }
 
     /**

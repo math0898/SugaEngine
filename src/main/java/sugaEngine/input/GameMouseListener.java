@@ -1,4 +1,4 @@
-package sugaEngine;
+package sugaEngine.input;
 
 import javax.swing.*;
 import java.awt.*;

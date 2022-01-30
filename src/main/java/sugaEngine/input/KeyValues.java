@@ -1,4 +1,4 @@
-package sugaEngine;
+package sugaEngine.input;
 
 /**
  * Gives an enum value to the different key values.

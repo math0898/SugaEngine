@@ -1,6 +1,6 @@
 import pong.PongGame;
-import sugaEngine.GameKeyListener;
-import sugaEngine.GameMouseListener;
+import sugaEngine.input.GameKeyListener;
+import sugaEngine.input.GameMouseListener;
 import sugaEngine.graphics.flat.Graphics2d;
 import sugaEngine.threads.GameLogicThread;
 import sugaEngine.threads.GraphicsThread;
