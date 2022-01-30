@@ -25,12 +25,28 @@ public class GraphicsThread extends Thread {
     private long lastFinished;
 
     /**
+     * The time that this graphics thread was started. Used in calculating average frame rate.
+     */
+    private static long startTime = 0;
+
+    /**
+     * The number of frames that have been rendered since the thread started.
+     */
+    private static long frames = 0;
+
+    /**
+     * The target frame rate for this GraphicsThread.
+     */
+    private final int FRAME_RATE;
+
+    /**
      * Creates a new graphics thread with the given panel.
      *
      * @param panel The panel to refresh for every frame.
      */
-    public GraphicsThread (JPanel panel) {
+    public GraphicsThread (JPanel panel, int frameRate) {
         this.panel = panel;
+        FRAME_RATE = frameRate;
     }
 
     /**
@@ -47,7 +63,7 @@ public class GraphicsThread extends Thread {
      */
     @Override
     public void run () {
-        double FRAME_RATE = 400; // Because of the film industry.
+        startTime = System.currentTimeMillis();
         while (!stop) {
             if (System.currentTimeMillis() - lastFinished < (1000 / FRAME_RATE)) {
                 try {
@@ -59,6 +75,16 @@ public class GraphicsThread extends Thread {
             }
             lastFinished = System.currentTimeMillis();
             panel.repaint();
+            frames++;
         }
+    }
+
+    /**
+     * Returns the average frame rate while this GraphicsThread has been running.
+     *
+     * @return The average frame rate of this thread since starting.
+     */
+    public static double getFPS () {
+        return (frames * 1.0) / ((System.currentTimeMillis() - startTime) / 1000.0);
     }
 }
