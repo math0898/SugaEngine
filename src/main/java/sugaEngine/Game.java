@@ -31,6 +31,16 @@ public abstract class Game {
     protected List<AIAgent> agents = new ArrayList<>();
 
     /**
+     * A Map of scenes indexed by name.
+     */
+    protected Map<String, Scene> scenes = new HashMap<>();
+
+    /**
+     * The currently loaded scene object.
+     */
+    protected Scene loadedScene;
+
+    /**
      * The graphics panel that should be used to register draw listeners to.
      */
     protected GraphicsPanel panel;
@@ -84,5 +94,31 @@ public abstract class Game {
      */
     public void addAgent (AIAgent agent) {
         agents.add(agent);
+    }
+
+    /**
+     * Clears all AIAgents, physics managers, GameObjects, and PanelListeners.
+     */
+    public void clear () {
+        physics = new PhysicsEngine();
+        agents = new ArrayList<>();
+        objects = new HashMap<>();
+        panel.clearListeners();
+    }
+
+    /**
+     * Attempts to load the given scene. If successful with return true, if un-found or loading fails, will return
+     * false.
+     *
+     * @param name The name of the scene to attempt loading.
+     */
+    public boolean loadScene (String name) {
+        Scene scene = scenes.get(name);
+        if (scene == null) return false;
+        if (scene.load(this)) {
+            loadedScene = scene;
+            return true;
+        }
+        return false;
     }
 }

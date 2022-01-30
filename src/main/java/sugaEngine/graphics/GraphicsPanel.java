@@ -17,7 +17,7 @@ public abstract class GraphicsPanel extends JPanel {
     /**
      * A map of drawing listeners with their priority.
      */
-    protected final Map<DrawListener.Priorities, ArrayList<DrawListener>> drawingListeners = new HashMap<>();
+    protected Map<DrawListener.Priorities, ArrayList<DrawListener>> drawingListeners = new HashMap<>();
 
     /**
      * Calls every program that would like add pixels to the panel before it's displayed.
@@ -45,5 +45,13 @@ public abstract class GraphicsPanel extends JPanel {
     public void registerListener (DrawListener.Priorities priority, DrawListener listener) {
         if (!drawingListeners.containsKey(priority)) drawingListeners.put(priority, new ArrayList<>());
         drawingListeners.get(priority).add(listener);
+    }
+
+    /**
+     * De-registers all draw listeners for this panel. New ones need to be added with
+     * {@link #registerListener(DrawListener)}.
+     */
+    public void clearListeners () {
+        drawingListeners = new HashMap<>();
     }
 }
