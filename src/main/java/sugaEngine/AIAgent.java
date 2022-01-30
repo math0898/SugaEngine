@@ -20,4 +20,9 @@ public abstract class AIAgent {
     public AIAgent (GameObject object) {
         this.object = object;
     }
+
+    /**
+     * Runs the logic of the AIAgent.
+     */
+    public abstract void logic ();
 }
