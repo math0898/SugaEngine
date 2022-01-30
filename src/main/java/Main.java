@@ -24,7 +24,8 @@ public class Main {
         Graphics2d panel = new Graphics2d();
         panel.setBackground(Color.BLACK);
         JFrame frame = new JFrame("SugaEngine - PONG");
-        frame.setSize(1920, 1080);
+        Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
+        frame.setSize(size.width, size.height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(panel, BorderLayout.CENTER);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

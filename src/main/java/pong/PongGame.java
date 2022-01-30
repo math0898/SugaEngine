@@ -1,9 +1,12 @@
 package pong;
 
+import pong.ui.DividingLine;
+import pong.ui.ScoreCounter;
 import sugaEngine.Game;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.graphics.GraphicsPanel;
+import sugaEngine.physics.Vector;
 import sugaEngine.threads.GameLogicThread;
 import sugaEngine.threads.GraphicsThread;
 
@@ -11,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Main game class for the Pong game.
@@ -26,6 +30,16 @@ public class PongGame extends Game {
     List<Integer> pressedKeys = new ArrayList<>();
 
     /**
+     * The player score counter.
+     */
+    private AtomicInteger playerScore = new AtomicInteger(0);
+
+    /**
+     * The AI score counter.
+     */
+    private AtomicInteger aiScore = new AtomicInteger(0);
+
+    /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
      *
      * @param panel The panel that GameObjects should register as a listener to.
@@ -35,6 +49,8 @@ public class PongGame extends Game {
     public PongGame (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
         super(panel, listener, mouseListener);
         addDrawingListener(new DividingLine());
+        addDrawingListener(new ScoreCounter(playerScore, new Vector((panel.getWidth() * 3.0) / 8.0, panel.getHeight() / 32.0, 0)));
+        addDrawingListener(new ScoreCounter(aiScore, new Vector((panel.getWidth() * 5.0) / 8.0, panel.getHeight() / 32.0, 0)));
     }
 
     /**
@@ -58,8 +74,15 @@ public class PongGame extends Game {
             if (pressedKeys.contains(key)) continue;
             pressedKeys.add(key);
             switch (key) {
-                case 27 -> GameLogicThread.setPaused(!GameLogicThread.getPaused()); // ESC
-                case 76 -> System.out.println("Average fps: " + GraphicsThread.getFPS()); // L
+                case 27 -> {
+                    paused = !paused;
+                    GameLogicThread.setPaused(paused); // ESC
+                }
+                case 76 -> System.out.printf("Average fps: %.1f", GraphicsThread.getFPS()); // L
+                case 38 -> { // todo remove.
+                    playerScore.incrementAndGet();
+                    aiScore.incrementAndGet();
+                }
             }
         }
         keys = keyListener.getKeysDepressed();

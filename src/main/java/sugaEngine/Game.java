@@ -59,6 +59,11 @@ public abstract class Game {
     protected GameMouseListener mouseListener;
 
     /**
+     * A boolean representing whether the PongGame is paused or not.
+     */
+    protected static boolean paused;
+
+    /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
      *
      * @param panel The panel that GameObjects should register as a listener to.
@@ -69,6 +74,16 @@ public abstract class Game {
         this.panel = panel;
         keyListener = listener;
         this.mouseListener = mouseListener;
+    }
+
+    /**
+     * Accessor method for whether this game is paused or not. This pause state is separate from the GameLogicThread
+     * pause.
+     *
+     * @return Whether this game is paused or not.
+     */
+    public static boolean getPaused () {
+        return paused;
     }
 
     /**
