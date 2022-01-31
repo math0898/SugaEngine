@@ -2,8 +2,11 @@ package sugaEngine.graphics.flat;
 
 import sugaEngine.graphics.GraphicsPanel;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
@@ -104,6 +107,29 @@ public class Graphics2d extends GraphicsPanel {
      */
     public void setBigPixel (int x, int y, int r, Color c) {
         setRectangle(x - (r / 2), y - (r / 2), r, r, c);
+    }
+
+    /**
+     * Adds the given image to the list of images to draw this frame. Attempts to load an image from resources.
+     *
+     * @param x The x position of this image.
+     * @param y The y position of this image.
+     * @param width The width of this image.
+     * @param height The height of this image.
+     * @param path The path of the image to draw on screen.
+     */
+    public void addImage (int x, int y, int width, int height, String path) {
+        InputStream inputStream = this.getClass().getResourceAsStream(path);
+        if (inputStream == null) {
+            System.out.println("Attempted to load '" + path + "' and failed.");
+            return;
+        }
+        try {
+            BufferedImage image = ImageIO.read(inputStream);
+            images.add(new DrawImage(x, y, width, height, image));
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
     }
 
     /**
