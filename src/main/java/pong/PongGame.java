@@ -6,6 +6,7 @@ import pong.objects.Goal;
 import pong.objects.Paddle;
 import pong.objects.Wall;
 import pong.ui.DividingLine;
+import pong.ui.PauseMenu;
 import pong.ui.ScoreCounter;
 import sugaEngine.AIAgent;
 import sugaEngine.Game;
@@ -61,6 +62,7 @@ public class PongGame extends Game {
      */
     public PongGame (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
         super(panel, listener, mouseListener);
+        addDrawingListener(new PauseMenu());
         addDrawingListener(new DividingLine());
         addDrawingListener(new ScoreCounter(playerScore, new Vector((panel.getWidth() * 3.0) / 8.0, panel.getHeight() / 32.0, 0)));
         addDrawingListener(new ScoreCounter(aiScore, new Vector((panel.getWidth() * 5.0) / 8.0, panel.getHeight() / 32.0, 0)));
