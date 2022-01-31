@@ -112,9 +112,13 @@ public abstract class HitBox {
      * @param panel The panel to draw the HitBox test points to.
      */
     public void drawTestPoints (Graphics2d panel) {
-        panel.setPixel((int) (pos.getX() + (width / 2.0)), (int) (pos.getY() + (height / 2.0)), Color.RED);
-        panel.setPixel((int) (pos.getX() + (width / 2.0)), (int) (pos.getY() - (height / 2.0)), Color.RED);
-        panel.setPixel((int) (pos.getX() - (width / 2.0)), (int) (pos.getY() + (height / 2.0)), Color.RED);
-        panel.setPixel((int) (pos.getX() - (width / 2.0)), (int) (pos.getY() - (height / 2.0)), Color.RED);
+        int y = (int) (pos.getY() + (height / 2.0));
+        int x = (int) (pos.getX() - (width / 2.0));
+        for (int i = x; i <= (int) (pos.getX() + (width / 2.0)); i++) panel.setPixel(i, y, Color.RED);
+        for (int i = (int) (pos.getY() - (height / 2.0)); i <= y; i++) panel.setPixel(x, i, Color.RED);
+        y = (int) (pos.getY() - (height / 2.0));
+        x = (int) (pos.getX() + (width / 2.0));
+        for (int i = (int) (pos.getX() - (width / 2.0)); i <= x; i++) panel.setPixel(i, y, Color.RED);
+        for (int i = y; i <= (int) (pos.getY() + (height / 2.0)); i++) panel.setPixel(x, i, Color.RED);
     }
 }
