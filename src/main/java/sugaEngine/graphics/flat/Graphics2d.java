@@ -3,8 +3,10 @@ package sugaEngine.graphics.flat;
 import sugaEngine.graphics.GraphicsPanel;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.Serial;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A 2d graphics window that can be manipulated with the given methods.
@@ -23,6 +25,11 @@ public class Graphics2d extends GraphicsPanel {
      * A list of pixels that need to be updated in the next frame.
      */
     private ArrayList<Pixel> updatePoints = new ArrayList<>();
+
+    /**
+     * An ArrayList of images that need to be drawn to the screen.
+     */
+    private List<DrawImage> images = new ArrayList<>();
 
     /**
      * Calls every program that would like add pixels to the panel before it's displayed.
@@ -54,7 +61,11 @@ public class Graphics2d extends GraphicsPanel {
             graphics.setColor(p.color());
             graphics.fillRect(p.x(), p.y(), 1, 1);
         }
+        for (DrawImage i : images) {
+            graphics.drawImage(i.image(), i.x(), i.y(), i.width(), i.height(), null);
+        }
         updatePoints = new ArrayList<>();
+        images = new ArrayList<>();
     }
 
     /**
@@ -93,5 +104,18 @@ public class Graphics2d extends GraphicsPanel {
      */
     public void setBigPixel (int x, int y, int r, Color c) {
         setRectangle(x - (r / 2), y - (r / 2), r, r, c);
+    }
+
+    /**
+     * Adds the given image to the list of images to draw this frame.
+     *
+     * @param x The x position of this image.
+     * @param y The y position of this image.
+     * @param width The width of this image.
+     * @param height The height of this image.
+     * @param image The image to draw to the screen.
+     */
+    public void addImage (int x, int y, int width, int height, BufferedImage image) {
+        images.add(new DrawImage(x, y, width, height, image));
     }
 }
