@@ -32,12 +32,6 @@ public class Main {
         frame.setUndecorated(true);
         frame.setVisible(true);
         new GraphicsThread(panel, 60).start();
-        try { // We do this to prevent paintImmediately() from calling draw listeners while they're being added.
-              //  It's a non-fatal error but still should be avoided whenever possible.
-            Thread.sleep(10);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         new GameLogicThread(new PongGame(panel, new GameKeyListener(frame), new GameMouseListener(frame)), 60).start();
     }
 }

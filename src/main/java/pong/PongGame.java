@@ -143,10 +143,6 @@ public class PongGame extends Game {
                     GameLogicThread.setPaused(paused); // ESC
                 }
                 case 76 -> System.out.printf("Average fps: %.1f", GraphicsThread.getFPS()); // L
-                case (int) 'A' -> { // todo remove.
-                    playerScore.incrementAndGet();
-                    aiScore.incrementAndGet();
-                }
                 case 73 -> devMode = !devMode; // I
                 case 38 -> objects.get("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0)); // UP ARROW
                 case 40 -> objects.get("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0)); // DOWN ARROW
