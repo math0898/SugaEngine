@@ -81,6 +81,16 @@ public class PlayerCharacter extends GameObject {
     }
 
     /**
+     * Returns the name of this object for use during collisions.
+     *
+     * @return The name of this object.
+     */
+    @Override
+    public String getName() {
+        return "Player";
+    }
+
+    /**
      * Makes the player jump.
      */
     public void jump () {

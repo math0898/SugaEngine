@@ -1,5 +1,6 @@
-package animus.objects;
+package pong.objects;
 
+import pong.PongGame;
 import sugaEngine.GameObject;
 import sugaEngine.graphics.flat.Graphics2d;
 import sugaEngine.physics.HitBox;
@@ -7,25 +8,21 @@ import sugaEngine.physics.Vector;
 
 import java.awt.*;
 
-public class BoxyBox extends GameObject {
-
-    /**
-     * The color of this cube.
-     */
-    private final Color color;
+/**
+ * A paddle is controlled by a player or AI and is used to hit the ball back and forth.
+ *
+ * @author Sugaku
+ */
+public class Paddle extends GameObject {
 
     /**
      * Creates a new Collidable object with the immutable property set to either true or false.
      *
-     * @param pos       The position of the object.
-     * @param width     The width of the HitBox.
-     * @param height    The height of the HitBox.
-     * @param color     The color of the box.
+     * @param pos The starting position of the Paddle.
      */
-    public BoxyBox (Vector pos, double width, double height, Color color) {
-        super(false, width, height);
+    public Paddle (Vector pos) {
+        super(false, 11, 101);
         this.pos = pos;
-        this.color = color;
     }
 
     /**
@@ -37,17 +34,20 @@ public class BoxyBox extends GameObject {
      */
     @Override
     public void applyChanges (int width, int height, Graphics2d panel) {
-        panel.setRectangle((int) pos.getX() - (int) (this.width / 2), (int) pos.getY() - (int) (this.height / 2), (int) this.width, (int) this.height, color);
+        Color c = PongGame.getPaused() ? Color.GRAY : Color.WHITE;
+        for (int i = (int) Math.max(0, pos.getY() - 40); i <= pos.getY() + 50; i++)
+            panel.setBigPixel((int) pos.getX() + 5, i, 10, c);
+        if (PongGame.getDevMode()) drawTestPoints(panel);
     }
 
     /**
-     * Runs collision logic. Should not modify the object passed.
+     * Runs collision logic. May, but in general should not modify the object passed.
      *
      * @param obj The object that this collidable collided with.
      */
     @Override
     public void collision (HitBox obj) {
-        obj.getPos().setY((pos.getY() - (this.height / 2)) - (obj.getHeight() / 2));
+
     }
 
     /**
@@ -67,6 +67,6 @@ public class BoxyBox extends GameObject {
      */
     @Override
     public String getName() {
-        return "Box";
+        return "Paddle";
     }
 }
