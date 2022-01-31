@@ -47,7 +47,15 @@ public class Paddle extends GameObject {
      */
     @Override
     public void collision (HitBox obj) {
-
+        if (obj instanceof GameObject collided)
+            if (collided.getName().equals("Ball")) {
+                int x = (int) (collided.getVelocity().getX() > 0 ?
+                        (int) (pos.getX() - (this.width / 2)) - (obj.getWidth() / 2) :
+                        (int) (pos.getX() + (this.width / 2)) + (obj.getWidth() / 2));
+                collided.getPos().setX(x);
+                collided.getVelocity().setY(pos.getY() - obj.getPos().getY());
+                collided.getVelocity().scale(1.0, 0.1, 1.0); // todo cap vertical speed.
+            }
     }
 
     /**
@@ -66,7 +74,7 @@ public class Paddle extends GameObject {
      * @return The name of this object.
      */
     @Override
-    public String getName() {
+    public String getName () {
         return "Paddle";
     }
 }
