@@ -37,7 +37,7 @@ public class Paddle extends GameObject {
         Color c = PongGame.getPaused() ? Color.GRAY : Color.WHITE;
         for (int i = (int) Math.max(0, pos.getY() - 40); i <= pos.getY() + 50; i++)
             panel.setBigPixel((int) pos.getX() + 5, i, 10, c);
-        if (PongGame.getDevMode()) drawTestPoints(panel);
+        if (PongGame.getDevMode()) drawHitBox(panel, Color.RED);
     }
 
     /**
