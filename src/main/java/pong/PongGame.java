@@ -1,5 +1,6 @@
 package pong;
 
+import pong.objects.Ball;
 import pong.objects.Paddle;
 import pong.ui.DividingLine;
 import pong.ui.ScoreCounter;
@@ -59,6 +60,7 @@ public class PongGame extends Game {
         addDrawingListener(new ScoreCounter(aiScore, new Vector((panel.getWidth() * 5.0) / 8.0, panel.getHeight() / 32.0, 0)));
         addGameObject("Player Paddle", new Paddle(new Vector(panel.getWidth() / 8.0, panel.getHeight() / 2.0, 0)));
         addGameObject("AI Paddle", new Paddle(new Vector((panel.getWidth() * 7.0) / 8.0, panel.getHeight() / 2.0, 0)));
+        addGameObject("Ball", new Ball(new Vector((panel.getWidth() * 3.0) / 4.0, panel.getHeight() / 2.0, 0), new Vector(-2.0, 0, 0)));
     }
 
     /**
