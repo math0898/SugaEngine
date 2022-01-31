@@ -1,11 +1,13 @@
 package pong;
 
 import pong.objects.Ball;
+import pong.objects.Goal;
 import pong.objects.Paddle;
 import pong.objects.Wall;
 import pong.ui.DividingLine;
 import pong.ui.ScoreCounter;
 import sugaEngine.Game;
+import sugaEngine.GameObject;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.graphics.GraphicsPanel;
@@ -16,6 +18,7 @@ import sugaEngine.threads.GraphicsThread;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Stack;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -64,7 +67,10 @@ public class PongGame extends Game {
         addGameObject("Ball", new Ball(new Vector((panel.getWidth() * 3.0) / 4.0, panel.getHeight() / 2.0, 0), new Vector(-6.0, 0, 0)));
         addGameObject("Wall1", new Wall(panel.getWidth(), new Vector(panel.getWidth() / 2.0, -50, 0)));
         addGameObject("Wall2", new Wall(panel.getWidth(), new Vector(panel.getWidth() / 2.0,  panel.getHeight() + 49, 0)));
-    } // todo add serving system start by serving towards right.
+        addGameObject("Player Goal",
+                new Goal(new Vector(((panel.getWidth() * 7.0) / 8.0) + 100, panel.getHeight() / 2.0, 0), panel.getHeight(), this));
+        addGameObject("AI Goal", new Goal(new Vector((panel.getWidth() / 8.0) - 100, panel.getHeight() / 2.0, 0), panel.getHeight(), this));
+    }
 
     /**
      * The main logic loop for the game. Will be called depending on the rate of the logic thread.
@@ -72,6 +78,33 @@ public class PongGame extends Game {
     @Override
     public void loop () {
         super.loop();
+    }
+
+    /**
+     * Adds to the given player's score.
+     *
+     * @param target The player that gets 1 added to their score.
+     */
+    public void addScore (String target) {
+        if (target.equals("AI")) aiScore.incrementAndGet();
+        else if (target.equals("Player")) playerScore.incrementAndGet();
+    }
+
+    /**
+     * Serves the pong ball towards the given player.
+     *
+     * @param target The player that is 'serving' the ball.
+     */
+    public void serve (String target) {
+        double posY = new Random().nextDouble() * (panel.getHeight() / 4.0);
+        double velY = new Random().nextBoolean() ? 6.0 : -6.0;
+        if (velY < 0) posY += panel.getHeight() / 2.0;
+        GameObject ball = objects.get("Ball");
+        if (ball == null) return;
+        ball.getPos().setY(posY);
+        ball.getPos().setX(panel.getWidth() / 2.0);
+        ball.getVelocity().setY(velY);
+        ball.getVelocity().setX(target.equals("AI") ? 6.0 : -6.0);
     }
 
     /**

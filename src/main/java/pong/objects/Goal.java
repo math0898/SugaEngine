@@ -3,24 +3,34 @@ package pong.objects;
 import pong.PongGame;
 import sugaEngine.GameObject;
 import sugaEngine.graphics.flat.Graphics2d;
-import sugaEngine.physics.Collidable;
 import sugaEngine.physics.HitBox;
 import sugaEngine.physics.Vector;
 
 import java.awt.*;
 
-public class Ball extends GameObject {
+/**
+ * The goal is used to add points to the score of a player when the ball makes contact.
+ *
+ * @author Sugaku
+ */
+public class Goal extends GameObject {
+
+    /**
+     * A pointer to the PongGame instance which is used to add to scores and re-serve the ball.
+     */
+    private final PongGame game;
 
     /**
      * Creates a new Collidable object with the immutable property set to either true or false.
      *
-     * @param pos The starting position of the ball.
-     * @param vel The starting velocity of the ball.
+     * @param pos       The position of this goal.
+     * @param height    The height of the HitBox.
+     * @param game      The pong game instance.
      */
-    public Ball (Vector pos, Vector vel) {
-        super(false, 21, 21);
+    public Goal (Vector pos, double height, PongGame game) {
+        super(true, 200, height);
         this.pos = pos;
-        this.velocity = vel;
+        this.game = game;
     }
 
     /**
@@ -32,9 +42,7 @@ public class Ball extends GameObject {
      */
     @Override
     public void applyChanges (int width, int height, Graphics2d panel) {
-        Color c = PongGame.getPaused() ? Color.DARK_GRAY : Color.WHITE;
-        panel.setBigPixel((int) pos.getX() + 10, (int) pos.getY() + 10, 20, c);
-        if (PongGame.getDevMode()) drawHitBox(panel, Color.BLUE.brighter());
+        if (PongGame.getDevMode()) drawHitBox(panel, Color.MAGENTA);
     }
 
     /**
@@ -44,11 +52,12 @@ public class Ball extends GameObject {
      */
     @Override
     public void collision (HitBox obj) {
-        if (obj instanceof Collidable collided)
-            if (collided.getName().equals("Paddle")) {
-                velocity.scale(-1.0, 1.0, 1.0);
-                velocity.add(new Vector(velocity.getX() > 0 ? 0.2 : -0.2, 0, 0));
-            } else if (collided.getName().equals("Wall")) velocity.scale(1.0, -1.0, 1.0);
+        if (obj instanceof GameObject collided)
+            if (collided.getName().equals("Ball")) {
+                String target = collided.getVelocity().getX() > 0 ? "AI" : "Player";
+                game.addScore(target);
+                game.serve(target);
+            }
     }
 
     /**
@@ -68,6 +77,6 @@ public class Ball extends GameObject {
      */
     @Override
     public String getName () {
-        return "Ball";
+        return "Goal";
     }
 }
