@@ -92,6 +92,6 @@ public class Graphics2d extends GraphicsPanel {
      * @param c The color to set these pixels to.
      */
     public void setBigPixel (int x, int y, int r, Color c) {
-        setRectangle(x - r, y - r, r, r, c);
+        setRectangle(x - (r / 2), y - (r / 2), r, r, c);
     }
 }
