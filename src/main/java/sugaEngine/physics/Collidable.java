@@ -48,4 +48,11 @@ public abstract class Collidable extends HitBox {
      * @param obj The object that this collidable is touching.
      */
     public abstract void touch (HitBox obj);
+
+    /**
+     * Returns the name of this object for use during collisions.
+     *
+     * @return The name of this object.
+     */
+    public abstract String getName ();
 }

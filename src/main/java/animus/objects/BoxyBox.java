@@ -59,4 +59,14 @@ public class BoxyBox extends GameObject {
     public void touch (HitBox obj) {
 
     }
+
+    /**
+     * Returns the name of this object for use during collisions.
+     *
+     * @return The name of this object.
+     */
+    @Override
+    public String getName() {
+        return "Box";
+    }
 }
