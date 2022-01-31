@@ -26,6 +26,18 @@ public class Paddle extends GameObject {
     }
 
     /**
+     * Called every logic frame to run the logic on this GameObject.
+     */
+    @Override
+    public void runLogic () {
+        pos.add(velocity);
+        velocity.add(accel);
+        if (Math.abs(velocity.getY()) > 5.0) velocity.setY(velocity.getY() > 0 ? 5.0 : -5.0);
+        if (accel.getY() == 0 && velocity.magnitude() > 0.2) velocity.setY(velocity.getY() > 0 ? velocity.getY() - 0.2 : velocity.getY() + 0.2);
+        else if (accel.getY() == 0 && velocity.magnitude() <= 0.2) velocity.setY(0);
+    }
+
+    /**
      * Called every drawing frame so programs have a chance to make their voices heard on what gets drawn.
      *
      * @param width  The width of the pixel map.
@@ -47,7 +59,7 @@ public class Paddle extends GameObject {
      */
     @Override
     public void collision (HitBox obj) {
-        if (obj instanceof GameObject collided)
+        if (obj instanceof GameObject collided) {
             if (collided.getName().equals("Ball")) {
                 int x = (int) (collided.getVelocity().getX() > 0 ?
                         (int) (pos.getX() - (this.width / 2)) - (obj.getWidth() / 2) :
@@ -55,7 +67,11 @@ public class Paddle extends GameObject {
                 collided.getPos().setX(x);
                 collided.getVelocity().setY(obj.getPos().getY() - pos.getY());
                 collided.getVelocity().scale(1.0, 0.1, 1.0);
+            } else if (collided.getName().equals("Wall")) {
+                if (pos.getY() - collided.getPos().getY() > 0 && velocity.getY() < 0) velocity.setY(0);
+                else if (pos.getY() - collided.getPos().getY() < 0 && velocity.getY() > 0) velocity.setY(0);
             }
+        }
     }
 
     /**

@@ -3,24 +3,27 @@ package pong.objects;
 import pong.PongGame;
 import sugaEngine.GameObject;
 import sugaEngine.graphics.flat.Graphics2d;
-import sugaEngine.physics.Collidable;
 import sugaEngine.physics.HitBox;
 import sugaEngine.physics.Vector;
 
 import java.awt.*;
 
-public class Ball extends GameObject {
+/**
+ * Walls are used to prevent paddles from exiting the screen as well as preventing the ball from exiting the screen.
+ *
+ * @author Sugaku
+ */
+public class Wall extends GameObject {
 
     /**
      * Creates a new Collidable object with the immutable property set to either true or false.
      *
-     * @param pos The starting position of the ball.
-     * @param vel The starting velocity of the ball.
+     * @param width     The width of the HitBox.
+     * @param pos       The position of the wall object.
      */
-    public Ball (Vector pos, Vector vel) {
-        super(false, 21, 21);
+    public Wall (double width, Vector pos) {
+        super(true, width, 100);
         this.pos = pos;
-        this.velocity = vel;
     }
 
     /**
@@ -32,9 +35,7 @@ public class Ball extends GameObject {
      */
     @Override
     public void applyChanges (int width, int height, Graphics2d panel) {
-        Color c = PongGame.getPaused() ? Color.GRAY : Color.WHITE;
-        panel.setBigPixel((int) pos.getX() + 10, (int) pos.getY() + 10, 20, c);
-        if (PongGame.getDevMode()) drawHitBox(panel, Color.BLUE.brighter());
+        if (PongGame.getDevMode()) drawHitBox(panel, Color.GREEN);
     }
 
     /**
@@ -44,11 +45,7 @@ public class Ball extends GameObject {
      */
     @Override
     public void collision (HitBox obj) {
-        if (obj instanceof Collidable collided)
-            if (collided.getName().equals("Paddle")) {
-                velocity.scale(-1.0, 1.0, 1.0);
-                velocity.add(new Vector(velocity.getX() > 0 ? 0.2 : -0.2, 0, 0));
-            } else if (collided.getName().equals("Wall")) velocity.scale(1.0, -1.0, 1.0);
+
     }
 
     /**
@@ -68,6 +65,6 @@ public class Ball extends GameObject {
      */
     @Override
     public String getName () {
-        return "Ball";
+        return "Wall";
     }
 }

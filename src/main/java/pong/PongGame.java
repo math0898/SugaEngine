@@ -2,6 +2,7 @@ package pong;
 
 import pong.objects.Ball;
 import pong.objects.Paddle;
+import pong.objects.Wall;
 import pong.ui.DividingLine;
 import pong.ui.ScoreCounter;
 import sugaEngine.Game;
@@ -61,7 +62,9 @@ public class PongGame extends Game {
         addGameObject("AI Paddle", new Paddle(new Vector(panel.getWidth() / 8.0, panel.getHeight() / 2.0, 0)));
         addGameObject("Player Paddle", new Paddle(new Vector((panel.getWidth() * 7.0) / 8.0, panel.getHeight() / 2.0, 0)));
         addGameObject("Ball", new Ball(new Vector((panel.getWidth() * 3.0) / 4.0, panel.getHeight() / 2.0, 0), new Vector(-6.0, 0, 0)));
-    }
+        addGameObject("Wall1", new Wall(panel.getWidth(), new Vector(panel.getWidth() / 2.0, -50, 0)));
+        addGameObject("Wall2", new Wall(panel.getWidth(), new Vector(panel.getWidth() / 2.0,  panel.getHeight() + 49, 0)));
+    } // todo add serving system start by serving towards right.
 
     /**
      * The main logic loop for the game. Will be called depending on the rate of the logic thread.
@@ -103,8 +106,8 @@ public class PongGame extends Game {
                     aiScore.incrementAndGet();
                 }
                 case 73 -> devMode = !devMode; // I
-                case 38 -> objects.get("Player Paddle").getAccel().add(new Vector(0, -0.3, 0)); // UP ARROW
-                case 40 -> objects.get("Player Paddle").getAccel().add(new Vector(0, 0.3, 0)); // DOWN ARROW
+                case 38 -> objects.get("Player Paddle").getAccel().add(new Vector(0, -0.5, 0)); // UP ARROW
+                case 40 -> objects.get("Player Paddle").getAccel().add(new Vector(0, 0.5, 0)); // DOWN ARROW
             }
         }
         keys = keyListener.getKeysDepressed();
@@ -112,8 +115,8 @@ public class PongGame extends Game {
             int key = keys.pop();
             pressedKeys.remove((Integer) key);
             switch (key) {
-                case 38 -> objects.get("Player Paddle").getAccel().add(new Vector(0, 0.3, 0)); // UP ARROW
-                case 40 -> objects.get("Player Paddle").getAccel().add(new Vector(0, -0.3, 0)); // DOWN ARROW
+                case 38 -> objects.get("Player Paddle").getAccel().add(new Vector(0, 0.5, 0)); // UP ARROW
+                case 40 -> objects.get("Player Paddle").getAccel().add(new Vector(0, -0.5, 0)); // DOWN ARROW
             }
         }
     }
