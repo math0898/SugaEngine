@@ -24,7 +24,9 @@ public class PauseMenu implements DrawListener {
     @Override
     public void applyChanges (int width, int height, Graphics2d panel) {
         if (PongGame.getPaused()) {
-            panel.setBigPixel(width / 2, height / 2, 540, Color.DARK_GRAY);
+            for (int x = -60; x <= 60; x += 60)
+                for (int y = -240; y <= 240; y += 120)
+                    panel.setBigPixel((width / 2) + x, (height / 2) + y, 60, Color.DARK_GRAY);
         }
     }
 }

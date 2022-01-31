@@ -63,7 +63,7 @@ public class Paddle extends GameObject {
     @Override
     public void applyChanges (int width, int height, Graphics2d panel) {
         Color c = PongGame.getPaused() ? Color.DARK_GRAY : Color.WHITE;
-        for (int i = (int) Math.max(0, pos.getY() - 45); i <= pos.getY() + 45; i += 10)
+        for (int i = (int)  (pos.getY() - 45); i <= (int) (pos.getY() + 45); i += 10)
             panel.setBigPixel((int) pos.getX(), i, 10, c);
         if (PongGame.getDevMode()) drawHitBox(panel, Color.RED);
     }
@@ -84,8 +84,14 @@ public class Paddle extends GameObject {
                 collided.getVelocity().setY(obj.getPos().getY() - pos.getY());
                 collided.getVelocity().scale(1.0, 0.2, 1.0);
             } else if (collided.getName().equals("Wall")) {
-                if (pos.getY() - collided.getPos().getY() > 0 && velocity.getY() < 0) velocity.setY(0);
-                else if (pos.getY() - collided.getPos().getY() < 0 && velocity.getY() > 0) velocity.setY(0);
+                if (pos.getY() - collided.getPos().getY() > 0 && velocity.getY() < 0) {
+                    pos.setY(collided.getPos().getY() + (collided.getHeight() / 2.0) + (height / 2.0));
+                    velocity.setY(0);
+                }
+                else if (pos.getY() - collided.getPos().getY() < 0 && velocity.getY() > 0) {
+                    pos.setY(collided.getPos().getY() - (collided.getHeight() / 2.0) - (height / 2.0));
+                    velocity.setY(0);
+                }
             }
         }
     }

@@ -62,8 +62,8 @@ public class PongGame extends Game {
      */
     public PongGame (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
         super(panel, listener, mouseListener);
-        addDrawingListener(new PauseMenu());
         addDrawingListener(new DividingLine());
+        addDrawingListener(new PauseMenu());
         addDrawingListener(new ScoreCounter(playerScore, new Vector((panel.getWidth() * 3.0) / 8.0, panel.getHeight() / 32.0, 0)));
         addDrawingListener(new ScoreCounter(aiScore, new Vector((panel.getWidth() * 5.0) / 8.0, panel.getHeight() / 32.0, 0)));
         Paddle aiPaddle = new Paddle(new Vector(panel.getWidth() / 8.0, panel.getHeight() / 2.0, 0));
