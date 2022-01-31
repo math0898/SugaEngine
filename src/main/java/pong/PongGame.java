@@ -1,5 +1,6 @@
 package pong;
 
+import pong.objects.Paddle;
 import pong.ui.DividingLine;
 import pong.ui.ScoreCounter;
 import sugaEngine.Game;
@@ -32,12 +33,12 @@ public class PongGame extends Game {
     /**
      * The player score counter.
      */
-    private AtomicInteger playerScore = new AtomicInteger(0);
+    private final AtomicInteger playerScore = new AtomicInteger(0);
 
     /**
      * The AI score counter.
      */
-    private AtomicInteger aiScore = new AtomicInteger(0);
+    private final AtomicInteger aiScore = new AtomicInteger(0);
 
     /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
@@ -51,6 +52,8 @@ public class PongGame extends Game {
         addDrawingListener(new DividingLine());
         addDrawingListener(new ScoreCounter(playerScore, new Vector((panel.getWidth() * 3.0) / 8.0, panel.getHeight() / 32.0, 0)));
         addDrawingListener(new ScoreCounter(aiScore, new Vector((panel.getWidth() * 5.0) / 8.0, panel.getHeight() / 32.0, 0)));
+        addGameObject("Player Paddle", new Paddle(new Vector(panel.getWidth() / 8.0, panel.getHeight() / 2.0, 0)));
+        addGameObject("AI Paddle", new Paddle(new Vector((panel.getWidth() * 7.0) / 8.0, panel.getHeight() / 2.0, 0)));
     }
 
     /**
