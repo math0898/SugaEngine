@@ -16,6 +16,21 @@ import java.awt.*;
 public class Paddle extends GameObject {
 
     /**
+     * Max velocity of the paddle vertically.
+     */
+    public static final double MAX_PADDLE_SPEED = 8.0;
+
+    /**
+     * The inertia values of the paddle.
+     */
+    public static final double PADDLE_INERTIA_VALUES = 0.4;
+
+    /**
+     * The max acceleration value of the paddle.
+     */
+    public static final double PADDLE_ACCELERATION = 0.8;
+
+    /**
      * Creates a new Collidable object with the immutable property set to either true or false.
      *
      * @param pos The starting position of the Paddle.
@@ -32,9 +47,10 @@ public class Paddle extends GameObject {
     public void runLogic () {
         pos.add(velocity);
         velocity.add(accel);
-        if (Math.abs(velocity.getY()) > 5.0) velocity.setY(velocity.getY() > 0 ? 5.0 : -5.0);
-        if (accel.getY() == 0 && velocity.magnitude() > 0.2) velocity.setY(velocity.getY() > 0 ? velocity.getY() - 0.2 : velocity.getY() + 0.2);
-        else if (accel.getY() == 0 && velocity.magnitude() <= 0.2) velocity.setY(0);
+        if (Math.abs(velocity.getY()) > MAX_PADDLE_SPEED) velocity.setY(velocity.getY() > 0 ? MAX_PADDLE_SPEED : -1 * MAX_PADDLE_SPEED);
+        if (accel.getY() == 0 && velocity.magnitude() > PADDLE_INERTIA_VALUES)
+            velocity.setY(velocity.getY() > 0 ? velocity.getY() - PADDLE_INERTIA_VALUES : velocity.getY() + PADDLE_INERTIA_VALUES);
+        else if (accel.getY() == 0 && velocity.magnitude() <= PADDLE_INERTIA_VALUES) velocity.setY(0);
     }
 
     /**
