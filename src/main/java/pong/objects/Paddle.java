@@ -78,11 +78,11 @@ public class Paddle extends GameObject {
         if (obj instanceof GameObject collided) {
             if (collided.getName().equals("Ball")) {
                 int x = (int) (collided.getVelocity().getX() > 0 ?
-                        (int) (pos.getX() - (this.width / 2)) - (obj.getWidth() / 2) :
-                        (int) (pos.getX() + (this.width / 2)) + (obj.getWidth() / 2));
+                        (int) (pos.getX() + (this.width / 2)) + (obj.getWidth() / 2) :
+                        (int) (pos.getX() - (this.width / 2)) - (obj.getWidth() / 2));
                 collided.getPos().setX(x);
                 collided.getVelocity().setY(obj.getPos().getY() - pos.getY());
-                collided.getVelocity().scale(1.0, 0.1, 1.0);
+                collided.getVelocity().scale(1.0, 0.2, 1.0);
             } else if (collided.getName().equals("Wall")) {
                 if (pos.getY() - collided.getPos().getY() > 0 && velocity.getY() < 0) velocity.setY(0);
                 else if (pos.getY() - collided.getPos().getY() < 0 && velocity.getY() > 0) velocity.setY(0);

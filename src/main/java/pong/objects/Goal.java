@@ -54,9 +54,14 @@ public class Goal extends GameObject {
     public void collision (HitBox obj) {
         if (obj instanceof GameObject collided)
             if (collided.getName().equals("Ball")) {
-                String target = collided.getVelocity().getX() > 0 ? "AI" : "Player";
+                String target = collided.getVelocity().getX() < 0 ? "AI" : "Player";
+                try {
+                    Thread.sleep(1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 game.addScore(target);
-                game.serve(target);
+                game.serve(target); // For some reason this is getting raced to.
             }
     }
 

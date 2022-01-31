@@ -7,6 +7,7 @@ import pong.objects.Paddle;
 import pong.objects.Wall;
 import pong.ui.DividingLine;
 import pong.ui.ScoreCounter;
+import sugaEngine.AIAgent;
 import sugaEngine.Game;
 import sugaEngine.GameObject;
 import sugaEngine.input.GameKeyListener;
@@ -72,8 +73,8 @@ public class PongGame extends Game {
         addGameObject("Wall1", new Wall(panel.getWidth(), new Vector(panel.getWidth() / 2.0, -50, 0)));
         addGameObject("Wall2", new Wall(panel.getWidth(), new Vector(panel.getWidth() / 2.0,  panel.getHeight() + 49, 0)));
         addGameObject("Player Goal",
-                new Goal(new Vector(((panel.getWidth() * 7.0) / 8.0) + 100, panel.getHeight() / 2.0, 0), panel.getHeight(), this));
-        addGameObject("AI Goal", new Goal(new Vector((panel.getWidth() / 8.0) - 100, panel.getHeight() / 2.0, 0), panel.getHeight(), this));
+                new Goal(new Vector(((panel.getWidth() * 7.0) / 8.0) + 150, panel.getHeight() / 2.0, 0), panel.getHeight(), this));
+        addGameObject("AI Goal", new Goal(new Vector((panel.getWidth() / 8.0) - 150, panel.getHeight() / 2.0, 0), panel.getHeight(), this));
     }
 
     /**
@@ -81,7 +82,9 @@ public class PongGame extends Game {
      */
     @Override
     public void loop () {
-        super.loop();
+        physics.checkCollisions();
+        for (AIAgent a : agents) a.logic();
+        for (GameObject gO : objects.values()) gO.runLogic();
     }
 
     /**
@@ -108,7 +111,7 @@ public class PongGame extends Game {
         ball.getPos().setY(posY);
         ball.getPos().setX(panel.getWidth() / 2.0);
         ball.getVelocity().setY(velY);
-        ball.getVelocity().setX(target.equals("AI") ? 6.0 : -6.0);
+        ball.getVelocity().setX(target.equals("AI") ? -6.0 : 6.0);
     }
 
     /**
