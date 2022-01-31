@@ -141,7 +141,7 @@ public class PongGame extends Game {
                     GameLogicThread.setPaused(paused); // ESC
                 }
                 case 76 -> System.out.printf("Average fps: %.1f", GraphicsThread.getFPS()); // L
-                case 75 -> { // todo remove.
+                case (int) 'A' -> { // todo remove.
                     playerScore.incrementAndGet();
                     aiScore.incrementAndGet();
                 }
