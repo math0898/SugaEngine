@@ -1,5 +1,8 @@
 package sugaEngine.physics;
 
+import sugaEngine.graphics.flat.Graphics2d;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -101,5 +104,17 @@ public abstract class HitBox {
      */
     public Vector getPos () {
         return pos;
+    }
+
+    /**
+     * Draws the test points for this HitBox on the given 2dGraphics panel.
+     *
+     * @param panel The panel to draw the HitBox test points to.
+     */
+    public void drawTestPoints (Graphics2d panel) {
+        panel.setPixel((int) (pos.getX() + (width / 2.0)), (int) (pos.getY() + (height / 2.0)), Color.RED);
+        panel.setPixel((int) (pos.getX() + (width / 2.0)), (int) (pos.getY() - (height / 2.0)), Color.RED);
+        panel.setPixel((int) (pos.getX() - (width / 2.0)), (int) (pos.getY() + (height / 2.0)), Color.RED);
+        panel.setPixel((int) (pos.getX() - (width / 2.0)), (int) (pos.getY() - (height / 2.0)), Color.RED);
     }
 }
