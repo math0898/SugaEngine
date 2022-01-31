@@ -18,7 +18,7 @@ public class Ball extends GameObject {
      * @param vel The starting velocity of the ball.
      */
     public Ball (Vector pos, Vector vel) {
-        super(false, 21, 21);
+        super(false, 20, 20);
         this.pos = pos;
         this.velocity = vel;
     }
@@ -33,7 +33,7 @@ public class Ball extends GameObject {
     @Override
     public void applyChanges (int width, int height, Graphics2d panel) {
         Color c = PongGame.getPaused() ? Color.DARK_GRAY : Color.WHITE;
-        panel.setBigPixel((int) pos.getX() + 10, (int) pos.getY() + 10, 20, c);
+        panel.setBigPixel((int) pos.getX(), (int) pos.getY(), 20, c);
         if (PongGame.getDevMode()) drawHitBox(panel, Color.BLUE.brighter());
     }
 

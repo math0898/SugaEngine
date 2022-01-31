@@ -36,7 +36,7 @@ public class Paddle extends GameObject {
      * @param pos The starting position of the Paddle.
      */
     public Paddle (Vector pos) {
-        super(false, 11, 101);
+        super(false, 10, 100);
         this.pos = pos;
     }
 
@@ -63,8 +63,8 @@ public class Paddle extends GameObject {
     @Override
     public void applyChanges (int width, int height, Graphics2d panel) {
         Color c = PongGame.getPaused() ? Color.DARK_GRAY : Color.WHITE;
-        for (int i = (int) Math.max(0, pos.getY() - 40); i <= pos.getY() + 50; i++)
-            panel.setBigPixel((int) pos.getX() + 5, i, 10, c);
+        for (int i = (int) Math.max(0, pos.getY() - 45); i <= pos.getY() + 45; i += 5)
+            panel.setBigPixel((int) pos.getX(), i, 10, c);
         if (PongGame.getDevMode()) drawHitBox(panel, Color.RED);
     }
 
