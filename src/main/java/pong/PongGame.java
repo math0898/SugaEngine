@@ -41,6 +41,11 @@ public class PongGame extends Game {
     private final AtomicInteger aiScore = new AtomicInteger(0);
 
     /**
+     * Whether the game pong is currently in dev mode or not.
+     */
+    private static boolean devMode = false;
+
+    /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
      *
      * @param panel The panel that GameObjects should register as a listener to.
@@ -65,6 +70,15 @@ public class PongGame extends Game {
     }
 
     /**
+     * Returns whether this PongGame is in dev mode or not.
+     *
+     * @return True if Pong is in dev mode. Otherwise, false.
+     */
+    public static boolean getDevMode () {
+        return devMode;
+    }
+
+    /**
      * Processes inputs given by players. Is run during pause.
      */
     @Override
@@ -86,6 +100,7 @@ public class PongGame extends Game {
                     playerScore.incrementAndGet();
                     aiScore.incrementAndGet();
                 }
+                case 73 -> devMode = !devMode; // I
             }
         }
         keys = keyListener.getKeysDepressed();
