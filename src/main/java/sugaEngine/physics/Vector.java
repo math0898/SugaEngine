@@ -133,6 +133,17 @@ public class Vector {
     }
 
     /**
+     * Returns a new copy of the vector with the same data contained.
+     *
+     * @return A copy of this vector with the same values.
+     */
+    @SuppressWarnings("MethodDoesntCallSuperMethod") // clone () not supported.
+    @Override
+    public Vector clone () {
+        return new Vector(this.x, this.y, this.z);
+    }
+
+    /**
      * Returns the magnitude of the vector.
      *
      * @return The magnitude of the vector.
