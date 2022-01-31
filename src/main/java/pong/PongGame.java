@@ -58,8 +58,8 @@ public class PongGame extends Game {
         addDrawingListener(new DividingLine());
         addDrawingListener(new ScoreCounter(playerScore, new Vector((panel.getWidth() * 3.0) / 8.0, panel.getHeight() / 32.0, 0)));
         addDrawingListener(new ScoreCounter(aiScore, new Vector((panel.getWidth() * 5.0) / 8.0, panel.getHeight() / 32.0, 0)));
-        addGameObject("Player Paddle", new Paddle(new Vector(panel.getWidth() / 8.0, panel.getHeight() / 2.0, 0)));
-        addGameObject("AI Paddle", new Paddle(new Vector((panel.getWidth() * 7.0) / 8.0, panel.getHeight() / 2.0, 0)));
+        addGameObject("AI Paddle", new Paddle(new Vector(panel.getWidth() / 8.0, panel.getHeight() / 2.0, 0)));
+        addGameObject("Player Paddle", new Paddle(new Vector((panel.getWidth() * 7.0) / 8.0, panel.getHeight() / 2.0, 0)));
         addGameObject("Ball", new Ball(new Vector((panel.getWidth() * 3.0) / 4.0, panel.getHeight() / 2.0, 0), new Vector(-6.0, 0, 0)));
     }
 
@@ -98,17 +98,23 @@ public class PongGame extends Game {
                     GameLogicThread.setPaused(paused); // ESC
                 }
                 case 76 -> System.out.printf("Average fps: %.1f", GraphicsThread.getFPS()); // L
-                case 38 -> { // todo remove.
+                case 75 -> { // todo remove.
                     playerScore.incrementAndGet();
                     aiScore.incrementAndGet();
                 }
                 case 73 -> devMode = !devMode; // I
+                case 38 -> objects.get("Player Paddle").getAccel().add(new Vector(0, -0.3, 0)); // UP ARROW
+                case 40 -> objects.get("Player Paddle").getAccel().add(new Vector(0, 0.3, 0)); // DOWN ARROW
             }
         }
         keys = keyListener.getKeysDepressed();
         while (keys.size() > 0) {
             int key = keys.pop();
             pressedKeys.remove((Integer) key);
+            switch (key) {
+                case 38 -> objects.get("Player Paddle").getAccel().add(new Vector(0, 0.3, 0)); // UP ARROW
+                case 40 -> objects.get("Player Paddle").getAccel().add(new Vector(0, -0.3, 0)); // DOWN ARROW
+            }
         }
     }
 }

@@ -53,8 +53,8 @@ public class Paddle extends GameObject {
                         (int) (pos.getX() - (this.width / 2)) - (obj.getWidth() / 2) :
                         (int) (pos.getX() + (this.width / 2)) + (obj.getWidth() / 2));
                 collided.getPos().setX(x);
-                collided.getVelocity().setY(pos.getY() - obj.getPos().getY());
-                collided.getVelocity().scale(1.0, 0.1, 1.0); // todo cap vertical speed.
+                collided.getVelocity().setY(obj.getPos().getY() - pos.getY());
+                collided.getVelocity().scale(1.0, 0.1, 1.0);
             }
     }
 
