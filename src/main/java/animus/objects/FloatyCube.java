@@ -59,7 +59,17 @@ public class FloatyCube extends GameObject {
      * @param obj The object that this collidable is touching.
      */
     @Override
-    public void touch(HitBox obj) {
+    public void touch (HitBox obj) {
         velocity.scale(-1);
+    }
+
+    /**
+     * Returns the name of this object for use during collisions.
+     *
+     * @return The name of this object.
+     */
+    @Override
+    public String getName() {
+        return "Floaty Cube";
     }
 }
