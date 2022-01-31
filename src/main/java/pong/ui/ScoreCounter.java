@@ -58,7 +58,7 @@ public class ScoreCounter implements DrawListener {
         Vector origin = pos.clone();
         for (Integer i : digits) {
             drawDigit(panel, origin, i);
-            origin.add(new Vector(-41, 0, 0));
+            origin.add(new Vector(-40, 0, 0));
         }
     }
 
@@ -72,67 +72,67 @@ public class ScoreCounter implements DrawListener {
     public void drawDigit (Graphics2d panel, Vector origin, int digit) {
         switch (digit) {
             case 0 -> {
-                for (int x = -11; x <= 10; x += 10)
-                    for (int y = 11; y <= 51; y += 10) {
-                        if ((y > 11 && y < 50) && x == -1) continue;
+                for (int x = -10; x <= 10; x += 10)
+                    for (int y = 10; y <= 50; y += 10) {
+                        if ((y > 10 && y < 50) && x == 0) continue;
                         panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + y), 10, Color.WHITE);
                     }
             }
             case 1 -> {
-                for (int y = 11; y <= 51; y += 10) panel.setBigPixel((int) (origin.getX() - 1), (int) (origin.getY() + y), 10, Color.WHITE);
-                for (int x = -11; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 51), 10, Color.WHITE);
-                panel.setBigPixel((int) (origin.getX() - 11), (int) (origin.getY() + 21), 10, Color.WHITE);
+                for (int y = 10; y <= 50; y += 10) panel.setBigPixel((int) origin.getX(), (int) (origin.getY() + y), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 50), 10, Color.WHITE);
+                panel.setBigPixel((int) (origin.getX() - 10), (int) (origin.getY() + 20), 10, Color.WHITE);
             }
             case 2 -> {
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 11), 10, Color.WHITE);
-                panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + 21), 10, Color.WHITE);
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 31), 10, Color.WHITE);
-                panel.setBigPixel((int) (origin.getX() - 11), (int) (origin.getY() + 41), 10, Color.WHITE);
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 51), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 10), 10, Color.WHITE);
+                panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + 20), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 30), 10, Color.WHITE);
+                panel.setBigPixel((int) (origin.getX() - 10), (int) (origin.getY() + 40), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 50), 10, Color.WHITE);
             }
             case 3 -> {
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 11), 10, Color.WHITE);
-                panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + 21), 10, Color.WHITE);
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 31), 10, Color.WHITE);
-                panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + 41), 10, Color.WHITE);
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 51), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 10), 10, Color.WHITE);
+                panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + 20), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 30), 10, Color.WHITE);
+                panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + 40), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 50), 10, Color.WHITE);
             }
             case 4 -> {
-                for (int y = 11; y <= 51; y += 10) panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + y), 10, Color.WHITE);
-                for (int y = 11; y <= 31; y += 10) panel.setBigPixel((int) (origin.getX() - 11), (int) (origin.getY() + y), 10, Color.WHITE);
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 31), 10, Color.WHITE);
+                for (int y = 10; y <= 50; y += 10) panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + y), 10, Color.WHITE);
+                for (int y = 10; y <= 30; y += 10) panel.setBigPixel((int) (origin.getX() - 10), (int) (origin.getY() + y), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 30), 10, Color.WHITE);
             }
             case 5 -> {
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 11), 10, Color.WHITE);
-                panel.setBigPixel((int) (origin.getX() - 11), (int) (origin.getY() + 21), 10, Color.WHITE);
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 31), 10, Color.WHITE);
-                panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + 41), 10, Color.WHITE);
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 51), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 10), 10, Color.WHITE);
+                panel.setBigPixel((int) (origin.getX() - 10), (int) (origin.getY() + 20), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 30), 10, Color.WHITE);
+                panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + 40), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 50), 10, Color.WHITE);
             }
             case 6 -> {
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 11), 10, Color.WHITE);
-                panel.setBigPixel((int) (origin.getX() - 11), (int) (origin.getY() + 21), 10, Color.WHITE);
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 31), 10, Color.WHITE);
-                panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + 41), 10, Color.WHITE);
-                panel.setBigPixel((int) (origin.getX() - 11), (int) (origin.getY() + 41), 10, Color.WHITE);
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 51), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 10), 10, Color.WHITE);
+                panel.setBigPixel((int) (origin.getX() - 10), (int) (origin.getY() + 20), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 30), 10, Color.WHITE);
+                panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + 40), 10, Color.WHITE);
+                panel.setBigPixel((int) (origin.getX() - 10), (int) (origin.getY() + 40), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 50), 10, Color.WHITE);
             }
             case 7 -> {
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 11), 10, Color.WHITE);
-                for (int y = 11; y <= 51; y++) panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + y), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 10), 10, Color.WHITE);
+                for (int y = 10; y <= 50; y += 10) panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + y), 10, Color.WHITE);
             }
             case 8 -> {
-                for (int x = -11; x <= 10; x += 10)
-                    for (int y = 11; y <= 51; y += 10) {
-                        if ((y == 21 || y == 41) && x == -1) continue;
+                for (int x = -10; x <= 10; x += 10)
+                    for (int y = 10; y <= 50; y += 10) {
+                        if ((y == 20 || y == 40) && x == 0) continue;
                         panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + y), 10, Color.WHITE);
                     }
             }
             case 9 -> {
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 11), 10, Color.WHITE);
-                for (int x = -11; x <= 10; x++) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 31), 10, Color.WHITE);
-                panel.setBigPixel((int) (origin.getX() - 11), (int) (origin.getY() + 21), 10, Color.WHITE);
-                for (int y = 11; y <= 51; y++) panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + y), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 10), 10, Color.WHITE);
+                for (int x = -10; x <= 10; x += 10) panel.setBigPixel((int) (origin.getX() + x), (int) (origin.getY() + 30), 10, Color.WHITE);
+                panel.setBigPixel((int) (origin.getX() - 10), (int) (origin.getY() + 20), 10, Color.WHITE);
+                for (int y = 10; y <= 50; y += 10) panel.setBigPixel((int) (origin.getX() + 10), (int) (origin.getY() + y), 10, Color.WHITE);
             }
         }
     }
