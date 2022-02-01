@@ -165,4 +165,13 @@ public abstract class Game {
     public GraphicsPanel getPanel () {
         return panel;
     }
+
+    /**
+     * Accessor method for the mouse listener used by the server.
+     *
+     * @return The mouse listener used by the server.
+     */
+    public GameMouseListener getMouseListener () {
+        return mouseListener;
+    }
 }
