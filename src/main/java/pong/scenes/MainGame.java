@@ -22,6 +22,11 @@ import sugaEngine.physics.Vector;
 public class MainGame extends Scene {
 
     /**
+     * The pause screen instance.
+     */
+    private PauseMenu pauseScreen;
+
+    /**
      * Loads this scene into the given game.
      *
      * @param game The game to load this scene into.
@@ -46,7 +51,17 @@ public class MainGame extends Scene {
                 new Goal(new Vector(((panel.getWidth() * 7.0) / 8.0) + 150, panel.getHeight() / 2.0, 0), panel.getHeight(), (PongGame) game));
         game.addGameObject("AI Goal",
                 new Goal(new Vector((panel.getWidth() / 8.0) - 150, panel.getHeight() / 2.0, 0), panel.getHeight(), (PongGame) game));
-        game.addDrawingListener(new PauseMenu(game.getMouseListener()));
+        pauseScreen = new PauseMenu(game.getMouseListener());
+        game.addDrawingListener(pauseScreen);
         return true;
+    }
+
+    /**
+     * Accessor method for the pause screen.
+     *
+     * @return The pause screen instance for this scene.
+     */
+    public PauseMenu getPauseScreen () {
+        return pauseScreen;
     }
 }

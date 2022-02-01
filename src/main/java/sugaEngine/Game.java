@@ -87,6 +87,16 @@ public abstract class Game {
     }
 
     /**
+     * Setter method for whether this game is paused or not. This pause state is separate from the GameLogicThread
+     * pause.
+     *
+     * @param val The new value for whether the game is paused or not.
+     */
+    public static void setPaused (boolean val) {
+        paused = val;
+    }
+
+    /**
      * The main logic loop for the game. Will be called depending on the rate of the logic thread.
      */
     public void loop () {

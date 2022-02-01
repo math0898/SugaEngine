@@ -22,7 +22,7 @@ public class GameLogicThread extends Thread {
     /**
      * Whether to exit the thread.
      */
-    private boolean stopped = false; // todo add method to modify.
+    private static boolean stopped = false;
 
     /**
      * Whether to simulate game logic or not.
@@ -61,6 +61,15 @@ public class GameLogicThread extends Thread {
      */
     public static boolean getPaused () {
         return paused;
+    }
+
+    /**
+     * Sets whether the logic thread is stopped or not.
+     *
+     * @param val whether the logic thread should be paused or not.
+     */
+    public static void setStopped (boolean val) {
+        stopped = val;
     }
 
     /**

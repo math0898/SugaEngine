@@ -8,15 +8,13 @@ import sugaEngine.GameObject;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.graphics.GraphicsPanel;
+import sugaEngine.input.KeyValues;
 import sugaEngine.physics.Vector;
 import sugaEngine.threads.GameLogicThread;
 import sugaEngine.threads.GraphicsThread;
 
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
@@ -35,12 +33,12 @@ public class PongGame extends Game {
     /**
      * The player score counter.
      */
-    private final AtomicInteger playerScore = new AtomicInteger(0);
+    private AtomicInteger playerScore = new AtomicInteger(0);
 
     /**
      * The AI score counter.
      */
-    private final AtomicInteger aiScore = new AtomicInteger(0);
+    private AtomicInteger aiScore = new AtomicInteger(0);
 
     /**
      * Whether the game pong is currently in dev mode or not.
@@ -89,6 +87,16 @@ public class PongGame extends Game {
     }
 
     /**
+     * Clears all AIAgents, physics managers, GameObjects, and PanelListeners.
+     */
+    @Override
+    public void clear () {
+        super.clear();
+        playerScore = new AtomicInteger(0);
+        aiScore = new AtomicInteger(0);
+    }
+
+    /**
      * Adds to the given player's score.
      *
      * @param target The player that gets 1 added to their score.
@@ -130,7 +138,13 @@ public class PongGame extends Game {
     @Override
     public void processInput () {
         Stack<MouseEvent> mice = mouseListener.getEvents();
-        while (mice.size() > 0) mice.pop();
+        while (mice.size() > 0) {
+            MouseEvent e = mice.pop();
+            if (paused)
+                if (e.getButton() == 1)
+                    if (loadedScene instanceof MainGame scene)
+                        scene.getPauseScreen().enter(this);
+        }
         Stack<Integer> keys = keyListener.getKeysPressed();
         while (keys.size() > 0) {
             int key = keys.pop();
@@ -152,8 +166,23 @@ public class PongGame extends Game {
             int key = keys.pop();
             pressedKeys.remove((Integer) key);
             switch (key) {
-                case 38 -> objects.get("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0)); // UP ARROW
-                case 40 -> objects.get("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0)); // DOWN ARROW
+                case 38 -> {
+                    objects.get("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0)); // UP ARROW
+                    if (paused)
+                        if (loadedScene instanceof MainGame scene)
+                            scene.getPauseScreen().move(KeyValues.ARROW_UP);
+                }
+                case 40 -> {
+                    objects.get("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0)); // DOWN ARROW
+                    if (paused)
+                        if (loadedScene instanceof MainGame scene)
+                            scene.getPauseScreen().move(KeyValues.ARROW_DOWN);
+                }
+                case 10 -> { // ENTER
+                    if (paused)
+                        if (loadedScene instanceof MainGame scene)
+                            scene.getPauseScreen().enter(this);
+                }
             }
         }
     }

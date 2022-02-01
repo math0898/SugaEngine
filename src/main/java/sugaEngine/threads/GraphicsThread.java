@@ -2,6 +2,10 @@ package sugaEngine.threads;
 
 import javax.swing.*;
 
+import java.awt.event.WindowEvent;
+
+import static main.Main.frame;
+
 /**
  * A thread used to refresh the graphics of a panel as fast as possible.
  *
@@ -17,7 +21,7 @@ public class GraphicsThread extends Thread {
     /**
      * Whether to exit the thread.
      */
-    private boolean stop = false;
+    private static boolean stop = false;
 
     /**
      * The last time that the graphics running finished.
@@ -54,7 +58,7 @@ public class GraphicsThread extends Thread {
      *
      * @param val Whether the graphics thread should be stopped.
      */
-    public void setStopped (boolean val) {
+    public static void setStopped (boolean val) {
         stop = val;
     }
 
@@ -77,6 +81,7 @@ public class GraphicsThread extends Thread {
             panel.repaint();
             frames++;
         }
+        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     }
 
     /**

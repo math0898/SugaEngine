@@ -1,3 +1,5 @@
+package main;
+
 import pong.PongGame;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
@@ -16,6 +18,11 @@ import java.awt.*;
 public class Main {
 
     /**
+     * The frame that this is being run in.
+     */
+    public static JFrame frame;
+
+    /**
      * Runs the testing program for the graphics engine.
      *
      * @param args The arguments given to the java program.
@@ -23,7 +30,7 @@ public class Main {
     public static void main (String[] args) {
         Graphics2d panel = new Graphics2d();
         panel.setBackground(Color.BLACK);
-        JFrame frame = new JFrame("SugaEngine - PONG");
+        frame = new JFrame("SugaEngine - PONG");
         Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
         frame.setSize(size.width, size.height);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

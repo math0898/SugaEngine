@@ -1,9 +1,13 @@
 package pong.ui;
 
 import pong.PongGame;
+import sugaEngine.Game;
 import sugaEngine.graphics.flat.DrawListener;
 import sugaEngine.graphics.flat.Graphics2d;
 import sugaEngine.input.GameMouseListener;
+import sugaEngine.input.KeyValues;
+import sugaEngine.threads.GameLogicThread;
+import sugaEngine.threads.GraphicsThread;
 
 import java.awt.*;
 
@@ -13,7 +17,7 @@ import java.awt.*;
  *
  * @author Sugaku
  */
-public class PauseMenu implements DrawListener { // todo add changing highlighted based on arrow keys. Add triggers to clicks and enter.
+public class PauseMenu implements DrawListener {
 
     /**
      * The mouse listener being used to highlight active elements of the PauseMenu and get when the player clicks on an
@@ -65,6 +69,33 @@ public class PauseMenu implements DrawListener { // todo add changing highlighte
     }
 
     /**
+     * Called by the game whenever enter or click is called.
+     *
+     * @param game Sometimes scenes need to be loaded from this method. Hence, the need to pass the game instance.
+     */
+    public void enter (Game game) {
+        if (PongGame.getPaused()) {
+            switch (highlighted) {
+                case CONTINUE -> {
+                    PongGame.setPaused(false);
+                    GameLogicThread.setPaused(false);
+                }
+                case RESTART -> {
+                    PongGame.setPaused(false);
+                    GameLogicThread.setPaused(false);
+                    game.loadScene("Main Game");
+                }
+                case SETTINGS -> game.loadScene("Settings");
+                case MAIN_MENU -> game.loadScene("Main Menu");
+                case QUIT -> {
+                    GraphicsThread.setStopped(true);
+                    GameLogicThread.setStopped(true);
+                }
+            }
+        }
+    }
+
+    /**
      * Creates a new PauseMenu instance with the given GameMouseListener.
      *
      * @param mouseListener The mouse listener that will be associated with this PauseMenu.
@@ -89,6 +120,31 @@ public class PauseMenu implements DrawListener { // todo add changing highlighte
         else if (lastPos.y <= height + 42) highlighted = MenuOptions.SETTINGS;
         else if (lastPos.y <= height + 162) highlighted = MenuOptions.MAIN_MENU;
         else highlighted = MenuOptions.QUIT;
+    }
+
+    /**
+     * Moves the currently highlighted menu option up or down depending on the value given.
+     *
+     * @param input The key that was pressed to move the menu selection.
+     */
+    public void move (KeyValues input) {
+        if (input == KeyValues.ARROW_DOWN) {
+            switch (highlighted) {
+                case QUIT -> highlighted = MenuOptions.CONTINUE;
+                case CONTINUE -> highlighted = MenuOptions.RESTART;
+                case RESTART -> highlighted = MenuOptions.SETTINGS;
+                case SETTINGS -> highlighted = MenuOptions.MAIN_MENU;
+                case MAIN_MENU -> highlighted = MenuOptions.QUIT;
+            }
+        } else if (input == KeyValues.ARROW_UP) {
+            switch (highlighted) {
+                case RESTART -> highlighted = MenuOptions.CONTINUE;
+                case SETTINGS -> highlighted = MenuOptions.RESTART;
+                case MAIN_MENU -> highlighted = MenuOptions.SETTINGS;
+                case QUIT -> highlighted = MenuOptions.MAIN_MENU;
+                case CONTINUE -> highlighted = MenuOptions.QUIT;
+            }
+        }
     }
 
     /**
