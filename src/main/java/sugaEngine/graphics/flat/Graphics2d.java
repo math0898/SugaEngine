@@ -1,6 +1,7 @@
 package sugaEngine.graphics.flat;
 
 import sugaEngine.graphics.GraphicsPanel;
+import sugaEngine.threads.GraphicsThread;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -69,6 +70,7 @@ public class Graphics2d extends GraphicsPanel {
         }
         updatePoints = new ArrayList<>();
         images = new ArrayList<>();
+        GraphicsThread.frames++;
     }
 
     /**

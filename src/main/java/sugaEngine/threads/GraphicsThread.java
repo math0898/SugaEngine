@@ -36,7 +36,7 @@ public class GraphicsThread extends Thread {
     /**
      * The number of frames that have been rendered since the thread started.
      */
-    private static long frames = 0;
+    public static long frames = 0;
 
     /**
      * The target frame rate for this GraphicsThread.
@@ -79,7 +79,6 @@ public class GraphicsThread extends Thread {
             }
             lastFinished = System.currentTimeMillis();
             panel.repaint();
-            frames++;
         }
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     }
