@@ -141,4 +141,13 @@ public abstract class Game {
         }
         return false;
     }
+
+    /**
+     * Accessor method for the graphics panel used by the server.
+     *
+     * @return The panel used by the server.
+     */
+    public GraphicsPanel getPanel () {
+        return panel;
+    }
 }
