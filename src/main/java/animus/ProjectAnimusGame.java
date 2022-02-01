@@ -6,7 +6,7 @@ import animus.objects.PlayerCharacter;
 import sugaEngine.Game;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
-import sugaEngine.MusicPlayer;
+import sugaEngine.sound.SoundManager;
 import sugaEngine.physics.Vector;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.threads.GameLogicThread;
@@ -33,7 +33,7 @@ public class ProjectAnimusGame extends Game {
     /**
      * The music player for the ProjectAnimusGame.
      */
-    MusicPlayer musicPlayer;
+    SoundManager<AnimusSoundEffects> soundManager = new SoundManager<>();
 
     /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
@@ -44,7 +44,8 @@ public class ProjectAnimusGame extends Game {
      */
     public ProjectAnimusGame (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
         super(panel, listener, mouseListener);
-        musicPlayer = new MusicPlayer("/media/music/Itro & Tobu - Cloud 9.wav");
+//        soundManager = new SoundManager("/media/music/Itro & Tobu - Cloud 9.wav");
+        soundManager.play(AnimusSoundEffects.TEST_EFFECT);
         panel.registerListener(new GameUI());
         addGameObject("Floaty Cube", new FloatyCube());
         addGameObject("Boxy Box", new BoxyBox(new Vector(540, 100, 0), 50, 50, Color.GREEN.darker().darker().darker()));
@@ -75,8 +76,8 @@ public class ProjectAnimusGame extends Game {
             switch (key) {
                 case 27 -> { // ESC
                     boolean paused = GameLogicThread.getPaused();
-                    if (paused) musicPlayer.setVolume(1.0f);
-                    else musicPlayer.setVolume(-0.5f);
+//                    if (paused) soundManager.setVolume(1.0f);
+//                    else soundManager.setVolume(-0.5f);
                     GameLogicThread.setPaused(!GameLogicThread.getPaused());
                 }
                 case 40 -> objects.get("Floaty Cube").getAccel().add(new Vector(0, 0.1, 0)); // UP ARROW

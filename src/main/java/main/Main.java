@@ -1,3 +1,6 @@
+package main;
+
+import animus.ProjectAnimusGame;
 import pong.PongGame;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
@@ -31,6 +34,6 @@ public class Main {
         frame.setUndecorated(true);
         frame.setVisible(true);
         new GraphicsThread(panel, 60).start();
-        new GameLogicThread(new PongGame(panel, new GameKeyListener(frame), new GameMouseListener(frame)), 60).start();
+        new GameLogicThread(new ProjectAnimusGame(panel, new GameKeyListener(frame), new GameMouseListener(frame)), 60).start();
     }
 }
