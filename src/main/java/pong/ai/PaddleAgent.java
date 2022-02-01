@@ -4,6 +4,11 @@ import pong.objects.Paddle;
 import sugaEngine.AIAgent;
 import sugaEngine.GameObject;
 
+/**
+ * Wobbly boi.
+ *
+ * @author Sugaku
+ */
 public class PaddleAgent extends AIAgent {
 
     /**
