@@ -31,8 +31,8 @@ public class MainGame extends Scene {
     public boolean load (Game game) {
         game.clear();
         game.addDrawingListener(new DividingLine());
-        game.addDrawingListener(new PauseMenu());
-        Graphics2d panel = game.getPanel();
+        game.addDrawingListener(new PauseMenu(game.getMouseListener()));
+        Graphics2d panel = (Graphics2d) game.getPanel();
         game.addDrawingListener(new ScoreCounter(((PongGame) game).getPlayerScorer(), new Vector((panel.getWidth() * 3.0) / 8.0, panel.getHeight() / 32.0, 0)));
         game.addDrawingListener(new ScoreCounter(((PongGame) game).getAiScorer(), new Vector((panel.getWidth() * 5.0) / 8.0, panel.getHeight() / 32.0, 0)));
         Paddle aiPaddle = new Paddle(new Vector(panel.getWidth() / 8.0, panel.getHeight() / 2.0, 0));

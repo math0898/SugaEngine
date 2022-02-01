@@ -3,6 +3,7 @@ package pong.ui;
 import pong.PongGame;
 import sugaEngine.graphics.flat.DrawListener;
 import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.input.GameMouseListener;
 
 /**
  * The PauseMenu is used by players to restart the game, exit pong, return to main menu, or to resume the game. Should
@@ -11,6 +12,21 @@ import sugaEngine.graphics.flat.Graphics2d;
  * @author Sugaku
  */
 public class PauseMenu implements DrawListener {
+
+    /**
+     * The mouse listener being used to highlight active elements of the PauseMenu and get when the player clicks on an
+     * element.
+     */
+    private GameMouseListener mouseListener;
+
+    /**
+     * Creates a new PauseMenu instance with the given GameMouseListener.
+     *
+     * @param mouseListener The mouse listener that will be associated with this PauseMenu.
+     */
+    public PauseMenu (GameMouseListener mouseListener) {
+        this.mouseListener = mouseListener;
+    }
 
     /**
      * Called every drawing frame so programs have a chance to make their voices heard on what gets drawn.
