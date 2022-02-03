@@ -57,7 +57,7 @@ public class ScoreCounter implements DrawListener {
         Vector origin = pos.clone();
         for (Integer i : digits) {
             drawDigit(panel, origin, i);
-            origin.add(new Vector(-40, 4, 0));
+            origin.add(new Vector(-40, 0, 0));
         }
     }
 
