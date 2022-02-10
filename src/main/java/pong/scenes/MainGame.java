@@ -11,7 +11,7 @@ import pong.ui.PauseMenu;
 import pong.ui.ScoreCounter;
 import sugaEngine.Game;
 import sugaEngine.Scene;
-import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.graphics.Graphics2d;
 import sugaEngine.physics.Vector;
 
 /**
@@ -39,19 +39,19 @@ public class MainGame extends Scene {
         Graphics2d panel = (Graphics2d) game.getPanel();
         game.addDrawingListener(new ScoreCounter(((PongGame) game).getPlayerScorer(), new Vector((panel.getWidth() * 3.0) / 8.0, panel.getHeight() / 32.0, 0)));
         game.addDrawingListener(new ScoreCounter(((PongGame) game).getAiScorer(), new Vector((panel.getWidth() * 5.0) / 8.0, panel.getHeight() / 32.0, 0)));
-        Paddle aiPaddle = new Paddle(new Vector(panel.getWidth() / 8.0, panel.getHeight() / 2.0, 0));
-        Ball ball = new Ball(new Vector((panel.getWidth() * 3.0) / 4.0, panel.getHeight() / 2.0, 0), new Vector(-6.0, 0, 0));
+        Paddle aiPaddle = new Paddle(new Vector(panel.getWidth() / 8.0, panel.getHeight() / 2.0, 0), game);
+        Ball ball = new Ball(new Vector((panel.getWidth() * 3.0) / 4.0, panel.getHeight() / 2.0, 0), new Vector(-6.0, 0, 0), game);
         game.addGameObject("Ball", ball);
         game.addGameObject("AI Paddle", aiPaddle);
         game.addAgent(new PaddleAgent(aiPaddle, ball));
-        game.addGameObject("Player Paddle", new Paddle(new Vector((panel.getWidth() * 7.0) / 8.0, panel.getHeight() / 2.0, 0)));
-        game.addGameObject("Wall1", new Wall(panel.getWidth(), new Vector(panel.getWidth() / 2.0, -50, 0)));
-        game.addGameObject("Wall2", new Wall(panel.getWidth(), new Vector(panel.getWidth() / 2.0,  panel.getHeight() + 49, 0)));
+        game.addGameObject("Player Paddle", new Paddle(new Vector((panel.getWidth() * 7.0) / 8.0, panel.getHeight() / 2.0, 0), game));
+        game.addGameObject("Wall1", new Wall(panel.getWidth(), new Vector(panel.getWidth() / 2.0, -50, 0), game));
+        game.addGameObject("Wall2", new Wall(panel.getWidth(), new Vector(panel.getWidth() / 2.0,  panel.getHeight() + 49, 0), game));
         game.addGameObject("Player Goal",
                 new Goal(new Vector(((panel.getWidth() * 7.0) / 8.0) + 150, panel.getHeight() / 2.0, 0), panel.getHeight(), (PongGame) game));
         game.addGameObject("AI Goal",
                 new Goal(new Vector((panel.getWidth() / 8.0) - 150, panel.getHeight() / 2.0, 0), panel.getHeight(), (PongGame) game));
-        pauseScreen = new PauseMenu(game.getMouseListener());
+        pauseScreen = new PauseMenu(game.getMouseListener(), game);
         game.addDrawingListener(pauseScreen);
         return true;
     }

@@ -1,7 +1,7 @@
 package animus.objects;
 
 import sugaEngine.GameObject;
-import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.physics.HitBox;
 import sugaEngine.physics.Vector;
 
@@ -55,7 +55,7 @@ public class PlayerCharacter extends GameObject {
      * @param panel  The panel to apply changes to.
      */
     @Override
-    public void applyChanges (int width, int height, Graphics2d panel) {
+    public void applyChanges (int width, int height, GraphicsPanel panel) {
         panel.setRectangle((int) pos.getX() - (int) (this.width / 2), (int) pos.getY() - (int) (this.height / 2), (int) this.width, (int) this.height, Color.decode("#288654"));
     }
 

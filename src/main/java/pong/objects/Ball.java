@@ -1,24 +1,25 @@
 package pong.objects;
 
 import pong.PongGame;
-import sugaEngine.GameObject;
-import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.Game;
+import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.physics.Collidable;
 import sugaEngine.physics.HitBox;
 import sugaEngine.physics.Vector;
 
 import java.awt.*;
 
-public class Ball extends GameObject {
+public class Ball extends PongGameObject {
 
     /**
      * Creates a new Collidable object with the immutable property set to either true or false.
      *
      * @param pos The starting position of the ball.
      * @param vel The starting velocity of the ball.
+     * @param game The game that this ball belongs to.
      */
-    public Ball (Vector pos, Vector vel) {
-        super(false, 20, 20);
+    public Ball (Vector pos, Vector vel, Game game) {
+        super(false, 20, 20, game);
         this.pos = pos;
         this.velocity = vel;
     }
@@ -31,8 +32,8 @@ public class Ball extends GameObject {
      * @param panel  The panel to apply changes to.
      */
     @Override
-    public void applyChanges (int width, int height, Graphics2d panel) {
-        Color c = PongGame.getPaused() ? Color.DARK_GRAY : Color.WHITE;
+    public void applyChanges (int width, int height, GraphicsPanel panel) {
+        Color c = game.getThread().getPaused() ? Color.DARK_GRAY : Color.WHITE;
         panel.setBigPixel((int) pos.getX(), (int) pos.getY(), 20, c);
         if (PongGame.getDevMode()) drawHitBox(panel, Color.BLUE.brighter());
     }

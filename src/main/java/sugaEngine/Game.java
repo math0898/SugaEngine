@@ -1,10 +1,11 @@
 package sugaEngine;
 
 import sugaEngine.graphics.GraphicsPanel;
-import sugaEngine.graphics.flat.DrawListener;
+import sugaEngine.graphics.DrawListener;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.physics.PhysicsEngine;
+import sugaEngine.threads.SugaThread;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,9 +60,9 @@ public abstract class Game {
     protected GameMouseListener mouseListener;
 
     /**
-     * A boolean representing whether the PongGame is paused or not.
+     * The thread that is currently running this Game. May be null in some cases.
      */
-    protected static boolean paused;
+    protected SugaThread thread = null;
 
     /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
@@ -77,23 +78,22 @@ public abstract class Game {
     }
 
     /**
-     * Accessor method for whether this game is paused or not. This pause state is separate from the GameLogicThread
-     * pause.
+     * Sets the thread that is calling loop() on this Game.
      *
-     * @return Whether this game is paused or not.
+     * @param thread The thread that will be calling loop() on this object.
      */
-    public static boolean getPaused () {
-        return paused;
+    public final void setThread (SugaThread thread) {
+        this.thread = thread;
     }
 
     /**
-     * Setter method for whether this game is paused or not. This pause state is separate from the GameLogicThread
-     * pause.
+     * Accessor method for the thread that is calling loop(). This can be used to determine whether the game has stopped
+     * or paused.
      *
-     * @param val The new value for whether the game is paused or not.
+     * @return The thread that is running this game instance.
      */
-    public static void setPaused (boolean val) {
-        paused = val;
+    public final SugaThread getThread () {
+        return thread;
     }
 
     /**

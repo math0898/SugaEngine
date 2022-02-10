@@ -10,7 +10,6 @@ import sugaEngine.input.GameMouseListener;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.input.KeyValues;
 import sugaEngine.physics.Vector;
-import sugaEngine.threads.GameLogicThread;
 import sugaEngine.threads.GraphicsThread;
 
 import java.awt.event.MouseEvent;
@@ -140,7 +139,7 @@ public class PongGame extends Game {
         Stack<MouseEvent> mice = mouseListener.getEvents();
         while (mice.size() > 0) {
             MouseEvent e = mice.pop();
-            if (paused)
+            if (thread.getPaused())
                 if (e.getButton() == 1)
                     if (loadedScene instanceof MainGame scene)
                         scene.getPauseScreen().enter(this);
@@ -151,10 +150,7 @@ public class PongGame extends Game {
             if (pressedKeys.contains(key)) continue;
             pressedKeys.add(key);
             switch (key) {
-                case 27 -> {
-                    paused = !paused;
-                    GameLogicThread.setPaused(paused); // ESC
-                }
+                case 27 -> thread.setPaused(true); // ESC
                 case 76 -> System.out.printf("Average fps: %.1f\n", GraphicsThread.getFPS()); // L
                 case 73 -> devMode = !devMode; // I
                 case 38 -> objects.get("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0)); // UP ARROW
@@ -168,18 +164,18 @@ public class PongGame extends Game {
             switch (key) {
                 case 38 -> {
                     objects.get("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0)); // UP ARROW
-                    if (paused)
+                    if (thread.getPaused())
                         if (loadedScene instanceof MainGame scene)
                             scene.getPauseScreen().move(KeyValues.ARROW_UP);
                 }
                 case 40 -> {
                     objects.get("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0)); // DOWN ARROW
-                    if (paused)
+                    if (thread.getPaused())
                         if (loadedScene instanceof MainGame scene)
                             scene.getPauseScreen().move(KeyValues.ARROW_DOWN);
                 }
                 case 10 -> { // ENTER
-                    if (paused)
+                    if (thread.getPaused())
                         if (loadedScene instanceof MainGame scene)
                             scene.getPauseScreen().enter(this);
                 }

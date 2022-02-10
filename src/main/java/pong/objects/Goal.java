@@ -2,7 +2,7 @@ package pong.objects;
 
 import pong.PongGame;
 import sugaEngine.GameObject;
-import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.physics.HitBox;
 import sugaEngine.physics.Vector;
 
@@ -13,7 +13,7 @@ import java.awt.*;
  *
  * @author Sugaku
  */
-public class Goal extends GameObject {
+public class Goal extends PongGameObject {
 
     /**
      * A pointer to the PongGame instance which is used to add to scores and re-serve the ball.
@@ -28,7 +28,7 @@ public class Goal extends GameObject {
      * @param game      The pong game instance.
      */
     public Goal (Vector pos, double height, PongGame game) {
-        super(true, 200, height);
+        super(true, 200, height, game);
         this.pos = pos;
         this.game = game;
     }
@@ -41,7 +41,7 @@ public class Goal extends GameObject {
      * @param panel  The panel to apply changes to.
      */
     @Override
-    public void applyChanges (int width, int height, Graphics2d panel) {
+    public void applyChanges (int width, int height, GraphicsPanel panel) {
         if (PongGame.getDevMode()) drawHitBox(panel, Color.MAGENTA);
     }
 

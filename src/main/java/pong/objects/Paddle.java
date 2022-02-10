@@ -1,8 +1,9 @@
 package pong.objects;
 
 import pong.PongGame;
+import sugaEngine.Game;
 import sugaEngine.GameObject;
-import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.physics.HitBox;
 import sugaEngine.physics.Vector;
 
@@ -13,7 +14,7 @@ import java.awt.*;
  *
  * @author Sugaku
  */
-public class Paddle extends GameObject {
+public class Paddle extends PongGameObject {
 
     /**
      * Max velocity of the paddle vertically.
@@ -34,9 +35,10 @@ public class Paddle extends GameObject {
      * Creates a new Collidable object with the immutable property set to either true or false.
      *
      * @param pos The starting position of the Paddle.
+     * @param game The game that this paddle belongs to.
      */
-    public Paddle (Vector pos) {
-        super(false, 10, 100);
+    public Paddle (Vector pos, Game game) {
+        super(false, 10, 100, game);
         this.pos = pos;
     }
 
@@ -61,8 +63,8 @@ public class Paddle extends GameObject {
      * @param panel  The panel to apply changes to.
      */
     @Override
-    public void applyChanges (int width, int height, Graphics2d panel) {
-        Color c = PongGame.getPaused() ? Color.DARK_GRAY : Color.WHITE;
+    public void applyChanges (int width, int height, GraphicsPanel panel) {
+        Color c = game.getThread().getPaused() ? Color.DARK_GRAY : Color.WHITE;
         for (int i = (int)  (pos.getY() - 45); i <= (int) (pos.getY() + 45); i += 10)
             panel.setBigPixel((int) pos.getX(), i, 10, c);
         if (PongGame.getDevMode()) drawHitBox(panel, Color.RED);

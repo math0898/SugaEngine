@@ -1,6 +1,6 @@
 package sugaEngine.threads;
 
-import javax.swing.*;
+import sugaEngine.graphics.GraphicsPanel;
 
 import java.awt.event.WindowEvent;
 
@@ -11,22 +11,12 @@ import static main.Main.frame;
  *
  * @author Sugaku
  */
-public class GraphicsThread extends Thread {
+public class GraphicsThread extends SugaThread {
 
     /**
      * The panel that should be redrawn every frame.
      */
-    private final JPanel panel;
-
-    /**
-     * Whether to exit the thread.
-     */
-    private static boolean stop = false;
-
-    /**
-     * The last time that the graphics running finished.
-     */
-    private long lastFinished;
+    private final GraphicsPanel panel;
 
     /**
      * The time that this graphics thread was started. Used in calculating average frame rate.
@@ -36,7 +26,7 @@ public class GraphicsThread extends Thread {
     /**
      * The number of frames that have been rendered since the thread started.
      */
-    public static long frames = 0;
+    private static long frames = 0;
 
     /**
      * The target frame rate for this GraphicsThread.
@@ -48,18 +38,10 @@ public class GraphicsThread extends Thread {
      *
      * @param panel The panel to refresh for every frame.
      */
-    public GraphicsThread (JPanel panel, int frameRate) {
+    public GraphicsThread (GraphicsPanel panel, int frameRate) {
         this.panel = panel;
         FRAME_RATE = frameRate;
-    }
-
-    /**
-     * Sets whether the graphics thread is stopped or not.
-     *
-     * @param val Whether the graphics thread should be stopped.
-     */
-    public static void setStopped (boolean val) {
-        stop = val;
+        panel.setThread(this);
     }
 
     /**
@@ -68,17 +50,20 @@ public class GraphicsThread extends Thread {
     @Override
     public void run () {
         startTime = System.currentTimeMillis();
-        while (!stop) {
-            if (System.currentTimeMillis() - lastFinished < (1000 / FRAME_RATE)) {
+        long lastFinished = 0;
+        while (!stopped) {
+            long drawTime = System.currentTimeMillis() - lastFinished;
+            if (drawTime < (1000 / FRAME_RATE)) {
                 try {
                     //noinspection BusyWait
-                    Thread.sleep((int) ((1000 / FRAME_RATE) - (System.currentTimeMillis() - lastFinished)));
+                    Thread.sleep((int) ((1000 / FRAME_RATE) - drawTime));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
             lastFinished = System.currentTimeMillis();
-            panel.repaint();
+            if (!paused) panel.repaint();
+            frames++;
         }
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
     }

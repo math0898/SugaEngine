@@ -1,13 +1,11 @@
 package pong.ui;
 
-import pong.PongGame;
 import sugaEngine.Game;
-import sugaEngine.graphics.flat.DrawListener;
-import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.graphics.DrawListener;
+import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.input.KeyValues;
-import sugaEngine.threads.GameLogicThread;
-import sugaEngine.threads.GraphicsThread;
+import sugaEngine.threads.SugaThread;
 
 import java.awt.*;
 
@@ -24,6 +22,11 @@ public class PauseMenu implements DrawListener {
      * element.
      */
     private final GameMouseListener mouseListener;
+
+    /**
+     * The game instance associated with this PauseMenu.
+     */
+    private final Game game;
 
     /**
      * The currently highlighted element of the pause menu.
@@ -74,23 +77,17 @@ public class PauseMenu implements DrawListener {
      * @param game Sometimes scenes need to be loaded from this method. Hence, the need to pass the game instance.
      */
     public void enter (Game game) {
-        if (PongGame.getPaused()) {
+        SugaThread thread = game.getThread();
+        if (thread.getPaused()) {
             switch (highlighted) {
-                case CONTINUE -> {
-                    PongGame.setPaused(false);
-                    GameLogicThread.setPaused(false);
-                }
+                case CONTINUE -> thread.setPaused(false);
                 case RESTART -> {
-                    PongGame.setPaused(false);
-                    GameLogicThread.setPaused(false);
+                    thread.setPaused(false);
                     game.loadScene("Main Game");
                 }
                 case SETTINGS -> game.loadScene("Settings");
                 case MAIN_MENU -> game.loadScene("Main Menu");
-                case QUIT -> {
-                    GraphicsThread.setStopped(true);
-                    GameLogicThread.setStopped(true);
-                }
+                case QUIT -> thread.setStopped(true);
             }
         }
     }
@@ -99,9 +96,11 @@ public class PauseMenu implements DrawListener {
      * Creates a new PauseMenu instance with the given GameMouseListener.
      *
      * @param mouseListener The mouse listener that will be associated with this PauseMenu.
+     * @param game          The game instance of this pause menu.
      */
-    public PauseMenu (GameMouseListener mouseListener) {
+    public PauseMenu (GameMouseListener mouseListener, Game game) {
         this.mouseListener = mouseListener;
+        this.game = game;
     }
 
     /**
@@ -155,8 +154,8 @@ public class PauseMenu implements DrawListener {
      * @param panel  The panel to apply changes to.
      */
     @Override
-    public void applyChanges (int width, int height, Graphics2d panel) {
-        if (PongGame.getPaused()) {
+    public void applyChanges (int width, int height, GraphicsPanel panel) {
+        if (game.getThread().getPaused()) {
             checkMouse(height);
             int dx = 0;
             int y = 0;

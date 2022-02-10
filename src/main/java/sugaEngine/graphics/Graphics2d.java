@@ -1,14 +1,10 @@
-package sugaEngine.graphics.flat;
-
-import sugaEngine.graphics.GraphicsPanel;
-import sugaEngine.threads.GraphicsThread;
+package sugaEngine.graphics;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,12 +14,6 @@ import java.util.List;
  * @author Sugaku
  */
 public class Graphics2d extends GraphicsPanel {
-
-    /**
-     * The serial version of the panel.
-     */
-    @Serial
-    private static final long serialVersionUID = 9879187320923L;
 
     /**
      * A list of pixels that need to be updated in the next frame.
@@ -36,19 +26,26 @@ public class Graphics2d extends GraphicsPanel {
     private List<DrawImage> images = new ArrayList<>();
 
     /**
-     * Calls every program that would like add pixels to the panel before it's displayed.
+     * Represents an image to draw on the screen.
      *
-     * @param width The width of the pixels that can be defined.
-     * @param height The height of the pixels that can be defined.
+     * @param x The x position of the image.
+     * @param y The y position of the image.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param image The actual image to draw.
+     * @author Sugaku
      */
-    @Override
-    public void drawing (int width, int height) {
-        DrawListener.Priorities[] order = new DrawListener.Priorities[]{ DrawListener.Priorities.BACKGROUND, DrawListener.Priorities.FOREGROUND, DrawListener.Priorities.GUI };
-        for (DrawListener.Priorities priorities : order) {
-            ArrayList<DrawListener> listeners = drawingListeners.get(priorities);
-            if (listeners != null) for (DrawListener l : listeners) l.applyChanges(width, height, this);
-        }
-    }
+    public record DrawImage (int x, int y, int width, int height, BufferedImage image) { }
+
+    /**
+     * Represents a single pixel in 2d space with its own color and position.
+     *
+     * @param x The x position of this pixel.
+     * @param y The y position of this pixel.
+     * @param color The color of the pixel.
+     * @author Sugaku
+     */
+    public record Pixel (int x, int y, Color color) { }
 
     /**
      * Called during runtime to repaint the graphics.
@@ -58,9 +55,7 @@ public class Graphics2d extends GraphicsPanel {
     @Override
     public void paintComponent (Graphics graphics) {
         super.paintComponent(graphics);
-        int width = getWidth();
-        int height = getHeight();
-        drawing(width, height);
+        drawing(getWidth(), getHeight());
         for (Pixel p : updatePoints) {
             graphics.setColor(p.color());
             graphics.fillRect(p.x(), p.y(), 1, 1);
@@ -70,7 +65,6 @@ public class Graphics2d extends GraphicsPanel {
         }
         updatePoints = new ArrayList<>();
         images = new ArrayList<>();
-        GraphicsThread.frames++;
     }
 
     /**
@@ -80,6 +74,7 @@ public class Graphics2d extends GraphicsPanel {
      * @param y The y to set.
      * @param c The color to set the pixel to.
      */
+    @Override
     public void setPixel (int x, int y, Color c) {
         updatePoints.add(new Pixel(x, y, c));
     }
@@ -93,6 +88,7 @@ public class Graphics2d extends GraphicsPanel {
      * @param height How tall the rectangle is.
      * @param c The color to set the rectangle to.
      */
+    @Override
     public void setRectangle (int x, int y, int width, int height, Color c) {
         for (int i = x; i < width + x; i++)
             for (int j = y; j < height + y; j++)
@@ -107,6 +103,7 @@ public class Graphics2d extends GraphicsPanel {
      * @param r The radius of this 'big pixel'.
      * @param c The color to set these pixels to.
      */
+    @Override
     public void setBigPixel (int x, int y, int r, Color c) {
         setRectangle(x - (r / 2), y - (r / 2), r, r, c);
     }
@@ -120,6 +117,7 @@ public class Graphics2d extends GraphicsPanel {
      * @param height The height of this image.
      * @param path The path of the image to draw on screen.
      */
+    @Override
     public void addImage (int x, int y, int width, int height, String path) {
         InputStream inputStream = this.getClass().getResourceAsStream(path);
         if (inputStream == null) {
@@ -143,6 +141,7 @@ public class Graphics2d extends GraphicsPanel {
      * @param height The height of this image.
      * @param image The image to draw to the screen.
      */
+    @Override
     public void addImage (int x, int y, int width, int height, BufferedImage image) {
         images.add(new DrawImage(x, y, width, height, image));
     }

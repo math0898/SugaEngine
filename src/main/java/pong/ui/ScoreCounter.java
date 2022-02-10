@@ -1,7 +1,7 @@
 package pong.ui;
 
-import sugaEngine.graphics.flat.DrawListener;
-import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.graphics.DrawListener;
+import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.physics.Vector;
 
 import java.util.ArrayList;
@@ -45,7 +45,7 @@ public class ScoreCounter implements DrawListener {
      * @param panel  The panel to apply changes to.
      */
     @Override
-    public void applyChanges (int width, int height, Graphics2d panel) {
+    public void applyChanges (int width, int height, GraphicsPanel panel) {
         List<Integer> digits = new ArrayList<>();
         int score = this.score.get();
         digits.add(score % 10);
@@ -68,7 +68,7 @@ public class ScoreCounter implements DrawListener {
      * @param origin The origin point to draw the number relative to.
      * @param digit The digit to draw to the screen.
      */
-    public void drawDigit (Graphics2d panel, Vector origin, int digit) {
+    public void drawDigit (GraphicsPanel panel, Vector origin, int digit) {
         switch (digit) {
             case 0 -> panel.addImage((int) origin.getX(), (int) origin.getY(), 30, 50, "/pong/Number0.png");
             case 1 -> panel.addImage((int) origin.getX(), (int) origin.getY(), 30, 50, "/pong/Number1.png");

@@ -3,7 +3,7 @@ package main;
 import pong.PongGame;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
-import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.graphics.Graphics2d;
 import sugaEngine.threads.GameLogicThread;
 import sugaEngine.threads.GraphicsThread;
 

@@ -1,6 +1,6 @@
 package sugaEngine;
 
-import sugaEngine.graphics.flat.DrawListener;
+import sugaEngine.graphics.DrawListener;
 import sugaEngine.physics.Collidable;
 import sugaEngine.physics.Vector;
 

@@ -1,8 +1,7 @@
 package pong.ui;
 
-import pong.PongGame;
-import sugaEngine.graphics.flat.DrawListener;
-import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.graphics.DrawListener;
+import sugaEngine.graphics.GraphicsPanel;
 
 import java.awt.*;
 
@@ -21,8 +20,8 @@ public class DividingLine implements DrawListener {
      * @param panel  The panel to apply changes to.
      */
     @Override
-    public void applyChanges (int width, int height, Graphics2d panel) {
-        Color c = PongGame.getPaused() ? Color.DARK_GRAY : Color.WHITE;
+    public void applyChanges (int width, int height, GraphicsPanel panel) {
+        Color c = /* PongGame.getPaused() */ true ? Color.DARK_GRAY : Color.WHITE; // todo reimplement.
         for (int y = 10; y < height; y += 20)
             panel.setBigPixel(width / 2, y, 5, c);
     }
