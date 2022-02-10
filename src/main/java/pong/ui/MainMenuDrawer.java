@@ -16,9 +16,24 @@ import java.io.InputStream;
 public class MainMenuDrawer implements DrawListener {
 
     /**
-     * The title image as a BufferedImage so it can remain in RAM.
+     * The title image as a BufferedImage, so it can remain in RAM.
      */
     private final BufferedImage title;
+
+    /**
+     * The start image as a BufferedImage, so it can remain in RAM.
+     */
+    private final BufferedImage start;
+
+    /**
+     * The settings image as a BufferedImage, so it can remain in RAM.
+     */
+    private final BufferedImage settings;
+
+    /**
+     * The quit image as a BufferedImage, so it can remain in RAM.
+     */
+    private final BufferedImage quit;
 
     /**
      * Creates a new MainMenuDrawer by loading the needed images from jar resources.
@@ -27,6 +42,15 @@ public class MainMenuDrawer implements DrawListener {
         InputStream stream = this.getClass().getResourceAsStream("/pong/Title.png");
         if (stream != null) title = ImageIO.read(stream);
         else throw new IOException("Failed to access /pong/Title.png resource!");
+        stream = this.getClass().getResourceAsStream("/pong/Start.png");
+        if (stream != null) start = ImageIO.read(stream);
+        else throw new IOException("Failed to access /pong/Start.png resource!");
+        stream = this.getClass().getResourceAsStream("/pong/Settings.png");
+        if (stream != null) settings = ImageIO.read(stream);
+        else throw new IOException("Failed to access /pong/Settings.png resource!");
+        stream = this.getClass().getResourceAsStream("/pong/Quit.png");
+        if (stream != null) quit = ImageIO.read(stream);
+        else throw new IOException("Failed to access /pong/Quit.png resource!");
     }
 
     /**
@@ -37,7 +61,10 @@ public class MainMenuDrawer implements DrawListener {
      * @param panel  The panel to apply changes to.
      */
     @Override
-    public void applyChanges (int width, int height, GraphicsPanel panel) {
-        panel.addImage(100, 100, 500, 50, title);
+    public void applyChanges (int width, int height, GraphicsPanel panel) { // todo change pixel sizes to be dynamic to screen, implement menu stuffs.
+        panel.addImage(100, 50, 400, 100, title);
+        panel.addImage(100, 450, 210, 50, start);
+        panel.addImage(100, 600, 340, 50, settings);
+        panel.addImage(100, 750, 170, 50, quit);
     }
 }
