@@ -1,5 +1,7 @@
 package sugaEngine;
 
+import java.awt.*;
+
 /**
  * The Scene object is a collection of objects, AIAgents, and a physics engine. Each game likely has multiple scenes.
  *
@@ -14,4 +16,20 @@ public abstract class Scene {
      * @return True if loading was successful. Otherwise, false.
      */
     public abstract boolean load (Game game);
+
+    /**
+     * Passes a keyboard input into the scene.
+     *
+     * @param key     The keycode of the key.
+     * @param pressed True if the key was pressed, false if it was released.
+     */
+    public abstract void keyboardInput (int key, boolean pressed);
+
+    /**
+     * Passes a mouse input into the scene.
+     *
+     * @param pos     The position of the mouse when it was clicked.
+     * @param pressed True if the button was pressed, false if it was released.
+     */
+    public abstract void mouseInput (Point pos, boolean pressed);
 }
