@@ -2,6 +2,7 @@ package pong;
 
 import pong.objects.Paddle;
 import pong.scenes.MainGame;
+import pong.scenes.MainMenu;
 import sugaEngine.AIAgent;
 import sugaEngine.Game;
 import sugaEngine.GameObject;
@@ -54,7 +55,8 @@ public class PongGame extends Game {
     public PongGame (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
         super(panel, listener, mouseListener);
         scenes.put("Main Game", new MainGame());
-        loadScene("Main Game");
+        scenes.put("Main Menu", new MainMenu());
+        loadScene("Main Menu");
     }
 
     /**
