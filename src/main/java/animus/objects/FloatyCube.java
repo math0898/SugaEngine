@@ -1,9 +1,9 @@
 package animus.objects;
 
 import sugaEngine.GameObject;
+import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.physics.HitBox;
 import sugaEngine.physics.Vector;
-import sugaEngine.graphics.flat.Graphics2d;
 
 import java.awt.*;
 
@@ -37,7 +37,7 @@ public class FloatyCube extends GameObject {
      * @param panel  The panel to apply changes to.
      */
     @Override
-    public void applyChanges (int width, int height, Graphics2d panel) {
+    public void applyChanges (int width, int height, GraphicsPanel panel) {
         for (int i = Math.max(0, (int) pos.getX() - 10); i < Math.min(width, pos.getX() + 10); i++)
             for (int j = Math.max(0, (int) pos.getY() - 10); j < Math.min(height, pos.getY() + 10); j++)
                 panel.setPixel(i, j, Color.CYAN);

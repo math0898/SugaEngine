@@ -1,4 +1,4 @@
-package sugaEngine.graphics.flat;
+package sugaEngine.graphics;
 
 /**
  * A DrawListener is registered with a Graphics system and called on every frame to check if something needs to be drawn.
@@ -35,5 +35,5 @@ public interface DrawListener {
      * @param height The height of the pixel map.
      * @param panel The panel to apply changes to.
      */
-    void applyChanges (int width, int height, Graphics2d panel);
+    void applyChanges (int width, int height, GraphicsPanel panel);
 }

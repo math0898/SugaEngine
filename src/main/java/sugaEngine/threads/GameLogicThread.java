@@ -7,7 +7,7 @@ import sugaEngine.Game;
  *
  * @author Sugaku
  */
-public class GameLogicThread extends Thread {
+public class GameLogicThread extends SugaThread {
 
     /**
      * The game that should be called once every 1/60th of a second.
@@ -18,21 +18,6 @@ public class GameLogicThread extends Thread {
      * A constant on how fast game logic should be called.
      */
     private final int LOGIC_RATE;
-
-    /**
-     * Whether to exit the thread.
-     */
-    private boolean stopped = false; // todo add method to modify.
-
-    /**
-     * Whether to simulate game logic or not.
-     */
-    private static boolean paused = false;
-
-    /**
-     * The last time that the logic running finished.
-     */
-    private long lastFinished;
 
     /**
      * Creates a new GameLogicThread.
@@ -46,40 +31,24 @@ public class GameLogicThread extends Thread {
     }
 
     /**
-     * Sets whether the logic thread is paused or not.
-     *
-     * @param val Whether the logic thread should be paused or not.
-     */
-    public static void setPaused (boolean val) {
-        paused = val;
-    }
-
-    /**
-     * Accessor method for the current status of the GameLogicThread.
-     *
-     * @return Whether game logic is paused currently or not.
-     */
-    public static boolean getPaused () {
-        return paused;
-    }
-
-    /**
      * Called to run the Game logic thread.
      */
     @Override
     public void run () {
+        long lastFinished = 0;
         while (!stopped) {
-                if (System.currentTimeMillis() - lastFinished < (1000 / LOGIC_RATE)) {
-                    try {
-                        //noinspection BusyWait
-                        Thread.sleep((1000 / LOGIC_RATE) - (System.currentTimeMillis() - lastFinished));
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+            long logicTime = System.currentTimeMillis() - lastFinished;
+            if (logicTime < (1000 / LOGIC_RATE)) {
+                try {
+                    //noinspection BusyWait
+                    Thread.sleep((1000 / LOGIC_RATE) - logicTime);
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                lastFinished = System.currentTimeMillis();
-                game.processInput();
-                if (!paused) game.loop();
+            }
+            lastFinished = System.currentTimeMillis();
+            game.processInput();
+            if (!paused) game.loop();
         }
     }
 }

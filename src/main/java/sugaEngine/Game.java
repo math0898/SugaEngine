@@ -1,7 +1,7 @@
 package sugaEngine;
 
 import sugaEngine.graphics.GraphicsPanel;
-import sugaEngine.graphics.flat.DrawListener;
+import sugaEngine.graphics.DrawListener;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.physics.PhysicsEngine;

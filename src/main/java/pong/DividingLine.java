@@ -1,7 +1,7 @@
 package pong;
 
-import sugaEngine.graphics.flat.DrawListener;
-import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.graphics.DrawListener;
+import sugaEngine.graphics.GraphicsPanel;
 
 import java.awt.*;
 
@@ -20,7 +20,7 @@ public class DividingLine implements DrawListener {
      * @param panel  The panel to apply changes to.
      */
     @Override
-    public void applyChanges (int width, int height, Graphics2d panel) {
+    public void applyChanges (int width, int height, GraphicsPanel panel) {
         for (int y = 0; y < height; y += 20)
             panel.setBigPixel(width / 2, y, 5, Color.WHITE);
     }

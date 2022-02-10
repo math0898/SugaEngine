@@ -1,6 +1,6 @@
 package sugaEngine.physics;
 
-import sugaEngine.graphics.flat.Graphics2d;
+import sugaEngine.graphics.Graphics2d;
 
 import java.awt.*;
 import java.util.ArrayList;
