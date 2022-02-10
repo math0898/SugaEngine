@@ -58,7 +58,7 @@ public class PongGame extends Game {
             if (pressedKeys.contains(key)) continue;
             pressedKeys.add(key);
             switch (key) {
-                case 27 -> GameLogicThread.setPaused(!GameLogicThread.getPaused()); // ESC
+                case 27 -> thread.setPaused(!thread.getPaused()); // ESC
                 case 76 -> System.out.println("Average fps: " + GraphicsThread.getFPS()); // L
             }
         }

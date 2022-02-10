@@ -28,6 +28,7 @@ public class GameLogicThread extends SugaThread {
     public GameLogicThread (Game game, int rate) {
         this.game = game;
         LOGIC_RATE = rate;
+        game.setThread(this);
     }
 
     /**

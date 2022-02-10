@@ -5,6 +5,7 @@ import sugaEngine.graphics.DrawListener;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.physics.PhysicsEngine;
+import sugaEngine.threads.SugaThread;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +60,11 @@ public abstract class Game {
     protected GameMouseListener mouseListener;
 
     /**
+     * The thread that is currently running this Game. May be null in some cases.
+     */
+    protected SugaThread thread = null;
+
+    /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
      *
      * @param panel The panel that GameObjects should register as a listener to.
@@ -69,6 +75,25 @@ public abstract class Game {
         this.panel = panel;
         keyListener = listener;
         this.mouseListener = mouseListener;
+    }
+
+    /**
+     * Sets the thread that is calling loop() on this Game.
+     *
+     * @param thread The thread that will be calling loop() on this object.
+     */
+    public final void setThread (SugaThread thread) {
+        this.thread = thread;
+    }
+
+    /**
+     * Accessor method for the thread that is calling loop(). This can be used to determine whether the game has stopped
+     * or paused.
+     *
+     * @return The thread that is running this game instance.
+     */
+    public final SugaThread getThread () {
+        return thread;
     }
 
     /**
