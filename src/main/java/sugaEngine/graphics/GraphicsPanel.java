@@ -34,6 +34,11 @@ public abstract class GraphicsPanel extends JPanel {
     protected SugaThread thread = null;
 
     /**
+     * A boolean used to check if paint is being called for the first time, or a subsequent time.
+     */
+    private boolean immediatePaint = true;
+
+    /**
      * Calls every program that would like add pixels to the panel before it's displayed.
      *
      * @param width The width of the pixels that can be defined.
@@ -44,6 +49,12 @@ public abstract class GraphicsPanel extends JPanel {
                 DrawListener.Priorities.BACKGROUND,
                 DrawListener.Priorities.FOREGROUND,
                 DrawListener.Priorities.GUI };
+        if (immediatePaint) {
+            // This is used to prevent the paintImmediately() call from accidentally accessing DrawListeners whilst
+            //  they're being registered.
+            immediatePaint = false;
+            return;
+        }
         for (DrawListener.Priorities priorities : order) {
             ArrayList<DrawListener> listeners = drawingListeners.get(priorities);
             if (listeners != null)
