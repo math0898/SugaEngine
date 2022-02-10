@@ -141,6 +141,7 @@ public class PongGame extends Game {
         Stack<MouseEvent> mice = mouseListener.getEvents();
         while (mice.size() > 0) {
             MouseEvent e = mice.pop();
+            loadedScene.mouseInput(e.getPoint(), e.getButton() == 1);
             if (thread.getPaused())
                 if (e.getButton() == 1)
                     if (loadedScene instanceof MainGame scene)
@@ -151,6 +152,7 @@ public class PongGame extends Game {
             int key = keys.pop();
             if (pressedKeys.contains(key)) continue;
             pressedKeys.add(key);
+            loadedScene.keyboardInput(key, true);
             switch (key) {
                 case 27 -> thread.setPaused(true); // ESC
                 case 76 -> System.out.printf("Average fps: %.1f\n", GraphicsThread.getFPS()); // L
@@ -163,6 +165,7 @@ public class PongGame extends Game {
         while (keys.size() > 0) {
             int key = keys.pop();
             pressedKeys.remove((Integer) key);
+            loadedScene.keyboardInput(key, false);
             switch (key) {
                 case 38 -> {
                     objects.get("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0)); // UP ARROW

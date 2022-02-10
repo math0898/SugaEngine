@@ -14,6 +14,8 @@ import sugaEngine.Scene;
 import sugaEngine.graphics.Graphics2d;
 import sugaEngine.physics.Vector;
 
+import java.awt.*;
+
 /**
  * The main game is the game with two paddles, a ball, goals, walls etc.
  *
@@ -56,6 +58,28 @@ public class MainGame extends Scene {
         pauseScreen = new PauseMenu(game.getMouseListener(), game);
         game.addDrawingListener(pauseScreen);
         return true;
+    }
+
+    /**
+     * Passes a keyboard input into the scene.
+     *
+     * @param key     The keycode of the key.
+     * @param pressed True if the key was pressed, false if it was released.
+     */
+    @Override
+    public void keyboardInput (int key, boolean pressed) {
+        // todo move movement and pause screen moving here.
+    }
+
+    /**
+     * Passes a mouse input into the scene.
+     *
+     * @param pos     The position of the mouse when it was clicked.
+     * @param pressed True if the button was pressed, false if it was released.
+     */
+    @Override
+    public void mouseInput (Point pos, boolean pressed) {
+
     }
 
     /**

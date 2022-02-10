@@ -3,7 +3,9 @@ package pong.scenes;
 import pong.ui.MainMenuDrawer;
 import sugaEngine.Game;
 import sugaEngine.Scene;
+import sugaEngine.input.KeyValues;
 
+import java.awt.*;
 import java.io.IOException;
 
 /**
@@ -21,11 +23,35 @@ public class MainMenu extends Scene {
      */
     @Override
     public boolean load (Game game) {
+        super.load(game);
+        game.clear();
         try {
             game.addDrawingListener(new MainMenuDrawer());
         } catch (IOException exception) {
             return false;
         }
         return true;
+    }
+
+    /**
+     * Passes a keyboard input into the scene.
+     *
+     * @param key     The keycode of the key.
+     * @param pressed True if the key was pressed, false if it was released.
+     */
+    @Override
+    public void keyboardInput (int key, boolean pressed) {
+        if (key == KeyValues.ESC.getValue() && !pressed) game.loadScene("Main Game");
+    }
+
+    /**
+     * Passes a mouse input into the scene.
+     *
+     * @param pos     The position of the mouse when it was clicked.
+     * @param pressed True if the button was pressed, false if it was released.
+     */
+    @Override
+    public void mouseInput (Point pos, boolean pressed) {
+
     }
 }
