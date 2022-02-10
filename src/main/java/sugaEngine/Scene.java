@@ -10,12 +10,20 @@ import java.awt.*;
 public abstract class Scene {
 
     /**
+     * The game instance that this scene is associated with.
+     */
+    protected Game game;
+
+    /**
      * Loads this scene into the given game.
      *
      * @param game The game to load this scene into.
      * @return True if loading was successful. Otherwise, false.
      */
-    public abstract boolean load (Game game);
+    public boolean load (Game game) {
+        this.game = game;
+        return true;
+    }
 
     /**
      * Passes a keyboard input into the scene.
