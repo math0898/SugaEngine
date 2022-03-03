@@ -33,6 +33,11 @@ public class Main {
         frame.setUndecorated(true);
         frame.setVisible(true);
         new GraphicsThread(panel, 60).start();
-        new GameLogicThread(new ProjectAnimusGame(panel, new GameKeyListener(frame), new GameMouseListener(frame)), 60).start();
+        try {
+            new GameLogicThread(new ProjectAnimusGame(panel, new GameKeyListener(frame), new GameMouseListener(frame)), 60).start();
+        } catch (Exception e) {
+            System.out.println(e.toString());
+            for (StackTraceElement s : e.getStackTrace()) System.out.println(s.toString());
+        }
     }
 }

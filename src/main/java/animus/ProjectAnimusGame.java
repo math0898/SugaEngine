@@ -11,6 +11,7 @@ import sugaEngine.physics.Vector;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.threads.GameLogicThread;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ public class ProjectAnimusGame extends Game {
     /**
      * The music player for the ProjectAnimusGame.
      */
-    SoundManager<AnimusSoundEffects> soundManager = new SoundManager<>();
+    SoundManager soundManager = new SoundManager();
 
     /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
@@ -42,10 +43,10 @@ public class ProjectAnimusGame extends Game {
      * @param listener The game key listener being used by this game object.
      * @param mouseListener The mouse listener being using by this game object.
      */
-    public ProjectAnimusGame (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
+    public ProjectAnimusGame (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) throws LineUnavailableException {
         super(panel, listener, mouseListener);
 //        soundManager = new SoundManager("/media/music/Itro & Tobu - Cloud 9.wav");
-        soundManager.play(AnimusSoundEffects.TEST_EFFECT);
+        soundManager.play("/media/music/Itro & Tobu - Cloud 9.wav");
         panel.registerListener(new GameUI(this));
         addGameObject("Floaty Cube", new FloatyCube());
         addGameObject("Boxy Box", new BoxyBox(new Vector(540, 100, 0), 50, 50, Color.GREEN.darker().darker().darker()));
