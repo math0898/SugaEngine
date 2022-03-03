@@ -43,7 +43,7 @@ public class ProjectAnimusGame extends Game {
      * @param listener The game key listener being used by this game object.
      * @param mouseListener The mouse listener being using by this game object.
      */
-    public ProjectAnimusGame (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) throws LineUnavailableException {
+    public ProjectAnimusGame (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
         super(panel, listener, mouseListener);
 //        soundManager = new SoundManager("/media/music/Itro & Tobu - Cloud 9.wav");
         soundManager.play("/media/music/Itro & Tobu - Cloud 9.wav");

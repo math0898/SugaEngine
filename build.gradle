@@ -10,6 +10,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.lwjgl:lwjgl-openal:3.3.0'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
 }
@@ -23,5 +24,5 @@ jar {
         attributes(
                 'Main-Class':'Main'
         )
-    }
+    } from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 }
