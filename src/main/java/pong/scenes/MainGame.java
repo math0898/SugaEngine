@@ -12,7 +12,6 @@ import pong.ui.ScoreCounter;
 import sugaEngine.Game;
 import sugaEngine.Scene;
 import sugaEngine.graphics.Graphics2d;
-import sugaEngine.input.KeyValues;
 import sugaEngine.physics.Vector;
 import sugaEngine.threads.GraphicsThread;
 

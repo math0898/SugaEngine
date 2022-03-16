@@ -92,6 +92,7 @@ public class PauseMenu implements DrawListener {
                 }
                 case QUIT -> thread.setStopped(true); // TODO: Stop graphics thread.
             }
+            highlighted = MenuOptions.CONTINUE;
         }
     }
 

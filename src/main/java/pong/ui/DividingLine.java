@@ -37,7 +37,7 @@ public class DividingLine implements DrawListener {
      */
     @Override
     public void applyChanges (int width, int height, GraphicsPanel panel) {
-        Color c = game.getThread().getPaused() ? Color.DARK_GRAY : Color.WHITE; // todo reimplement.
+        Color c = game.getThread().getPaused() ? Color.DARK_GRAY : Color.WHITE;
         for (int y = 10; y < height; y += 20)
             panel.setBigPixel(width / 2, y, 5, c);
     }
