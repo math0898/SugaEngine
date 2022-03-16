@@ -12,6 +12,7 @@ import pong.ui.ScoreCounter;
 import sugaEngine.Game;
 import sugaEngine.Scene;
 import sugaEngine.graphics.Graphics2d;
+import sugaEngine.input.KeyValues;
 import sugaEngine.physics.Vector;
 import sugaEngine.threads.GraphicsThread;
 
@@ -65,26 +66,31 @@ public class MainGame extends Scene {
     /**
      * Passes a keyboard input into the scene.
      *
-     * @param key     The keycode of the key.
+     * @param key     The value of the key pressed.
      * @param pressed True if the key was pressed, false if it was released.
      */
     @Override
-    public void keyboardInput (int key, boolean pressed) {
+    public void keyboardInput (KeyValues key, boolean pressed) {
         if (pressed) {
+            if (game.getThread().getPaused()) {
+                if (key == KeyValues.ARROW_UP || key == KeyValues.ARROW_DOWN) pauseScreen.move(key);
+                else if (key == KeyValues.ENTER) pauseScreen.enter(game);
+            }
             switch (key) {
-                case 27 -> game.getThread().setPaused(true); // ESC
-                case 76 -> System.out.printf("Average fps: %.1f\n", GraphicsThread.getFPS()); // L
-                case 73 -> PongGame.setDevMode(!PongGame.getDevMode()); // I
-                case 38 -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0)); // UP ARROW
-                case 40 -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0)); // DOWN ARROW
+                case ESC -> game.getThread().setPaused(true);
+                case L -> System.out.printf("Average fps: %.1f\n", GraphicsThread.getFPS());
+                case I -> PongGame.setDevMode(!PongGame.getDevMode());
+                case ARROW_UP -> {
+                    game.getGameObject("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0));
+                }
+                case ARROW_DOWN -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0));
             }
         } else { // Depressed key
             switch (key) {
-                case 38 -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0)); // UP ARROW
-                case 40 -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0)); // DOWN ARROW
+                case ARROW_UP -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0));
+                case ARROW_DOWN -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0));
             }
         }
-        // todo pause screen moving here.
     }
 
     /**
@@ -95,15 +101,8 @@ public class MainGame extends Scene {
      */
     @Override
     public void mouseInput (Point pos, boolean pressed) {
-
-    }
-
-    /**
-     * Accessor method for the pause screen.
-     *
-     * @return The pause screen instance for this scene.
-     */
-    public PauseMenu getPauseScreen () {
-        return pauseScreen;
+        if (pressed)
+            if (game.getThread().getPaused())
+                pauseScreen.enter(game);
     }
 }

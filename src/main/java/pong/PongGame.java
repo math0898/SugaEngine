@@ -148,40 +148,19 @@ public class PongGame extends Game {
         while (mice.size() > 0) {
             MouseEvent e = mice.pop();
             loadedScene.mouseInput(e.getPoint(), e.getButton() == 1);
-            if (thread.getPaused())
-                if (e.getButton() == 1)
-                    if (loadedScene instanceof MainGame scene)
-                        scene.getPauseScreen().enter(this);
         }
         Stack<Integer> keys = keyListener.getKeysPressed();
         while (keys.size() > 0) {
             int key = keys.pop();
             if (pressedKeys.contains(key)) continue;
             pressedKeys.add(key);
-            loadedScene.keyboardInput(key, true);
-            switch (key) {
-                case 38 -> { // ARROW_UP
-                    if (thread.getPaused())
-                        if (loadedScene instanceof MainGame scene)
-                            scene.getPauseScreen().move(KeyValues.ARROW_UP);
-                }
-                case 40 -> { // ARROW_DOWN
-                    if (thread.getPaused())
-                        if (loadedScene instanceof MainGame scene)
-                            scene.getPauseScreen().move(KeyValues.ARROW_DOWN);
-                }
-                case 10 -> { // ENTER
-                    if (thread.getPaused())
-                        if (loadedScene instanceof MainGame scene)
-                            scene.getPauseScreen().enter(this);
-                }
-            }
+            loadedScene.keyboardInput(KeyValues.toEnum(key), true);
         }
         keys = keyListener.getKeysDepressed();
         while (keys.size() > 0) {
             int key = keys.pop();
             pressedKeys.remove((Integer) key);
-            loadedScene.keyboardInput(key, false);
+            loadedScene.keyboardInput(KeyValues.toEnum(key), false);
         }
     }
 }

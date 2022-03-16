@@ -36,12 +36,12 @@ public class MainMenu extends Scene {
     /**
      * Passes a keyboard input into the scene.
      *
-     * @param key     The keycode of the key.
+     * @param key     The value of the key pressed.
      * @param pressed True if the key was pressed, false if it was released.
      */
     @Override
-    public void keyboardInput (int key, boolean pressed) {
-        if (key == KeyValues.ESC.getValue() && !pressed) game.loadScene("Main Game");
+    public void keyboardInput (KeyValues key, boolean pressed) {
+        if (key == KeyValues.ESC && !pressed) game.loadScene("Main Game");
     }
 
     /**
