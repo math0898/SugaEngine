@@ -86,8 +86,11 @@ public class PauseMenu implements DrawListener {
                     game.loadScene("Main Game");
                 }
                 case SETTINGS -> game.loadScene("Settings");
-                case MAIN_MENU -> game.loadScene("Main Menu");
-                case QUIT -> thread.setStopped(true);
+                case MAIN_MENU -> {
+                    thread.setPaused(false);
+                    game.loadScene("Main Menu");
+                }
+                case QUIT -> thread.setStopped(true); // TODO: Stop graphics thread.
             }
         }
     }

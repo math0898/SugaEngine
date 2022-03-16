@@ -12,7 +12,9 @@ import pong.ui.ScoreCounter;
 import sugaEngine.Game;
 import sugaEngine.Scene;
 import sugaEngine.graphics.Graphics2d;
+import sugaEngine.input.KeyValues;
 import sugaEngine.physics.Vector;
+import sugaEngine.threads.GraphicsThread;
 
 import java.awt.*;
 
@@ -36,8 +38,9 @@ public class MainGame extends Scene {
      */
     @Override
     public boolean load (Game game) {
+        super.load(game);
         game.clear();
-        game.addDrawingListener(new DividingLine());
+        game.addDrawingListener(new DividingLine(game));
         Graphics2d panel = (Graphics2d) game.getPanel();
         game.addDrawingListener(
                 new ScoreCounter(((PongGame) game).getPlayerScorer(), new Vector((panel.getWidth() * 3.0) / 8.0, panel.getHeight() / 32.0, 0)));
@@ -68,7 +71,21 @@ public class MainGame extends Scene {
      */
     @Override
     public void keyboardInput (int key, boolean pressed) {
-        // todo move movement and pause screen moving here.
+        if (pressed) {
+            switch (key) {
+                case 27 -> game.getThread().setPaused(true); // ESC
+                case 76 -> System.out.printf("Average fps: %.1f\n", GraphicsThread.getFPS()); // L
+                case 73 -> PongGame.setDevMode(!PongGame.getDevMode()); // I
+                case 38 -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0)); // UP ARROW
+                case 40 -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0)); // DOWN ARROW
+            }
+        } else { // Depressed key
+            switch (key) {
+                case 38 -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0)); // UP ARROW
+                case 40 -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0)); // DOWN ARROW
+            }
+        }
+        // todo pause screen moving here.
     }
 
     /**

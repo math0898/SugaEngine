@@ -123,6 +123,16 @@ public abstract class Game {
     }
 
     /**
+     * Accessor method for game objects.
+     *
+     * @param name The name of the object to attempt to get.
+     * @return The found object or null.
+     */
+    public GameObject getGameObject (String name) {
+        return objects.get(name);
+    }
+
+    /**
      * Registers a new AI agent so that it can be called every tick after collisions but before object logic.
      *
      * @param agent The AIAgent to add into the list of agents.

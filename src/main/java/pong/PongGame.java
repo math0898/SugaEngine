@@ -1,6 +1,5 @@
 package pong;
 
-import pong.objects.Paddle;
 import pong.scenes.MainGame;
 import pong.scenes.MainMenu;
 import sugaEngine.AIAgent;
@@ -10,8 +9,6 @@ import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.input.KeyValues;
-import sugaEngine.physics.Vector;
-import sugaEngine.threads.GraphicsThread;
 
 import java.awt.event.MouseEvent;
 import java.util.*;
@@ -134,6 +131,15 @@ public class PongGame extends Game {
     }
 
     /**
+     * Sets the value of dev mode to the given value.
+     *
+     * @param dev The new value for whether the game is in dev mode or not.
+     */
+    public static void setDevMode (boolean dev) {
+        devMode = dev;
+    }
+
+    /**
      * Processes inputs given by players. Is run during pause.
      */
     @Override
@@ -154,27 +160,12 @@ public class PongGame extends Game {
             pressedKeys.add(key);
             loadedScene.keyboardInput(key, true);
             switch (key) {
-                case 27 -> thread.setPaused(true); // ESC
-                case 76 -> System.out.printf("Average fps: %.1f\n", GraphicsThread.getFPS()); // L
-                case 73 -> devMode = !devMode; // I
-                case 38 -> objects.get("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0)); // UP ARROW
-                case 40 -> objects.get("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0)); // DOWN ARROW
-            }
-        }
-        keys = keyListener.getKeysDepressed();
-        while (keys.size() > 0) {
-            int key = keys.pop();
-            pressedKeys.remove((Integer) key);
-            loadedScene.keyboardInput(key, false);
-            switch (key) {
-                case 38 -> {
-                    objects.get("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0)); // UP ARROW
+                case 38 -> { // ARROW_UP
                     if (thread.getPaused())
                         if (loadedScene instanceof MainGame scene)
                             scene.getPauseScreen().move(KeyValues.ARROW_UP);
                 }
-                case 40 -> {
-                    objects.get("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0)); // DOWN ARROW
+                case 40 -> { // ARROW_DOWN
                     if (thread.getPaused())
                         if (loadedScene instanceof MainGame scene)
                             scene.getPauseScreen().move(KeyValues.ARROW_DOWN);
@@ -185,6 +176,12 @@ public class PongGame extends Game {
                             scene.getPauseScreen().enter(this);
                 }
             }
+        }
+        keys = keyListener.getKeysDepressed();
+        while (keys.size() > 0) {
+            int key = keys.pop();
+            pressedKeys.remove((Integer) key);
+            loadedScene.keyboardInput(key, false);
         }
     }
 }
