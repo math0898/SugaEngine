@@ -80,9 +80,7 @@ public class MainGame extends Scene {
                 case ESC -> game.getThread().setPaused(true);
                 case L -> System.out.printf("Average fps: %.1f\n", GraphicsThread.getFPS());
                 case I -> PongGame.setDevMode(!PongGame.getDevMode());
-                case ARROW_UP -> {
-                    game.getGameObject("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0));
-                }
+                case ARROW_UP -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, -1 * Paddle.PADDLE_ACCELERATION, 0));
                 case ARROW_DOWN -> game.getGameObject("Player Paddle").getAccel().add(new Vector(0, Paddle.PADDLE_ACCELERATION, 0));
             }
         } else { // Depressed key

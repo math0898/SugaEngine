@@ -8,9 +8,7 @@ import sugaEngine.GameObject;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.graphics.GraphicsPanel;
-import sugaEngine.input.KeyValues;
 
-import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -20,12 +18,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  * @author Sugaku
  */
 public class PongGame extends Game {
-
-    /**
-     * These are keys that are currently being held. That can be useful information in it of itself but this is used to
-     * ignore future key pressed messages.
-     */
-    List<Integer> pressedKeys = new ArrayList<>();
 
     /**
      * The player score counter.
@@ -137,30 +129,5 @@ public class PongGame extends Game {
      */
     public static void setDevMode (boolean dev) {
         devMode = dev;
-    }
-
-    /**
-     * Processes inputs given by players. Is run during pause.
-     */
-    @Override
-    public void processInput () {
-        Stack<MouseEvent> mice = mouseListener.getEvents();
-        while (mice.size() > 0) {
-            MouseEvent e = mice.pop();
-            loadedScene.mouseInput(e.getPoint(), e.getButton() == 1);
-        }
-        Stack<Integer> keys = keyListener.getKeysPressed();
-        while (keys.size() > 0) {
-            int key = keys.pop();
-            if (pressedKeys.contains(key)) continue;
-            pressedKeys.add(key);
-            loadedScene.keyboardInput(KeyValues.toEnum(key), true);
-        }
-        keys = keyListener.getKeysDepressed();
-        while (keys.size() > 0) {
-            int key = keys.pop();
-            pressedKeys.remove((Integer) key);
-            loadedScene.keyboardInput(KeyValues.toEnum(key), false);
-        }
     }
 }
