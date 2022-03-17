@@ -6,7 +6,7 @@ package sugaEngine.input;
  *
  * @author Sugaku
  */
-public class DefaultKeyMapper implements KeyMapper {
+public class BasicKeyMapper implements KeyMapper {
 
     /**
      * The array used to convert between keycodes and keys.
@@ -14,9 +14,9 @@ public class DefaultKeyMapper implements KeyMapper {
     protected KeyValues[] values = new KeyValues[256];
 
     /**
-     * Constructs the DefaultKeyMapper. Initializes everything to null before iterating through the values of KeyValues.
+     * Constructs the BasicKeyMapper. Initializes everything to null before iterating through the values of KeyValues.
      */
-    public DefaultKeyMapper () {
+    public BasicKeyMapper () {
         for (int i = 0; i < 255; i++)
             values[i] = null;
         for (KeyValues v : KeyValues.values())

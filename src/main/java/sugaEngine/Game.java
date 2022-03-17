@@ -2,7 +2,7 @@ package sugaEngine;
 
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.graphics.DrawListener;
-import sugaEngine.input.GameKeyListener;
+import sugaEngine.input.StackGameKeyListener;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.input.KeyValues;
 import sugaEngine.physics.PhysicsEngine;
@@ -57,7 +57,7 @@ public abstract class Game {
     /**
      * The key listener that is being used by this game.
      */
-    protected GameKeyListener keyListener;
+    protected StackGameKeyListener keyListener;
 
     /**
      * The mouse listener that is being used by this game.
@@ -76,7 +76,7 @@ public abstract class Game {
      * @param listener The game key listener being used by this game object.
      * @param mouseListener The mouse listener being using by this game object.
      */
-    public Game (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
+    public Game (GraphicsPanel panel, StackGameKeyListener listener, GameMouseListener mouseListener) {
         this.panel = panel;
         keyListener = listener;
         this.mouseListener = mouseListener;
