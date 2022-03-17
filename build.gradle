@@ -54,7 +54,7 @@ publishing {
     repositories {
         maven {
             name = "SugaEngine"
-            url = "http:///maven.pkg.github.com/math0898/GraphicsEngine"
+            url = "https:///maven.pkg.github.com/math0898/GraphicsEngine"
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
