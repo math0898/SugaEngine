@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 import java.util.Objects;
 
-import org.lwjgl.openal.*;
+//import org.lwjgl.openal.*;
 
 /**
  * The SoundManager class is used to play sound to the player.
@@ -52,16 +52,16 @@ public class SoundManager {
      * @param path The path to the audio clip resource.
      */
     public void play (String path) {
-        try {
-            alSource = AL11.alGenSources();
-            alSampleSet = AL11.alGenBuffers();
-            byte[] alBuffer = Objects.requireNonNull(this.getClass().getResourceAsStream(path)).readAllBytes();
-            AL11.alBufferData(alSampleSet, AL10.AL_FORMAT_STEREO8, ByteBuffer.wrap(alBuffer), AL11.AL_FREQUENCY);
-            AL11.alSourcei(alSource, AL10.AL_BUFFER, alSampleSet);
-            AL11.alSourcei(alSource, AL10.AL_LOOPING, AL10.AL_TRUE);
-            AL11.alSourcePlay(alSource);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            alSource = AL11.alGenSources();
+//            alSampleSet = AL11.alGenBuffers();
+//            byte[] alBuffer = Objects.requireNonNull(this.getClass().getResourceAsStream(path)).readAllBytes();
+//            AL11.alBufferData(alSampleSet, AL10.AL_FORMAT_STEREO8, ByteBuffer.wrap(alBuffer), AL11.AL_FREQUENCY);
+//            AL11.alSourcei(alSource, AL10.AL_BUFFER, alSampleSet);
+//            AL11.alSourcei(alSource, AL10.AL_LOOPING, AL10.AL_TRUE);
+//            AL11.alSourcePlay(alSource);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
     }
 }
