@@ -1,0 +1,13 @@
+name: GitHub Actions
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: java --version
+      - run: gradle --version
+      - run: gradle build
