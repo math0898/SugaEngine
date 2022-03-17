@@ -2,13 +2,10 @@ package sugaEngine;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import sugaEngine.graphics.Graphics2d;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.threads.SugaThread;
-
-import javax.swing.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -30,9 +27,7 @@ class GameTest { // todo: Implement unit tests.
      */
     @BeforeEach
     void setUp () {
-        GraphicsPanel panel = new Graphics2d();
-        JFrame frame = new JFrame();
-        game = new Game(panel, new GameKeyListener(frame), new GameMouseListener(frame)) {};
+        game = new Game(mock(GraphicsPanel.class), mock(GameKeyListener.class), mock(GameMouseListener.class)) {};
     }
 
     /**
@@ -70,51 +65,41 @@ class GameTest { // todo: Implement unit tests.
 
     @Test
     void loop () {
-        assertNull(null);
     }
 
     @Test
     void processInput () {
-        assertNull(null);
     }
 
     @Test
     void addGameObject () {
-        assertNull(null);
     }
 
     @Test
     void getGameObject () {
-        assertNull(null);
     }
 
     @Test
     void addAgent () {
-        assertNull(null);
     }
 
     @Test
     void addDrawingListener () {
-        assertNull(null);
     }
 
     @Test
     void clear () {
-        assertNull(null);
     }
 
     @Test
     void loadScene () {
-        assertNull(null);
     }
 
     @Test
     void getPanel () {
-        assertNull(null);
     }
 
     @Test
     void getMouseListener () {
-        assertNull(null);
     }
 }
