@@ -15,6 +15,8 @@ import static org.mockito.Mockito.mock;
 
 /**
  * UnitTests for the abstract Game class.
+ *
+ * @author Sugaku
  */
 class GameTest { // todo: Implement unit tests.
 
@@ -50,47 +52,69 @@ class GameTest { // todo: Implement unit tests.
         assertEquals(t2, game.thread, "Game should have the newly set thread.");
     }
 
+    /**
+     * Tests the getThread() method on Game. Expected behavior is that the set thread will be returned.
+     */
     @Test
     void getThread () {
+        SugaThread t1 = mock(SugaThread.class);
+        SugaThread t2 = mock(SugaThread.class);
+        assertNull(game.getThread(), "Game has not been assigned a thread and should return null.");
+        game.thread = t1;
+        assertEquals(t1, game.getThread(), "getThread() should return the currently set thread.");
+        assertNotEquals(t2, game.getThread(), "getThread() should not return an object equal to the one set.");
+        game.thread = t2;
+        assertEquals(t2, game.getThread(), "getThread() should return the currently set thread.");
+        assertNotEquals(t1, game.getThread(), "getThread() should not return an object equal to the one set.");
     }
 
     @Test
     void loop () {
+        assertNull(null);
     }
 
     @Test
     void processInput () {
+        assertNull(null);
     }
 
     @Test
     void addGameObject () {
+        assertNull(null);
     }
 
     @Test
     void getGameObject () {
+        assertNull(null);
     }
 
     @Test
     void addAgent () {
+        assertNull(null);
     }
 
     @Test
     void addDrawingListener () {
+        assertNull(null);
     }
 
     @Test
     void clear () {
+        assertNull(null);
     }
 
     @Test
     void loadScene () {
+        assertNull(null);
     }
 
     @Test
     void getPanel () {
+        assertNull(null);
     }
 
     @Test
     void getMouseListener () {
+        assertNull(null);
     }
 }

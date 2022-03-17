@@ -20,4 +20,4 @@ jobs:
         uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
       - run: java --version
       - run: gradle --version --no-daemon
-      - run: gradle test --no-daemon
+      - run: gradle check --no-daemon
