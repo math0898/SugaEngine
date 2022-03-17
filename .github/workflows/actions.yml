@@ -12,6 +12,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: gradle
       - run: java --version
       - run: gradle --version
       - run: gradle build
@@ -23,6 +24,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: gradle
       - run: java --version
       - run: gradle --version
       - run: gradle test
@@ -34,6 +36,7 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+          cache: gradle
       - run: java --version
       - run: gradle --version
       #- run: gradle deploy
