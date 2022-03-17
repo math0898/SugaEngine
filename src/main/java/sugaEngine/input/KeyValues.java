@@ -5,7 +5,7 @@ package sugaEngine.input;
  *
  * @author Sugaku
  */
-public enum KeyValues {
+public enum KeyValues { // todo rename to KeyValue, requires Major version increment.
 
     /**
      * The enter key maps to keycode '10'.
@@ -91,11 +91,12 @@ public enum KeyValues {
     }
 
     /**
-     * Converts the given int keycode into an enum value from KeyValues.
+     * Converts the given int keycode into an enum value from KeyValues. {@link KeyMapper}
      *
      * @param code The code of the key pressed.
      * @return The enum value of the key if present, otherwise null.
      */
+    @Deprecated
     public static KeyValues toEnum (int code) { // Might be a bit slow for input handling. Perhaps prioritize more popular keys.
         for (KeyValues k : KeyValues.values())  //  This would also be a good level for key remapping.
             if (k.getValue() == code)
