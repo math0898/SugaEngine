@@ -76,6 +76,7 @@ public class StackGameKeyListener implements GameKeyListenerInterface {
     @Override
     public void keyPressed (KeyEvent e) {
         KeyValues key = mapper.convert(e.getKeyCode());
+        if (heldKeys.contains(key)) return;
         keysPressed.add(key);
         heldKeys.add(key);
     }
@@ -90,6 +91,7 @@ public class StackGameKeyListener implements GameKeyListenerInterface {
     @Override
     public void keyReleased (KeyEvent e) {
         KeyValues key = mapper.convert(e.getKeyCode());
+        if (!heldKeys.contains(key)) return;
         keysReleased.add(key);
         heldKeys.remove(key);
     }

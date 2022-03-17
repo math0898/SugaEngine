@@ -2,7 +2,7 @@ package sugaEngine;
 
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.graphics.DrawListener;
-import sugaEngine.input.StackGameKeyListener;
+import sugaEngine.input.GameKeyListenerInterface;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.input.KeyValues;
 import sugaEngine.physics.PhysicsEngine;
@@ -17,12 +17,6 @@ import java.util.*;
  * @author Sugaku
  */
 public abstract class Game {
-
-    /**
-     * These are keys that are currently being held. That can be useful information in it of itself but this is used to
-     * ignore future key pressed messages.
-     */
-    protected List<Integer> pressedKeys = new ArrayList<>();
 
     /**
      * A list of game objects for this game. Their logic should be called every cycle.
@@ -57,7 +51,7 @@ public abstract class Game {
     /**
      * The key listener that is being used by this game.
      */
-    protected StackGameKeyListener keyListener;
+    protected GameKeyListenerInterface keyListener;
 
     /**
      * The mouse listener that is being used by this game.
@@ -76,7 +70,7 @@ public abstract class Game {
      * @param listener The game key listener being used by this game object.
      * @param mouseListener The mouse listener being using by this game object.
      */
-    public Game (GraphicsPanel panel, StackGameKeyListener listener, GameMouseListener mouseListener) {
+    public Game (GraphicsPanel panel, GameKeyListenerInterface listener, GameMouseListener mouseListener) {
         this.panel = panel;
         keyListener = listener;
         this.mouseListener = mouseListener;
@@ -119,19 +113,12 @@ public abstract class Game {
             MouseEvent e = mice.pop();
             loadedScene.mouseInput(e.getPoint(), e.getButton() == 1);
         }
-        Stack<Integer> keys = keyListener.getKeysPressed();
-        while (keys.size() > 0) {
-            int key = keys.pop();
-            if (pressedKeys.contains(key)) continue;
-            pressedKeys.add(key);
-            loadedScene.keyboardInput(KeyValues.toEnum(key), true);
-        }
-        keys = keyListener.getKeysDepressed();
-        while (keys.size() > 0) {
-            int key = keys.pop();
-            pressedKeys.remove((Integer) key);
-            loadedScene.keyboardInput(KeyValues.toEnum(key), false);
-        }
+        Stack<KeyValues> keys = keyListener.getKeyPresses();
+        while (keys.size() > 0)
+            loadedScene.keyboardInput(keys.pop(), true);
+        keys = keyListener.getKeyReleases();
+        while (keys.size() > 0)
+            loadedScene.keyboardInput(keys.pop(), false);
     }
 
     /**
