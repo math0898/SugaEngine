@@ -5,7 +5,7 @@ package sugaEngine.input;
  *
  * @author Sugaku
  */
-public enum KeyValues {
+public enum KeyValues { // todo rename to KeyValue, requires Major version increment.
 
     /**
      * The enter key maps to keycode '10'.
