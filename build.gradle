@@ -38,6 +38,19 @@ jar {
 }
 
 publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'io.github.math0898'
+            artifactId = 'SugaEngine'
+            version(version) // Pulls version from Gradle root
+            from components.java
+
+            pom {
+                name = 'Sugaku Engine'
+                description = 'The Suga engine is meant to be a fully functional game engine written in Java without extra dependencies.'
+            }
+        }
+    }
     repositories {
         maven {
             name = "SugaEngine"
