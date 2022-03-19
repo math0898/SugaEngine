@@ -96,4 +96,13 @@ public class GameMouseListener implements MouseListener {
     public Stack<MouseEvent> getEvents () {
         return events;
     }
+
+    /**
+     * Sets the frame that this mouse listener is listening to. Does not deregister with the old frame.
+     *
+     * @param frame The new frame to listen to.
+     */
+    public void setFrame (JFrame frame) {
+        frame.addMouseListener(this);
+    }
 }

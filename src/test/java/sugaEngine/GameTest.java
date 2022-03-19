@@ -4,8 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.input.GameKeyListener;
+import sugaEngine.input.GameKeyListenerInterface;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.threads.SugaThread;
+
+import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -20,14 +24,45 @@ class GameTest { // todo: Implement unit tests.
     /**
      * The game instance being used in each test.
      */
-    private Game game;
+    private BasicGame game;
 
     /**
      * Resets the game instance before each unit test runs.
      */
     @BeforeEach
     void setUp () {
-        game = new Game(mock(GraphicsPanel.class), mock(GameKeyListener.class), mock(GameMouseListener.class)) {};
+        game = new BasicGame(mock(GraphicsPanel.class), mock(GameKeyListenerInterface.class), mock(GameMouseListener.class)) {
+
+            /**
+             * Sets the graphics panel being used by this game.
+             *
+             * @param panel The panel to assign to this game.
+             */
+            @Override
+            public void setPanel(GraphicsPanel panel) {
+
+            }
+
+            /**
+             * Sets the key listener currently being used by this game.
+             *
+             * @param listener The new key listener that this game should use.
+             */
+            @Override
+            public void setKeyListener(KeyListener listener) {
+
+            }
+
+            /**
+             * Sets the mouse listener currently being used by this game.
+             *
+             * @param listener The new mouse listener that this game should use.
+             */
+            @Override
+            public void setMouseListener(MouseListener listener) {
+
+            }
+        };
     }
 
     /**

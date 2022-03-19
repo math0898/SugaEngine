@@ -1,6 +1,6 @@
 package sugaEngine.threads;
 
-import sugaEngine.Game;
+import sugaEngine.GameInterface;
 
 /**
  * A thread used to run game logic once every 1/60th of a second.
@@ -12,7 +12,7 @@ public class GameLogicThread extends SugaThread {
     /**
      * The game that should be called once every 1/60th of a second.
      */
-    private final Game game;
+    private final GameInterface game;
 
     /**
      * A constant on how fast game logic should be called.
@@ -25,7 +25,7 @@ public class GameLogicThread extends SugaThread {
      * @param game The game to run.
      * @param rate How many times the logic should be run per second as a maximum.
      */
-    public GameLogicThread (Game game, int rate) {
+    public GameLogicThread (GameInterface game, int rate) {
         this.game = game;
         LOGIC_RATE = rate;
         game.setThread(this);

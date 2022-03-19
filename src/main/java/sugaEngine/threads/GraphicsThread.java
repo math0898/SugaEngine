@@ -63,7 +63,6 @@ public class GraphicsThread extends SugaThread {
             if (!paused) panel.repaint();
             frames++;
         }
-//        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)); todo Need a way to get frame to graphics thread.
     }
 
     /**
