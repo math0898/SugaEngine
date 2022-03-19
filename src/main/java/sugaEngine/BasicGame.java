@@ -87,6 +87,7 @@ public abstract class BasicGame implements GameInterface {
      *
      * @param thread The thread that will be calling loop() on this object.
      */
+    @Override
     public final void setThread (SugaThread thread) {
         this.thread = thread;
     }
@@ -104,6 +105,7 @@ public abstract class BasicGame implements GameInterface {
     /**
      * The main logic loop for the game. Will be called depending on the rate of the logic thread.
      */
+    @Override
     public void loop () {
         physics.checkCollisions();
         for (AIAgent a : agents) a.logic();
@@ -113,6 +115,7 @@ public abstract class BasicGame implements GameInterface {
     /**
      * Processes inputs given by players. Is run during pause.
      */
+    @Override
     public void processInput () {
         Stack<MouseEvent> mice = mouseListener.getEvents();
         while (mice.size() > 0) {

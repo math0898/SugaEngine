@@ -84,4 +84,13 @@ public class GameKeyListener implements KeyListener {
     public Stack<Integer> getKeysDepressed () {
         return keysDepressed;
     }
+
+    /**
+     * Sets the frame that this key listener is listening to. Does not deregister with the old frame.
+     *
+     * @param frame The new frame to listen to.
+     */
+    public void setFrame (JFrame frame) {
+        frame.addKeyListener(this);
+    }
 }
