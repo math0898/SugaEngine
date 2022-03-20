@@ -15,19 +15,19 @@ import static org.mockito.Mockito.mock;
  *
  * @author Sugaku
  */
-class GameTest { // todo: Implement unit tests.
+class BasicGameTest { // todo: Implement unit tests.
 
     /**
      * The game instance being used in each test.
      */
-    private Game game;
+    private BasicGame game;
 
     /**
      * Resets the game instance before each unit test runs.
      */
     @BeforeEach
     void setUp () {
-        game = new Game(mock(GraphicsPanel.class), mock(GameKeyListener.class), mock(GameMouseListener.class)) {};
+        game = new BasicGame(mock(GraphicsPanel.class), mock(GameKeyListener.class), mock(GameMouseListener.class)) {};
     }
 
     /**
