@@ -1,5 +1,6 @@
-package sugaEngine.graphics;
+package sugaEngine.graphics.ui.menu;
 
+import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.input.KeyValues;
 
 import java.util.List;
