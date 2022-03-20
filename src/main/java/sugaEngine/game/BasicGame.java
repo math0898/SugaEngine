@@ -2,6 +2,7 @@ package sugaEngine.game;
 
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.graphics.DrawListener;
+import sugaEngine.graphics.GraphicsPanelInterface;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.input.KeyValues;
@@ -52,7 +53,7 @@ public class BasicGame implements GameInterface {
     /**
      * The graphics panel that should be used to register draw listeners to.
      */
-    protected GraphicsPanel panel;
+    protected GraphicsPanelInterface panel;
 
     /**
      * The key listener that is being used by this game.
@@ -76,7 +77,7 @@ public class BasicGame implements GameInterface {
      * @param listener The game key listener being used by this game object.
      * @param mouseListener The mouse listener being using by this game object.
      */
-    public BasicGame (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
+    public BasicGame (GraphicsPanelInterface panel, GameKeyListener listener, GameMouseListener mouseListener) {
         this.panel = panel;
         keyListener = listener;
         this.mouseListener = mouseListener;
@@ -217,7 +218,7 @@ public class BasicGame implements GameInterface {
      * @return The panel used by the server.
      */
     @Override
-    public GraphicsPanel getPanel () {
+    public GraphicsPanelInterface getPanel () {
         return panel;
     }
 

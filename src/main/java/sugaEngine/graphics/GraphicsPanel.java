@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * @author Sugaku
  */
-public abstract class GraphicsPanel extends JPanel {
+public abstract class GraphicsPanel extends JPanel implements GraphicsPanelInterface {
 
     /**
      * The serial version of the panel.

@@ -2,6 +2,7 @@ package sugaEngine.game;
 
 import sugaEngine.graphics.DrawListener;
 import sugaEngine.graphics.GraphicsPanel;
+import sugaEngine.graphics.GraphicsPanelInterface;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.threads.SugaThread;
 
@@ -87,7 +88,7 @@ public interface GameInterface {
      *
      * @return The panel used by the server.
      */
-    GraphicsPanel getPanel ();
+    GraphicsPanelInterface getPanel ();
 
     /**
      * Accessor method for the mouse listener used by the server.

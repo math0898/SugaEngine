@@ -3,13 +3,14 @@ package sugaEngine.game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import sugaEngine.graphics.GraphicsPanel;
+import sugaEngine.graphics.DrawListener;
+import sugaEngine.graphics.GraphicsPanelInterface;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.threads.SugaThread;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.*;
 
 /**
  * UnitTests for the abstract Game class.
@@ -24,13 +25,17 @@ class BasicGameTest { // todo: Implement unit tests.
     private BasicGame game;
 
     /**
+     * An instance of the graphics panel which is used for testing.
+     */
+    GraphicsPanelInterface panel;
+
+    /**
      * Resets the game instance before each unit test runs.
      */
     @BeforeEach
     void setUp () {
-        GraphicsPanel panel = mock(GraphicsPanel.class);
-        Mockito.doReturn(true).when(panel).registerListener(null);
-        game = new BasicGame(mock(GraphicsPanel.class), mock(GameKeyListener.class), mock(GameMouseListener.class));
+        panel = mock(GraphicsPanelInterface.class);
+        game = new BasicGame(panel, mock(GameKeyListener.class), mock(GameMouseListener.class));
     }
 
     /**
@@ -87,11 +92,13 @@ class BasicGameTest { // todo: Implement unit tests.
     }
 
     /**
-     *
+     * Adding a DrawListener to the game should result in it being registered.
      */
     @Test
     void addDrawingListener () {
-
+        DrawListener listener = Mockito.mock(DrawListener.class);
+        game.addDrawingListener(listener);
+        verify(panel, times(1)).registerListener(listener);
     }
 
     @Test
