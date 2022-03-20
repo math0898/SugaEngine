@@ -1,4 +1,4 @@
-package sugaEngine;
+package sugaEngine.game;
 
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.input.GameKeyListener;

@@ -1,4 +1,4 @@
-package sugaEngine;
+package sugaEngine.game;
 
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.graphics.DrawListener;
@@ -16,7 +16,7 @@ import java.util.*;
  *
  * @author Sugaku
  */
-public abstract class BasicGame implements GameInterface {
+public class BasicGame implements GameInterface {
 
     /**
      * These are keys that are currently being held. That can be useful information in it of itself but this is used to

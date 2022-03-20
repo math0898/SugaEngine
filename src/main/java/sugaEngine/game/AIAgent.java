@@ -1,4 +1,4 @@
-package sugaEngine;
+package sugaEngine.game;
 
 /**
  * AIAgents are bits of logic that effect a single object in the game.

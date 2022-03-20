@@ -1,7 +1,8 @@
-package sugaEngine;
+package sugaEngine.game;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
@@ -27,7 +28,9 @@ class BasicGameTest { // todo: Implement unit tests.
      */
     @BeforeEach
     void setUp () {
-        game = new BasicGame(mock(GraphicsPanel.class), mock(GameKeyListener.class), mock(GameMouseListener.class)) {};
+        GraphicsPanel panel = mock(GraphicsPanel.class);
+        Mockito.doReturn(true).when(panel).registerListener(null);
+        game = new BasicGame(mock(GraphicsPanel.class), mock(GameKeyListener.class), mock(GameMouseListener.class));
     }
 
     /**
@@ -83,8 +86,12 @@ class BasicGameTest { // todo: Implement unit tests.
     void addAgent () {
     }
 
+    /**
+     *
+     */
     @Test
     void addDrawingListener () {
+
     }
 
     @Test

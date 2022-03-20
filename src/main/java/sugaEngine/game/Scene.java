@@ -1,4 +1,4 @@
-package sugaEngine;
+package sugaEngine.game;
 
 import sugaEngine.input.KeyValues;
 import java.awt.*;
