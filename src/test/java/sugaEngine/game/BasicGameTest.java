@@ -72,9 +72,31 @@ class BasicGameTest {
         assertNotEquals(t1, game.getThread(), "getThread() should not return an object equal to the one set.");
     }
 
+    /**
+     * Loop in the case of BasicGame should call the logic on AIAgents, GameObjects, and check physics for collisions.
+     */
     @Test
     void loop () {
-        fail();
+        GameObject o1 = mock(GameObject.class);
+        GameObject o2 = mock(GameObject.class);
+        AIAgent a1 = mock(AIAgent.class);
+        AIAgent a2 = mock(AIAgent.class);
+        game.physics = mock(PhysicsEngine.class);
+        game.addAgent(a1);
+        game.addAgent(a2);
+        game.addGameObject("o1", o1);
+        game.addGameObject("o2", o2);
+        verify(o1, times(0)).runLogic();
+        verify(o2, times(0)).runLogic();
+        verify(a1, times(0)).logic();
+        verify(a2, times(0)).logic();
+        verify(game.physics, times(0)).checkCollisions();
+        game.loop();
+        verify(o1, times(1)).runLogic();
+        verify(o2, times(1)).runLogic();
+        verify(a1, times(1)).logic();
+        verify(a2, times(1)).logic();
+        verify(game.physics, times(1)).checkCollisions();
     }
 
     @Test
@@ -136,9 +158,21 @@ class BasicGameTest {
         assertNotEquals(physics, game.physics, "Game should have a fresh physics system after clear.");
     }
 
+    /**
+     * Loading a scene should call scene.load() once to load everything. Returns false if a scene is not found, or
+     * loading fails.
+     */
     @Test
     void loadScene () {
-        fail();
+        Scene pass = mock(Scene.class);
+        when(pass.load(game)).thenReturn(true);
+        Scene fail = mock(Scene.class);
+        when(fail.load(game)).thenReturn(false);
+        game.scenes.put("pass", pass);
+        game.scenes.put("fail", fail);
+        assertFalse(game.loadScene("Not Found"), "Loading a scene should fail on a scene not present.");
+        assertTrue(game.loadScene("pass"), "Loading the scene 'pass' should work, and loadScene() should reflect that.");
+        assertFalse(game.loadScene("fail"), "Loading the scene 'fail' shouldn't work, and loadScene() should reflect that.");
     }
 
     /**
