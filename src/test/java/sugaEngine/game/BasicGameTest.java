@@ -7,6 +7,7 @@ import sugaEngine.graphics.DrawListener;
 import sugaEngine.graphics.GraphicsPanelInterface;
 import sugaEngine.input.GameKeyListener;
 import sugaEngine.input.GameMouseListener;
+import sugaEngine.physics.PhysicsEngine;
 import sugaEngine.threads.SugaThread;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +18,7 @@ import static org.mockito.Mockito.*;
  *
  * @author Sugaku
  */
-class BasicGameTest { // todo: Implement unit tests.
+class BasicGameTest {
 
     /**
      * The game instance being used in each test.
@@ -73,22 +74,37 @@ class BasicGameTest { // todo: Implement unit tests.
 
     @Test
     void loop () {
+        fail();
     }
 
     @Test
     void processInput () {
+        fail();
     }
 
     @Test
     void addGameObject () {
+        fail();
     }
 
     @Test
     void getGameObject () {
+        fail();
     }
 
+    /**
+     * Expected to add an agent so that its logic is called each time on loop.
+     *
+     * May fail depending on whether game.loop() is fully functional.
+     */
     @Test
     void addAgent () {
+        AIAgent a = mock(AIAgent.class);
+        game.loop();
+        verify(a, times(0)).logic();
+        game.addAgent(a);
+        game.loop(); // Assuming this is working correctly a.logic() should've been called.
+        verify(a, times(1)).logic();
     }
 
     /**
@@ -101,19 +117,57 @@ class BasicGameTest { // todo: Implement unit tests.
         verify(panel, times(1)).registerListener(listener);
     }
 
+    /**
+     * After calling clear all GameObjects, AIAgents, Physics objects, and DrawListeners.
+     */
     @Test
     void clear () {
+        PhysicsEngine physics = game.physics;
+        GameObject o = mock(GameObject.class);
+        game.addGameObject("obj", o);
+        AIAgent a = mock(AIAgent.class);
+        game.addAgent(a);
+        GraphicsPanelInterface p = mock(GraphicsPanelInterface.class);
+        game.panel = p;
+        game.clear();
+        verify(p, times(1)).clearListeners();
+        assertNull(game.getGameObject("obj"), "Game should no longer contain added object after clear.");
+        assertFalse(game.agents.contains(a), "Game should no longer contain added AIAgent after clear.");
+        assertNotEquals(physics, game.physics, "Game should have a fresh physics system after clear.");
     }
 
     @Test
     void loadScene () {
+        fail();
     }
 
+    /**
+     * Should allow access to the GraphicsPanel being used to draw.
+     */
     @Test
     void getPanel () {
+        GraphicsPanelInterface a = mock(GraphicsPanelInterface.class);
+        GraphicsPanelInterface b = mock(GraphicsPanelInterface.class);
+        game.panel = a;
+        assertEquals(a, game.getPanel(), "Game should return currently active panel.");
+        assertNotEquals(b, game.getPanel(), "Game should not return an unrelated panel.");
+        game.panel = b;
+        assertNotEquals(a, game.getPanel(), "When game is using a new panel the old should not be equal.");
+        assertEquals(b, game.getPanel(), "Game should be using updated panel.");
     }
 
+    /**
+     * Should allow access to the MouseListener being used by this game.
+     */
     @Test
     void getMouseListener () {
+        GameMouseListener a = mock(GameMouseListener.class);
+        GameMouseListener b = mock(GameMouseListener.class);
+        game.mouseListener = a;
+        assertEquals(a, game.getMouseListener(), "Game should return currently active mouse listener.");
+        assertNotEquals(b, game.getMouseListener(), "Game should not return an unrelated mouse listener.");
+        game.mouseListener = b;
+        assertNotEquals(a, game.getMouseListener(), "When game is using a new mouse listener the old should not be equal.");
+        assertEquals(b, game.getMouseListener(), "Game should be using updated mouse listener.");
     }
 }
