@@ -1,6 +1,6 @@
 package sugaEngine.threads;
 
-import sugaEngine.GameInterface;
+import sugaEngine.game.GameInterface;
 
 /**
  * A thread used to run game logic once every 1/60th of a second.

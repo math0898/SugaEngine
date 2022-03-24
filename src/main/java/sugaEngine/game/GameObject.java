@@ -1,4 +1,4 @@
-package sugaEngine;
+package sugaEngine.game;
 
 import sugaEngine.graphics.DrawListener;
 import sugaEngine.physics.Collidable;
