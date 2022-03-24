@@ -10,6 +10,8 @@ import sugaEngine.input.GameMouseListener;
 import sugaEngine.physics.PhysicsEngine;
 import sugaEngine.threads.SugaThread;
 
+import java.util.Stack;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -99,19 +101,42 @@ class BasicGameTest {
         verify(game.physics, times(1)).checkCollisions();
     }
 
+    /**
+     * Process input should read from the mouse and keyboard listeners.
+     */
     @Test
     void processInput () {
-        fail();
+        when(game.getMouseListener().getEvents()).thenReturn(new Stack<>());
+        when(game.keyListener.getKeysPressed()).thenReturn(new Stack<>());
+        when(game.keyListener.getKeysDepressed()).thenReturn(new Stack<>());
+        game.processInput();
+        verify(game.getMouseListener(), times(1)).getEvents();
+        verify(game.keyListener, times(1)).getKeysPressed();
+        verify(game.keyListener, times(1)).getKeysDepressed();
     }
 
+    /**
+     * Adding a game object should register it to be called with logic and drawing.
+     */
     @Test
     void addGameObject () {
-        fail();
+        GameObject o1 = mock(GameObject.class);
+        game.addGameObject("o1", o1);
+        verify(game.getPanel(), times(1)).registerListener(o1);
+        assertEquals(o1, game.getGameObject("o1"), "Added object should be present.");
+        game.loop();
+        verify(o1, times(1)).runLogic();
     }
 
+    /**
+     * Should be able to access added games.
+     */
     @Test
     void getGameObject () {
-        fail();
+        GameObject o1 = mock(GameObject.class);
+        game.addGameObject("o1", o1);
+        assertEquals(o1, game.getGameObject("o1"), "Should be able to get added object.");
+        assertNull(game.getGameObject("not-added"), "Un-added game object should return null.");
     }
 
     /**
