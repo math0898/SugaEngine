@@ -1,8 +1,9 @@
-package sugaEngine;
+package sugaEngine.game;
 
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.graphics.DrawListener;
-import sugaEngine.input.GameKeyListener;
+import sugaEngine.graphics.GraphicsPanelInterface;
+import sugaEngine.input.GameKeyListenerInterface;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.input.KeyValues;
 import sugaEngine.physics.PhysicsEngine;
@@ -16,13 +17,7 @@ import java.util.*;
  *
  * @author Sugaku
  */
-public abstract class Game {
-
-    /**
-     * These are keys that are currently being held. That can be useful information in it of itself but this is used to
-     * ignore future key pressed messages.
-     */
-    protected List<Integer> pressedKeys = new ArrayList<>();
+public class BasicGame implements GameInterface {
 
     /**
      * A list of game objects for this game. Their logic should be called every cycle.
@@ -52,12 +47,12 @@ public abstract class Game {
     /**
      * The graphics panel that should be used to register draw listeners to.
      */
-    protected GraphicsPanel panel;
+    protected GraphicsPanelInterface panel;
 
     /**
      * The key listener that is being used by this game.
      */
-    protected GameKeyListener keyListener;
+    protected GameKeyListenerInterface keyListener;
 
     /**
      * The mouse listener that is being used by this game.
@@ -76,7 +71,7 @@ public abstract class Game {
      * @param listener The game key listener being used by this game object.
      * @param mouseListener The mouse listener being using by this game object.
      */
-    public Game (GraphicsPanel panel, GameKeyListener listener, GameMouseListener mouseListener) {
+    public BasicGame (GraphicsPanelInterface panel, GameKeyListenerInterface listener, GameMouseListener mouseListener) {
         this.panel = panel;
         keyListener = listener;
         this.mouseListener = mouseListener;
@@ -87,8 +82,39 @@ public abstract class Game {
      *
      * @param thread The thread that will be calling loop() on this object.
      */
+    @Override
     public final void setThread (SugaThread thread) {
         this.thread = thread;
+    }
+
+    /**
+     * Sets the graphics panel being used by this game.
+     *
+     * @param panel The panel to assign to this game.
+     */
+    @Override
+    public void setPanel (GraphicsPanel panel) {
+        this.panel = panel;
+    }
+
+    /**
+     * Sets the key listener currently being used by this game.
+     *
+     * @param listener The new key listener that this game should use.
+     */
+    @Override
+    public void setKeyListener (GameKeyListenerInterface listener) {
+        this.keyListener = listener;
+    }
+
+    /**
+     * Sets the mouse listener currently being used by this game.
+     *
+     * @param listener The new mouse listener that this game should use.
+     */
+    @Override
+    public void setMouseListener (GameMouseListener listener) {
+        this.mouseListener = listener;
     }
 
     /**
@@ -97,6 +123,7 @@ public abstract class Game {
      *
      * @return The thread that is running this game instance.
      */
+    @Override
     public final SugaThread getThread () {
         return thread;
     }
@@ -104,6 +131,7 @@ public abstract class Game {
     /**
      * The main logic loop for the game. Will be called depending on the rate of the logic thread.
      */
+    @Override
     public void loop () {
         physics.checkCollisions();
         for (AIAgent a : agents) a.logic();
@@ -113,25 +141,19 @@ public abstract class Game {
     /**
      * Processes inputs given by players. Is run during pause.
      */
+    @Override
     public void processInput () {
         Stack<MouseEvent> mice = mouseListener.getEvents();
         while (mice.size() > 0) {
             MouseEvent e = mice.pop();
             loadedScene.mouseInput(e.getPoint(), e.getButton() == 1);
         }
-        Stack<Integer> keys = keyListener.getKeysPressed();
-        while (keys.size() > 0) {
-            int key = keys.pop();
-            if (pressedKeys.contains(key)) continue;
-            pressedKeys.add(key);
-            loadedScene.keyboardInput(KeyValues.toEnum(key), true);
-        }
-        keys = keyListener.getKeysDepressed();
-        while (keys.size() > 0) {
-            int key = keys.pop();
-            pressedKeys.remove((Integer) key);
-            loadedScene.keyboardInput(KeyValues.toEnum(key), false);
-        }
+        Stack<KeyValues> keys = keyListener.getKeyPresses();
+        while (keys.size() > 0)
+            loadedScene.keyboardInput(keys.pop(), true);
+        keys = keyListener.getKeyReleases();
+        while (keys.size() > 0)
+            loadedScene.keyboardInput(keys.pop(), false);
     }
 
     /**
@@ -140,6 +162,7 @@ public abstract class Game {
      * @param name The name of the game object. Can be used later to remove the item.
      * @param object The game object to add.
      */
+    @Override
     public void addGameObject (String name, GameObject object) {
         objects.put(name, object);
         panel.registerListener(object);
@@ -152,6 +175,7 @@ public abstract class Game {
      * @param name The name of the object to attempt to get.
      * @return The found object or null.
      */
+    @Override
     public GameObject getGameObject (String name) {
         return objects.get(name);
     }
@@ -161,6 +185,7 @@ public abstract class Game {
      *
      * @param agent The AIAgent to add into the list of agents.
      */
+    @Override
     public void addAgent (AIAgent agent) {
         agents.add(agent);
     }
@@ -171,6 +196,7 @@ public abstract class Game {
      *
      * @param listener The draw listener that should be registered to this panel.
      */
+    @Override
     public void addDrawingListener (DrawListener listener) {
         panel.registerListener(listener);
     }
@@ -178,6 +204,7 @@ public abstract class Game {
     /**
      * Clears all AIAgents, physics managers, GameObjects, and PanelListeners.
      */
+    @Override
     public void clear () {
         physics = new PhysicsEngine();
         agents = new ArrayList<>();
@@ -191,6 +218,7 @@ public abstract class Game {
      *
      * @param name The name of the scene to attempt loading.
      */
+    @Override
     public boolean loadScene (String name) {
         Scene scene = scenes.get(name);
         if (scene == null) return false;
@@ -206,7 +234,8 @@ public abstract class Game {
      *
      * @return The panel used by the server.
      */
-    public GraphicsPanel getPanel () {
+    @Override
+    public GraphicsPanelInterface getPanel () {
         return panel;
     }
 
@@ -215,6 +244,7 @@ public abstract class Game {
      *
      * @return The mouse listener used by the server.
      */
+    @Override
     public GameMouseListener getMouseListener () {
         return mouseListener;
     }

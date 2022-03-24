@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.github.math0898'
-version 'v1.1.1-BETA'
+version 'v1.2.1'
 
 repositories {
     mavenCentral()
@@ -22,19 +22,12 @@ java {
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+    testImplementation 'org.mockito:mockito-core:4.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 }
 
 test {
     useJUnitPlatform()
-}
-
-jar {
-    manifest {
-        attributes(
-                'Main-Class':'main.Main'
-        )
-    } from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 publishing {

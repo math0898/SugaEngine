@@ -1,4 +1,4 @@
-package sugaEngine;
+package sugaEngine.game;
 
 import sugaEngine.input.KeyValues;
 import java.awt.*;
@@ -13,7 +13,7 @@ public abstract class Scene {
     /**
      * The game instance that this scene is associated with.
      */
-    protected Game game;
+    protected GameInterface game;
 
     /**
      * Loads this scene into the given game.
@@ -21,7 +21,7 @@ public abstract class Scene {
      * @param game The game to load this scene into.
      * @return True if loading was successful. Otherwise, false.
      */
-    public boolean load (Game game) {
+    public boolean load (GameInterface game) {
         this.game = game;
         return true;
     }

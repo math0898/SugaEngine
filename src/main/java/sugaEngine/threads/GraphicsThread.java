@@ -2,8 +2,6 @@ package sugaEngine.threads;
 
 import sugaEngine.graphics.GraphicsPanel;
 
-import java.awt.event.WindowEvent;
-
 /**
  * A thread used to refresh the graphics of a panel as fast as possible.
  *
@@ -63,7 +61,6 @@ public class GraphicsThread extends SugaThread {
             if (!paused) panel.repaint();
             frames++;
         }
-//        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING)); todo Need a way to get frame to graphics thread.
     }
 
     /**

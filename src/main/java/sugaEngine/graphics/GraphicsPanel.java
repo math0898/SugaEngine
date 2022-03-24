@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * @author Sugaku
  */
-public abstract class GraphicsPanel extends JPanel {
+public abstract class GraphicsPanel extends JPanel implements GraphicsPanelInterface {
 
     /**
      * The serial version of the panel.
@@ -26,7 +26,7 @@ public abstract class GraphicsPanel extends JPanel {
     /**
      * A map of drawing listeners with their priority.
      */
-    protected Map<DrawListener.Priorities, ArrayList<DrawListener>> drawingListeners = new HashMap<>();
+    protected volatile Map<DrawListener.Priorities, ArrayList<DrawListener>> drawingListeners = new HashMap<>();
 
     /**
      * The thread that is currently running this GraphicsPanel. May be null in some cases.

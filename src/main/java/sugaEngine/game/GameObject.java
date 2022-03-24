@@ -1,4 +1,4 @@
-package sugaEngine;
+package sugaEngine.game;
 
 import sugaEngine.graphics.DrawListener;
 import sugaEngine.physics.Collidable;
@@ -44,7 +44,7 @@ public abstract class GameObject extends Collidable implements DrawListener {
      *
      * @return The acceleration vector.
      */
-    public Vector getAccel() {
+    public Vector getAccel () {
         return accel;
     }
 }

@@ -1,6 +1,5 @@
 package sugaEngine.physics;
 
-import sugaEngine.graphics.Graphics2d;
 import sugaEngine.graphics.GraphicsPanel;
 
 import java.awt.*;
