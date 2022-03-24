@@ -1,11 +1,12 @@
 package sugaEngine;
 
 import sugaEngine.graphics.GraphicsPanel;
-import sugaEngine.input.GameKeyListener;
+import sugaEngine.input.GameKeyListenerInterface;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.threads.GameLogicThread;
 import sugaEngine.threads.GraphicsThread;
 import sugaEngine.threads.SugaThread;
+import sugaEngine.game.GameInterface;
 
 import javax.swing.*;
 import java.awt.*;
@@ -71,7 +72,7 @@ public class GameEngine {
      * @param game          The game to attach to this window. Will override currently active panel or input listeners.
      */
     public static void launchGameWindow (int width, int height, String name, boolean border, GraphicsPanel panel,
-                                         Color background, int logicRate, int frameRate, GameKeyListener keyListener,
+                                         Color background, int logicRate, int frameRate, GameKeyListenerInterface keyListener,
                                          GameMouseListener mouseListener, GameInterface game) {
         panel.setBackground(background);
         frame = new JFrame(name);

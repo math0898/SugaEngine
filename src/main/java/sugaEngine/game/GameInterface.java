@@ -1,7 +1,9 @@
 package sugaEngine.game;
 
 import sugaEngine.graphics.DrawListener;
+import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.graphics.GraphicsPanelInterface;
+import sugaEngine.input.GameKeyListenerInterface;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.threads.SugaThread;
 
@@ -19,6 +21,27 @@ public interface GameInterface {
      * @param thread The thread that will be calling loop() on this object.
      */
     void setThread (SugaThread thread);
+
+    /**
+     * Sets the graphics panel being used by this game.
+     *
+     * @param panel The panel to assign to this game.
+     */
+    void setPanel (GraphicsPanel panel);
+
+    /**
+     * Sets the key listener currently being used by this game.
+     *
+     * @param listener The new key listener that this game should use.
+     */
+    void setKeyListener (GameKeyListenerInterface listener);
+
+    /**
+     * Sets the mouse listener currently being used by this game.
+     *
+     * @param listener The new mouse listener that this game should use.
+     */
+    void setMouseListener (GameMouseListener listener);
 
     /**
      * Accessor method for the thread that is calling loop(). This can be used to determine whether the game has stopped

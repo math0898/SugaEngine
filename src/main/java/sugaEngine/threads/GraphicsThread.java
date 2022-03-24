@@ -2,8 +2,6 @@ package sugaEngine.threads;
 
 import sugaEngine.graphics.GraphicsPanel;
 
-import java.awt.event.WindowEvent;
-
 /**
  * A thread used to refresh the graphics of a panel as fast as possible.
  *

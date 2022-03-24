@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import sugaEngine.graphics.DrawListener;
 import sugaEngine.graphics.GraphicsPanelInterface;
-import sugaEngine.input.GameKeyListener;
+import sugaEngine.input.GameKeyListenerInterface;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.physics.PhysicsEngine;
 import sugaEngine.threads.SugaThread;
@@ -38,7 +38,7 @@ class BasicGameTest {
     @BeforeEach
     void setUp () {
         panel = mock(GraphicsPanelInterface.class);
-        game = new BasicGame(panel, mock(GameKeyListener.class), mock(GameMouseListener.class));
+        game = new BasicGame(panel, mock(GameKeyListenerInterface.class), mock(GameMouseListener.class));
     }
 
     /**
@@ -107,12 +107,12 @@ class BasicGameTest {
     @Test
     void processInput () {
         when(game.getMouseListener().getEvents()).thenReturn(new Stack<>());
-        when(game.keyListener.getKeysPressed()).thenReturn(new Stack<>());
-        when(game.keyListener.getKeysDepressed()).thenReturn(new Stack<>());
+        when(game.keyListener.getKeyPresses()).thenReturn(new Stack<>());
+        when(game.keyListener.getKeyReleases()).thenReturn(new Stack<>());
         game.processInput();
         verify(game.getMouseListener(), times(1)).getEvents();
-        verify(game.keyListener, times(1)).getKeysPressed();
-        verify(game.keyListener, times(1)).getKeysDepressed();
+        verify(game.keyListener, times(1)).getKeyPresses();
+        verify(game.keyListener, times(1)).getKeyReleases();
     }
 
     /**

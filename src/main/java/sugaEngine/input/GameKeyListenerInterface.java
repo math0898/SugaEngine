@@ -1,5 +1,6 @@
 package sugaEngine.input;
 
+import javax.swing.*;
 import java.awt.event.KeyListener;
 import java.util.Stack;
 
@@ -44,4 +45,11 @@ public interface GameKeyListenerInterface extends KeyListener {
      * @return The 'to handle' stack of key releases.
      */
     Stack<KeyValues> getKeyReleases ();
+
+    /**
+     * Sets the frame that this key listener is listening to. Does not deregister with the old frame.
+     *
+     * @param frame The new frame to listen to.
+     */
+    void setFrame (JFrame frame);
 }

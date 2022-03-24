@@ -25,7 +25,7 @@ public interface DrawListener {
         /**
          * Called for fundamental background elements.
          */
-        BACKGROUND;
+        BACKGROUND
     }
 
     /**

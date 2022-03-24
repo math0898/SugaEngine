@@ -170,4 +170,13 @@ public class StackGameKeyListener implements GameKeyListenerInterface {
     public Stack<KeyValues> getKeyReleases () {
         return keysReleased;
     }
+
+    /**
+     * Sets the frame that this key listener is listening to. Does not deregister with the old frame.
+     *
+     * @param frame The new frame to listen to.
+     */
+    public void setFrame (JFrame frame) {
+        frame.addKeyListener(this);
+    }
 }

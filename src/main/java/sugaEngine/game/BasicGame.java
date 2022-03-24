@@ -3,7 +3,7 @@ package sugaEngine.game;
 import sugaEngine.graphics.GraphicsPanel;
 import sugaEngine.graphics.DrawListener;
 import sugaEngine.graphics.GraphicsPanelInterface;
-import sugaEngine.input.GameKeyListener;
+import sugaEngine.input.GameKeyListenerInterface;
 import sugaEngine.input.GameMouseListener;
 import sugaEngine.input.KeyValues;
 import sugaEngine.physics.PhysicsEngine;
@@ -18,12 +18,6 @@ import java.util.*;
  * @author Sugaku
  */
 public class BasicGame implements GameInterface {
-
-    /**
-     * These are keys that are currently being held. That can be useful information in it of itself but this is used to
-     * ignore future key pressed messages.
-     */
-    protected List<Integer> pressedKeys = new ArrayList<>();
 
     /**
      * A list of game objects for this game. Their logic should be called every cycle.
@@ -58,7 +52,7 @@ public class BasicGame implements GameInterface {
     /**
      * The key listener that is being used by this game.
      */
-    protected GameKeyListener keyListener;
+    protected GameKeyListenerInterface keyListener;
 
     /**
      * The mouse listener that is being used by this game.
@@ -77,7 +71,7 @@ public class BasicGame implements GameInterface {
      * @param listener The game key listener being used by this game object.
      * @param mouseListener The mouse listener being using by this game object.
      */
-    public BasicGame (GraphicsPanelInterface panel, GameKeyListener listener, GameMouseListener mouseListener) {
+    public BasicGame (GraphicsPanelInterface panel, GameKeyListenerInterface listener, GameMouseListener mouseListener) {
         this.panel = panel;
         keyListener = listener;
         this.mouseListener = mouseListener;
@@ -91,6 +85,36 @@ public class BasicGame implements GameInterface {
     @Override
     public final void setThread (SugaThread thread) {
         this.thread = thread;
+    }
+
+    /**
+     * Sets the graphics panel being used by this game.
+     *
+     * @param panel The panel to assign to this game.
+     */
+    @Override
+    public void setPanel (GraphicsPanel panel) {
+        this.panel = panel;
+    }
+
+    /**
+     * Sets the key listener currently being used by this game.
+     *
+     * @param listener The new key listener that this game should use.
+     */
+    @Override
+    public void setKeyListener (GameKeyListenerInterface listener) {
+        this.keyListener = listener;
+    }
+
+    /**
+     * Sets the mouse listener currently being used by this game.
+     *
+     * @param listener The new mouse listener that this game should use.
+     */
+    @Override
+    public void setMouseListener (GameMouseListener listener) {
+        this.mouseListener = listener;
     }
 
     /**
@@ -124,19 +148,12 @@ public class BasicGame implements GameInterface {
             MouseEvent e = mice.pop();
             loadedScene.mouseInput(e.getPoint(), e.getButton() == 1);
         }
-        Stack<Integer> keys = keyListener.getKeysPressed();
-        while (keys.size() > 0) {
-            int key = keys.pop();
-            if (pressedKeys.contains(key)) continue;
-            pressedKeys.add(key);
-            loadedScene.keyboardInput(KeyValues.toEnum(key), true);
-        }
-        keys = keyListener.getKeysDepressed();
-        while (keys.size() > 0) {
-            int key = keys.pop();
-            pressedKeys.remove((Integer) key);
-            loadedScene.keyboardInput(KeyValues.toEnum(key), false);
-        }
+        Stack<KeyValues> keys = keyListener.getKeyPresses();
+        while (keys.size() > 0)
+            loadedScene.keyboardInput(keys.pop(), true);
+        keys = keyListener.getKeyReleases();
+        while (keys.size() > 0)
+            loadedScene.keyboardInput(keys.pop(), false);
     }
 
     /**

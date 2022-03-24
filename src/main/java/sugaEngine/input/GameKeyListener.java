@@ -20,13 +20,4 @@ public class GameKeyListener extends StackGameKeyListener {
     public GameKeyListener (JFrame frame) {
         super(frame);
     }
-
-    /**
-     * Sets the frame that this key listener is listening to. Does not deregister with the old frame.
-     *
-     * @param frame The new frame to listen to.
-     */
-    public void setFrame (JFrame frame) {
-        frame.addKeyListener(this);
-    }
 }
