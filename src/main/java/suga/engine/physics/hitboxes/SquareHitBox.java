@@ -1,6 +1,6 @@
 package suga.engine.physics.hitboxes;
 
-import suga.engine.graphics.AbstractGraphicsPanel;
+import suga.engine.graphics.GraphicsPanel;
 import suga.engine.physics.Vector;
 
 import java.awt.*;
@@ -10,11 +10,11 @@ import java.util.List;
 
 /**
  * Every collidable object needs a HitBox. This is a box where if a test point overlaps with a box then a collision
- * occurs.
+ * occurs. This hit box does not interact with the z component of objects, and thus makes a
  *
  * @author Sugaku
  */
-public abstract class SquareHitBox implements HitBox {
+public class SquareHitBox implements HitBox {
 
     /**
      * The current position of the game object.
@@ -32,12 +32,27 @@ public abstract class SquareHitBox implements HitBox {
     protected final double height;
 
     /**
-     * Creates a new HitBox with the given relative sizes in the horizontal and vertical directions.
+     * Creates a new square hit box with the given position and relative sizes.
      *
-     * @param width The width of the HitBox.
-     * @param height The height of the HitBox.
+     * @param width  The width of the hit box.
+     * @param height The height of the hit box.
+     * @param pos    The center position of this hit box.
      */
-    public SquareHitBox(double width, double height) {
+    public SquareHitBox (double width, double height, Vector pos) {
+        this.width = width;
+        this.height = height;
+        this.pos = pos;
+    }
+
+    /**
+     * Creates a new square hit box with the given relative sizes in the horizontal and vertical directions. This hit
+     * box will be centered at (0, 0, 0) until pos is updated with {@link #setPos(Vector)}.
+     *
+     * @param width  The width of the hit box.
+     * @param height The height of the hit box.
+     */
+    public SquareHitBox (double width, double height) {
+        pos = Vector.ZERO;
         this.width = width;
         this.height = height;
     }
@@ -66,6 +81,7 @@ public abstract class SquareHitBox implements HitBox {
      * @param test The point to test. Represented in vector form.
      * @return True if and only if the test point is inside this HitBox.
      */
+    @Override
     public boolean isInside (Vector test) {
         if (test.getX() > pos.getX() - (width / 2.0) && test.getX() < pos.getX() + (width / 2.0))
             return test.getY() > pos.getY() - (height / 2.0) && test.getY() < pos.getY() + (height / 2.0);
@@ -78,9 +94,12 @@ public abstract class SquareHitBox implements HitBox {
      * @param test The point to test. Represented in vector form.
      * @return True if and only if the test point is on the boundary of this HitBox.
      */
+    @Override
     public boolean touching (Vector test) {
-        if (test.getX() >= pos.getX() - (width / 2.0) && test.getX() <= pos.getX() + (width / 2.0))
+        if (test.getX() == pos.getX() - (width / 2.0) || test.getX() == pos.getX() + (width / 2.0))
             return test.getY() >= pos.getY() - (height / 2.0) && test.getY() <= pos.getY() + (height / 2.0);
+        else if (test.getY() == pos.getY() - (height / 2.0) || test.getY() == pos.getY() + (height / 2.0))
+            return test.getX() >= pos.getX() - (width / 2.0) && test.getX() <= pos.getX() + (width / 2.0);
         return false;
     }
 
@@ -89,6 +108,7 @@ public abstract class SquareHitBox implements HitBox {
      *
      * @return A list of test points to look for collisions at.
      */
+    @Override
     public Collection<Vector> getTestPoints () {
         List<Vector> vectors = new ArrayList<>();
         vectors.add(new Vector(pos.getX() + (width / 2.0), pos.getY() + (height / 2.0), pos.getZ()));
@@ -103,24 +123,35 @@ public abstract class SquareHitBox implements HitBox {
      *
      * @return Returns the current position of this HitBox.
      */
+    @Override
     public Vector getPos () {
         return pos;
     }
 
     /**
-     * Draws the test points for this HitBox on the given 2dGraphics panel.
+     * Sets the center position of this hit box. Used to center hit boxes on game objects.
      *
-     * @param panel The panel to draw the HitBox test points to.
-     * @param color The color to draw the test points as.
+     * @param pos The new center position of this hit box.
      */
-    public void drawHitBox (AbstractGraphicsPanel panel, Color color) {
+    @Override
+    public void setPos (Vector pos) {
+        this.pos = pos;
+    }
+
+    /**
+     * Draws this hit box to the given graphics panel. Different hit boxes may appear differently when drawn.
+     *
+     * @param panel The panel to draw the hit box test points to.
+     */
+    @Override
+    public void drawHitBox (GraphicsPanel panel) {
         int y = (int) (pos.getY() + (height / 2.0));
         int x = (int) (pos.getX() - (width / 2.0));
-        for (int i = x; i <= (int) (pos.getX() + (width / 2.0)); i++) panel.setPixel(i, y, color);
-        for (int i = (int) (pos.getY() - (height / 2.0)); i <= y; i++) panel.setPixel(x, i, color);
+        for (int i = x; i <= (int) (pos.getX() + (width / 2.0)); i++) panel.setPixel(i, y, Color.BLUE.brighter());
+        for (int i = (int) (pos.getY() - (height / 2.0)); i <= y; i++) panel.setPixel(x, i, Color.BLUE.brighter());
         y = (int) (pos.getY() - (height / 2.0));
         x = (int) (pos.getX() + (width / 2.0));
-        for (int i = (int) (pos.getX() - (width / 2.0)); i <= x; i++) panel.setPixel(i, y, color);
-        for (int i = y; i <= (int) (pos.getY() + (height / 2.0)); i++) panel.setPixel(x, i, color);
+        for (int i = (int) (pos.getX() - (width / 2.0)); i <= x; i++) panel.setPixel(i, y, Color.BLUE.brighter());
+        for (int i = y; i <= (int) (pos.getY() + (height / 2.0)); i++) panel.setPixel(x, i, Color.BLUE.brighter());
     }
 }

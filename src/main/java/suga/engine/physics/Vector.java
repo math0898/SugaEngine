@@ -8,6 +8,13 @@ package suga.engine.physics;
 public class Vector {
 
     /**
+     * The zero vector, or zero position. Helpful when creating new objects or nullifying velocity or acceleration.
+     * Modifying this vector with {@link #setX(double)}, {@link #setY(double)}, or {@link #setZ(double)} will result in
+     * undefined behavior.
+     */
+    public static final Vector ZERO = new Vector();
+
+    /**
      * The x value of this vector.
      */
     private double x;
@@ -21,6 +28,15 @@ public class Vector {
      * The z value of this vector.
      */
     private double z;
+
+    /**
+     * Creates a new vector at (0, 0, 0).
+     */
+    public Vector () {
+        x = 0;
+        y = 0;
+        z = 0;
+    }
 
     /**
      * Creates a new vector with the given values of x, y, and z.
