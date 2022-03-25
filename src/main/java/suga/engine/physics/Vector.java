@@ -141,6 +141,18 @@ public class Vector {
     }
 
     /**
+     * Updates this vector to have the values of the given vector. Useful when multiple objects need the position of an
+     * object, and they all need to be updated.
+     *
+     * @param vec The vector to pull values from and assign to this vector.
+     */
+    public void update (Vector vec) {
+        x = vec.x;
+        y = vec.y;
+        z = vec.z;
+    }
+
+    /**
      * Converts this vector into a string.
      *
      * @return The string representation of this object.

@@ -1,15 +1,14 @@
 package suga.engine.game.objects;
 
 import suga.engine.graphics.DrawListener;
-import suga.engine.physics.AbstractCollidable;
-import suga.engine.physics.Vector;
+import suga.engine.physics.collidables.ElasticCollider;
 
 /**
  * A game object has its own physical position within the world, and a DrawListener to draw it each frame.
  *
  * @author Sugaku
  */
-public abstract class AbstractGameObject extends AbstractCollidable implements DrawListener {
+public abstract class AbstractGameObject extends ElasticCollider implements DrawListener {
 
     /**
      * Creates a new Collidable object with the immutable property set to either true or false.
@@ -19,32 +18,15 @@ public abstract class AbstractGameObject extends AbstractCollidable implements D
      * @param height The height of the HitBox.
      */
     public AbstractGameObject (boolean immutable, double width, double height) {
-        super(immutable, width, height);
+//        super(immutable, width, height);
     }
 
     /**
      * Called every logic frame to run the logic on this GameObject.
      */
+    @Deprecated // Physics engine will update object positions now using Physical.update();
     public void runLogic () {
-        pos.add(velocity);
-        if (velocity.magnitude() < 25 && accel.magnitude() > 0 || velocity.magnitude() > 25 && accel.magnitude() < 0) velocity.add(accel);
-    }
-
-    /**
-     * Accessor method for the velocity vector of the game object.
-     *
-     * @return The velocity vector.
-     */
-    public Vector getVelocity () {
-        return velocity;
-    }
-
-    /**
-     * Accessor method for the acceleration vector of the game object.
-     *
-     * @return The acceleration vector.
-     */
-    public Vector getAccel () {
-        return accel;
+//        pos.add(velocity);
+//        if (velocity.magnitude() < 25 && accel.magnitude() > 0 || velocity.magnitude() > 25 && accel.magnitude() < 0) velocity.add(accel);
     }
 }
