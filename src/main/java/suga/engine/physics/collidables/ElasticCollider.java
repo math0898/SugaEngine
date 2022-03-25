@@ -11,6 +11,11 @@ import suga.engine.physics.hitboxes.HitBox;
 public class ElasticCollider implements Collidable { // todo implement.
 
     /**
+     * The mass of this ElasticCollider.
+     */
+    protected double mass = 1.0; // todo, setters, getters, and constructors.
+
+    /**
      * The current position of this ElasticCollider.
      */
     protected Vector pos;
@@ -115,7 +120,7 @@ public class ElasticCollider implements Collidable { // todo implement.
      */
     @Override
     public void collision (Collidable obj) {
-
+        touch(obj);
     }
 
     /**

@@ -8,50 +8,62 @@ import static org.junit.jupiter.api.Assertions.*;
 class ElasticColliderTest { // todo implement.
 
     @BeforeEach
-    void setUp() {
+    void setUp () {
+
     }
 
     @Test
-    void getPos() {
+    void getPos () {
+
     }
 
     @Test
-    void setPos() {
+    void setPos () {
+
     }
 
     @Test
-    void getVelocity() {
+    void getVelocity () {
+
     }
 
     @Test
-    void setVelocity() {
+    void setVelocity () {
+
     }
 
     @Test
-    void getAcceleration() {
+    void getAcceleration () {
+
     }
 
     @Test
-    void setAcceleration() {
+    void setAcceleration () {
+
     }
 
     @Test
-    void update() {
+    void update () {
+
     }
 
     @Test
-    void getHitBox() {
+    void getHitBox () {
+
     }
 
     @Test
-    void setHitBox() {
+    void setHitBox () {
+
     }
 
     @Test
-    void collision() {
+    void collision () {
+
     }
 
     @Test
-    void touch() {
+    void touch () {
+
     }
 }
