@@ -19,7 +19,7 @@ public class SquareHitBox implements HitBox {
     /**
      * The current position of the game object.
      */
-    protected Vector pos;
+    protected Vector pos = Vector.ZERO;
 
     /**
      * The width of the HitBox.
@@ -39,8 +39,7 @@ public class SquareHitBox implements HitBox {
      * @param pos    The center position of this hit box.
      */
     public SquareHitBox (double width, double height, Vector pos) {
-        this.width = width;
-        this.height = height;
+        this(width, height);
         this.pos = pos;
     }
 
@@ -52,7 +51,6 @@ public class SquareHitBox implements HitBox {
      * @param height The height of the hit box.
      */
     public SquareHitBox (double width, double height) {
-        pos = Vector.ZERO;
         this.width = width;
         this.height = height;
     }

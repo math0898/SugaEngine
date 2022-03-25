@@ -2,9 +2,18 @@ package suga.engine.physics.hitboxes;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import suga.engine.graphics.GraphicsPanel;
 import suga.engine.physics.Vector;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Random;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Unit tests for the SquareHitBox implementation of HitBox.
@@ -23,7 +32,7 @@ class SquareHitBoxTest {
      */
     @BeforeEach
     void setUp () {
-        hitBox = new SquareHitBox(20, 20); // 10 in each direction from 0.
+        hitBox = new SquareHitBox(20, 20, Vector.ZERO); // 10 in each direction from 0.
     }
 
     /**
@@ -62,23 +71,46 @@ class SquareHitBoxTest {
                 assertFalse(hitBox.isInside(new Vector(x, y, 0)), "Should be outside of hit box (" + x + ", " + y + ").");
     }
 
+    /**
+     * A square should have four test points, one at each corner.
+     */
     @Test
     void getTestPoints () {
-        fail("unimplemented");
+        Collection<Vector> points = hitBox.getTestPoints();
+        Collection<Vector> expected = new ArrayList<>(Arrays.asList(new Vector(10, 10, 0), new Vector(10, -10, 0),
+                                                                  new Vector(-10, 10, 0), new Vector(-10, -10, 0)));
+        for (Vector v : expected)
+            assertTrue(points.contains(v), "Expected to find: " + v.toString());
+        for (Vector v : points)
+            assertTrue(expected.contains(v), "Found unexpected point: " + v.toString());
     }
 
+    /**
+     * Should return the current center position of the hit box.
+     */
     @Test
     void getPos () {
-        fail("unimplemented");
+        assertEquals(Vector.ZERO, hitBox.getPos(), "Hit box was created to be centered at (0, 0, 0).");
     }
 
+    /**
+     * Setting the position should make getPos() return the new position.
+     */
     @Test
     void setPos () {
-        fail("unimplemented");
+        Random rand = new Random();
+        Vector v = new Vector(rand.nextDouble(), rand.nextDouble(), rand.nextDouble());
+        hitBox.setPos(v);
+        assertEquals(v, hitBox.getPos(), "Hit box was created to be centered at (0, 0, 0).");
     }
 
+    /**
+     * This test has the very low bar of drawing a single pixel to the given graphics panel.
+     */
     @Test
     void drawHitBox () {
-        fail("unimplemented");
+        GraphicsPanel panel = mock(GraphicsPanel.class);
+        hitBox.drawHitBox(panel);
+        verify(panel, atLeastOnce()).setPixel(Mockito.any(int.class), Mockito.any(int.class), Mockito.any(Color.class));
     }
 }
