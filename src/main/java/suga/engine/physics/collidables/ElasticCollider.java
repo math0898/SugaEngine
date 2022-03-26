@@ -8,12 +8,12 @@ import suga.engine.physics.hitboxes.HitBox;
  *
  * @author Sugaku
  */
-public class ElasticCollider implements Collidable { // todo implement.
+public class ElasticCollider implements Collidable {
 
     /**
      * The mass of this ElasticCollider.
      */
-    protected double mass = 1.0; // todo, setters, getters, and constructors.
+    protected double mass;
 
     /**
      * The current position of this ElasticCollider.
@@ -28,6 +28,29 @@ public class ElasticCollider implements Collidable { // todo implement.
     /**
      * The current acceleration of ElasticCollider.
      */
+    protected Vector acceleration;
+
+    /**
+     * The current HitBox of this ElasticCollider.
+     */
+    protected HitBox hitBox;
+
+    /**
+     * Creates a new ElasticCollider with the given position, velocity, acceleration, mass, and HitBox.
+     *
+     * @param pos The position of this ElasticCollider.
+     * @param vel The velocity of this ElasticCollider.
+     * @param accel The acceleration of this ElasticCollider.
+     * @param mass The mass of this ElasticCollider.
+     * @param hitBox The hitBox that should be used by this ElasticCollider.
+     */
+    public ElasticCollider (Vector pos, Vector vel, Vector accel, double mass, HitBox hitBox) {
+        this.pos = pos.clone();
+        this.velocity = vel.clone();
+        this.acceleration = accel.clone();
+        this.mass = mass;
+        this.hitBox = hitBox;
+    }
 
     /**
      * Gets the center position of this collidable object.
@@ -76,7 +99,7 @@ public class ElasticCollider implements Collidable { // todo implement.
      */
     @Override
     public Vector getAcceleration () {
-        return null;
+        return acceleration;
     }
 
     /**
@@ -86,7 +109,7 @@ public class ElasticCollider implements Collidable { // todo implement.
      */
     @Override
     public void setAcceleration (Vector accel) {
-
+        acceleration = accel;
     }
 
     /**
@@ -95,8 +118,8 @@ public class ElasticCollider implements Collidable { // todo implement.
      * @return The mass of this object.
      */
     @Override
-    public double getMass() {
-        return 0;
+    public double getMass () {
+        return mass;
     }
 
     /**
@@ -105,8 +128,8 @@ public class ElasticCollider implements Collidable { // todo implement.
      * @param mass The new mass of this object.
      */
     @Override
-    public void setMass(double mass) {
-
+    public void setMass (double mass) {
+        this.mass = mass;
     }
 
     /**
@@ -114,7 +137,8 @@ public class ElasticCollider implements Collidable { // todo implement.
      */
     @Override
     public void update () {
-
+        pos.add(velocity);
+        velocity.add(acceleration);
     }
 
     /**
@@ -124,7 +148,7 @@ public class ElasticCollider implements Collidable { // todo implement.
      */
     @Override
     public HitBox getHitBox () {
-        return null;
+        return hitBox;
     }
 
     /**
@@ -134,7 +158,8 @@ public class ElasticCollider implements Collidable { // todo implement.
      */
     @Override
     public void setHitBox (HitBox hitBox) {
-
+        this.hitBox = hitBox;
+        hitBox.setPos(pos); // Sync positions.
     }
 
     /**
@@ -154,8 +179,12 @@ public class ElasticCollider implements Collidable { // todo implement.
      */
     @Override
     public void touch (Collidable obj) {
-
-        obj.getVelocity();
+        if (obj.getMass() < Integer.MAX_VALUE) {
+            Vector v = obj.getVelocity();
+            velocity.setX((obj.getMass() * v.getX() * v.getX()) / (mass * v.getX() <= 0 ? -1 : 1));
+            velocity.setY((obj.getMass() * v.getY() * v.getY()) / (mass * v.getY() <= 0 ? -1 : 1));
+            velocity.setZ((obj.getMass() * v.getZ() * v.getZ()) / (mass * v.getZ() <= 0 ? -1 : 1));
+        } else velocity.scale(-1);
     }
 
     /**
@@ -166,12 +195,7 @@ public class ElasticCollider implements Collidable { // todo implement.
      */
     @SuppressWarnings("MethodDoesntCallSuperMethod")
     @Override
-    public Collidable clone () {
-        Collidable c = new ElasticCollider();
-        c.setVelocity(c.getVelocity().clone());
-        c.setPos(c.getPos().clone());
-        c.setAcceleration(c.getAcceleration().clone());
-        c.setHitBox(c.getHitBox()); // Perhaps HitBox needs a clone method too.
-        return c;
+    public ElasticCollider clone () {
+        return new ElasticCollider(pos, velocity, acceleration, mass, hitBox);
     }
 }

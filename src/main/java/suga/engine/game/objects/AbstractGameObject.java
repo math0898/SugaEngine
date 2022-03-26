@@ -1,6 +1,7 @@
 package suga.engine.game.objects;
 
 import suga.engine.graphics.DrawListener;
+import suga.engine.physics.Vector;
 import suga.engine.physics.collidables.ElasticCollider;
 
 /**
@@ -18,6 +19,7 @@ public abstract class AbstractGameObject extends ElasticCollider implements Draw
      * @param height The height of the HitBox.
      */
     public AbstractGameObject (boolean immutable, double width, double height) {
+        super(Vector.ZERO, Vector.ZERO, Vector.ZERO, 1, null);
 //        super(immutable, width, height);
     }
 
