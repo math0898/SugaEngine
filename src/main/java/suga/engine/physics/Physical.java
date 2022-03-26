@@ -50,6 +50,20 @@ public interface Physical {
     void setAcceleration (Vector accel);
 
     /**
+     * Accessor method for the mass of this object. Mass numbers larger than int max should be considered unmovable.
+     *
+     * @return The mass of this object.
+     */
+    double getMass ();
+
+    /**
+     * Sets the mass of this object.
+     *
+     * @param mass The new mass of this object.
+     */
+    void setMass (double mass);
+
+    /**
      * Updates this object's location based on the acceleration, velocity, and current position.
      */
     void update ();

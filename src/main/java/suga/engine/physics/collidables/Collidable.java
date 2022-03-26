@@ -37,4 +37,12 @@ public interface Collidable extends Physical {
      * @param obj The object that this collidable is touching.
      */
     void touch (Collidable obj);
+
+    /**
+     * Returns a deep copy of this collidable object. Used to preserve values of velocity, position, and acceleration
+     * during collision calculations.
+     *
+     * @return A copy of this object with the same position, velocity, and acceleration.
+     */
+    Collidable clone ();
 }

@@ -26,6 +26,10 @@ public class ElasticCollider implements Collidable { // todo implement.
     protected Vector velocity;
 
     /**
+     * The current acceleration of ElasticCollider.
+     */
+
+    /**
      * Gets the center position of this collidable object.
      *
      * @return The center position of this collidable object.
@@ -86,6 +90,26 @@ public class ElasticCollider implements Collidable { // todo implement.
     }
 
     /**
+     * Accessor method for the mass of this object. Mass numbers larger than int max should be considered unmovable.
+     *
+     * @return The mass of this object.
+     */
+    @Override
+    public double getMass() {
+        return 0;
+    }
+
+    /**
+     * Sets the mass of this object.
+     *
+     * @param mass The new mass of this object.
+     */
+    @Override
+    public void setMass(double mass) {
+
+    }
+
+    /**
      * Updates this object's location based on the acceleration, velocity, and current position.
      */
     @Override
@@ -131,5 +155,23 @@ public class ElasticCollider implements Collidable { // todo implement.
     @Override
     public void touch (Collidable obj) {
 
+        obj.getVelocity();
+    }
+
+    /**
+     * Returns a deep copy of this collidable object. Used to preserve values of velocity, position, and acceleration
+     * during collision calculations.
+     *
+     * @return A copy of this object with the same position, velocity, and acceleration.
+     */
+    @SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
+    public Collidable clone () {
+        Collidable c = new ElasticCollider();
+        c.setVelocity(c.getVelocity().clone());
+        c.setPos(c.getPos().clone());
+        c.setAcceleration(c.getAcceleration().clone());
+        c.setHitBox(c.getHitBox()); // Perhaps HitBox needs a clone method too.
+        return c;
     }
 }

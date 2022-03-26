@@ -26,7 +26,7 @@ public class BasicPhysicsEngine implements PhysicsEngine {
             Collidable master = objects.get(i);
             for (int j = i; j < objects.size(); j++) {
                 if (i == j) continue;
-                Collidable temp = objects.get(j);
+                Collidable temp = objects.get(j); // How many times are collisions called on a single object?
                 boolean touching = false;
                 boolean colliding = false;
                 for (Vector v : temp.getHitBox().getTestPoints()) {
@@ -40,12 +40,14 @@ public class BasicPhysicsEngine implements PhysicsEngine {
                     else if (temp.getHitBox().touching(v)) touching = true;
                 }
                 if (colliding) {
+                    Collidable mc = master.clone(); // Save values in master.
                     master.collision(temp);
-                    temp.collision(master);
+                    temp.collision(mc);
                 }
-                if (touching) {
-                    master.touch(temp);
-                    temp.touch(master);
+                if (touching && !colliding) {
+                    Collidable mc = master.clone(); // Save values in master.
+                    master.touch(temp.clone());
+                    temp.touch(mc);
                 }
             }
         }
