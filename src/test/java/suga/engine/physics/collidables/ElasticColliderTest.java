@@ -56,14 +56,32 @@ class ElasticColliderTest {
         assertEquals(v, collider.getPos(), "Collider shouldn't create a copy of vector.");
     }
 
+    /**
+     * The getVelocity method should return the velocity being used by the Elastic Collider. Modifying it should also
+     * modify the velocity of the collider.
+     */
     @Test
     void getVelocity () {
-        fail("Un-implemented");
+        assertEquals(new Vector(0, 1, 0), collider.getVelocity(), "Velocity should start at (0, 0, 0)");
+        Vector v = collider.getVelocity();
+        v.add(new Vector(1, 1, 1));
+        assertEquals(new Vector(1, 2, 1), collider.getVelocity(), "The returned position object shouldn't be a clone, and thus can be modified" +
+                "to modify the velocity of the elastic collider.");
     }
 
+    /**
+     * Expected behavior is to override the velocity vector being used by the object. Modifying the object after setting
+     * it to the velocity of the collider should modify the colliders velocity.
+     */
     @Test
     void setVelocity () {
-        fail("Un-implemented");
+        Vector v = new Vector(1, 0, 0);
+        collider.setVelocity(v);
+        assertEquals(v, collider.getVelocity(), "Collider should use given velocity vector.");
+        v.scale(5);
+        v.add(new Vector(-123, 9084, 91));
+        v.scale(3, -1, 2);
+        assertEquals(v, collider.getVelocity(), "Collider shouldn't create a copy of vector.");
     }
 
     @Test
