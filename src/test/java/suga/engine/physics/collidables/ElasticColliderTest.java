@@ -84,9 +84,17 @@ class ElasticColliderTest {
         assertEquals(v, collider.getVelocity(), "Collider shouldn't create a copy of vector.");
     }
 
+    /**
+     * The getAcceleration method should return the acceleration being used by the Elastic Collider. Modifying it should
+     * also modify the acceleration of the collider.
+     */
     @Test
     void getAcceleration () {
-        fail("Un-implemented");
+        assertEquals(Vector.ZERO, collider.getAcceleration(), "Acceleration should start at (0, 0, 0).");
+        Vector v = collider.getAcceleration();
+        v.add(new Vector(1, 1, 1));
+        assertEquals(new Vector(1, 2, 1), collider.getAcceleration(), "The returned acceleration object shouldn't be a clone, and thus can be modified" +
+                "to modify the acceleration of the elastic collider.");
     }
 
     @Test
