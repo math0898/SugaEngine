@@ -6,6 +6,7 @@ import suga.engine.graphics.DrawListener;
 import suga.engine.graphics.AbstractGraphicsPanel;
 import suga.engine.input.mouse.BasicMouseListener;
 import suga.engine.physics.BasicPhysicsEngine;
+import suga.engine.physics.PhysicsEngine;
 import suga.engine.threads.SugaThread;
 import suga.engine.graphics.GraphicsPanel;
 import suga.engine.input.keyboard.GameKeyListener;
@@ -29,7 +30,7 @@ public class BasicGame implements Game {
     /**
      * The physics engine that will be used with this game.
      */
-    protected BasicPhysicsEngine physics = new BasicPhysicsEngine();
+    protected PhysicsEngine physics = new BasicPhysicsEngine();
 
     /**
      * A list of AIAgents that should have their logic run every cycle.

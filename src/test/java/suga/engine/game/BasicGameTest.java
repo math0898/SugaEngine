@@ -10,6 +10,7 @@ import suga.engine.physics.BasicPhysicsEngine;
 import suga.engine.graphics.DrawListener;
 import suga.engine.graphics.GraphicsPanel;
 import suga.engine.input.keyboard.GameKeyListener;
+import suga.engine.physics.PhysicsEngine;
 import suga.engine.threads.SugaThread;
 
 import java.util.Stack;
@@ -171,7 +172,7 @@ class BasicGameTest {
      */
     @Test
     void clear () {
-        BasicPhysicsEngine physics = game.physics;
+        PhysicsEngine physics = game.physics;
         AbstractGameObject o = mock(AbstractGameObject.class);
         game.addGameObject("obj", o);
         AbstractAIAgent a = mock(AbstractAIAgent.class);
