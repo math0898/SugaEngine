@@ -69,6 +69,14 @@ class SquareHitBoxTest {
         for (int x : new int[]{ -15, -15, 15, 15 })
             for (int y : new int[]{ -15, 15, -15, 15 })
                 assertFalse(hitBox.isInside(new Vector(x, y, 0)), "Should be outside of hit box (" + x + ", " + y + ").");
+        assertFalse(hitBox.isInside(new Vector(5, 15, 0)), "Should be outside of hit box (5, 15).");
+        assertFalse(hitBox.isInside(new Vector(5, -15, 0)), "Should be outside of hit box (5, -15).");
+        assertFalse(hitBox.isInside(new Vector(-5, 15, 0)), "Should be outside of hit box (-5, 15).");
+        assertFalse(hitBox.isInside(new Vector(-5, -15, 0)), "Should be outside of hit box (-5, -15).");
+        assertFalse(hitBox.isInside(new Vector(15, 5, 0)), "Should be outside of hit box (15, 5).");
+        assertFalse(hitBox.isInside(new Vector(15, -5, 0)), "Should be outside of hit box (15, -5).");
+        assertFalse(hitBox.isInside(new Vector(-15, 5, 0)), "Should be outside of hit box (-15, 5).");
+        assertFalse(hitBox.isInside(new Vector(-15, -5, 0)), "Should be outside of hit box (-15, -5).");
     }
 
     /**
@@ -112,5 +120,33 @@ class SquareHitBoxTest {
         GraphicsPanel panel = mock(GraphicsPanel.class);
         hitBox.drawHitBox(panel);
         verify(panel, atLeastOnce()).setPixel(Mockito.any(int.class), Mockito.any(int.class), Mockito.any(Color.class));
+    }
+
+    /**
+     * A square HitBox has a constant height upon creation which should at no time change.
+     */
+    @Test
+    void getHeight () {
+        assertEquals(20, hitBox.getHeight(), "Testing HitBox was made with height 20, getHeight should return that.");
+        Random rand = new Random();
+        for (int i = 0; i < 100; i++) {
+            int h = rand.nextInt();
+            SquareHitBox shb = new SquareHitBox(10, h);
+            assertEquals(h, shb.getHeight(), "Square HitBox should return the height it was created at.");
+        }
+    }
+
+    /**
+     * A square HitBox has a constant width upon creation which should at no time change.
+     */
+    @Test
+    void getWidth () {
+        assertEquals(20, hitBox.getHeight(), "Testing HitBox was made with width 20, getWidth should return that.");
+        Random rand = new Random();
+        for (int i = 0; i < 100; i++) {
+            int w = rand.nextInt();
+            SquareHitBox shb = new SquareHitBox(w, 10);
+            assertEquals(w, shb.getWidth(), "Square HitBox should return the width it was created at.");
+        }
     }
 }

@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'jacoco'
 }
 
 group 'io.github.math0898'
