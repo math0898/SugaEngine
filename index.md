@@ -1,6 +1,15 @@
 ## Game Engine
 
-<details> 
+<style>
+    details > summary {
+        padding: 4px;
+        width: 200px;
+        border: none;
+        cursor: pointer;
+    }
+</style>
+
+<details>
     <summary>
         <p>v2.1.1</p>
     </summary>
