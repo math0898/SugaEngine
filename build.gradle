@@ -35,8 +35,8 @@ test {
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId = 'io.github.math0898'
-            artifactId = 'suga-engine'
+            groupId(group)
+            artifactId('suga-engine')
             version(version) // Pulls version from Gradle root
             from components.java
 
