@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicMouseListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine.input.mouse</a> &gt; <span class="el_source">BasicMouseListener.java</span></div><h1>BasicMouseListener.java</h1><pre class="source lang-java linenums">package suga.engine.input.mouse;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Stack;
+
+public class BasicMouseListener implements MouseListener {
+
+    /**
+     * A reference to the JFrame object that this GameMouseListener is listening to.
+     */
+    protected final JFrame frame;
+
+    /**
+     * A stack of mouse click events that need to be processed.
+     */
+<span class="nc" id="L19">    protected Stack&lt;MouseEvent&gt; events = new Stack&lt;&gt;();</span>
+
+    /**
+     * Creates a new GameMouseListener with the given JFrame so that the mouse position can be grabbed at any point.
+     *
+     * @param frame The JFrame instance that this mouse listener should be listening to.
+     */
+<span class="nc" id="L26">    public BasicMouseListener (JFrame frame) {</span>
+<span class="nc" id="L27">        this.frame = frame;</span>
+<span class="nc" id="L28">        frame.addMouseListener(this);</span>
+<span class="nc" id="L29">    }</span>
+
+    /**
+     * Returns the current position of the mouse.
+     *
+     * @return A point object which contains data about the current mouse position.
+     */
+    public Point getMousePos () {
+<span class="nc" id="L37">        return frame.getMousePosition();</span>
+    }
+
+    /**
+     * Invoked when the mouse button has been clicked (pressed
+     * and released) on a component.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void mouseClicked (MouseEvent e) {
+
+<span class="nc" id="L49">    }</span>
+
+    /**
+     * Invoked when a mouse button has been pressed on a component.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void mousePressed (MouseEvent e) {
+<span class="nc" id="L58">        events.add(e);</span>
+<span class="nc" id="L59">    }</span>
+
+    /**
+     * Invoked when a mouse button has been released on a component.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void mouseReleased (MouseEvent e) {
+<span class="nc" id="L68">        events.add(e);</span>
+<span class="nc" id="L69">    }</span>
+
+    /**
+     * Invoked when the mouse enters a component.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void mouseEntered (MouseEvent e) {
+
+<span class="nc" id="L79">    }</span>
+
+    /**
+     * Invoked when the mouse exits a component.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void mouseExited (MouseEvent e) {
+
+<span class="nc" id="L89">    }</span>
+
+    /**
+     * Accessor method for the stack of mouse events that need to be handled.
+     *
+     * @return The stack of mouse events.
+     */
+    public Stack&lt;MouseEvent&gt; getEvents () {
+<span class="nc" id="L97">        return events;</span>
+    }
+
+    /**
+     * Sets the frame that this mouse listener is listening to. Does not deregister with the old frame.
+     *
+     * @param frame The new frame to listen to.
+     */
+    public void setFrame (JFrame frame) {
+<span class="nc" id="L106">        frame.addMouseListener(this);</span>
+<span class="nc" id="L107">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

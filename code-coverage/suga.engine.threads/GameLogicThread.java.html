@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameLogicThread.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine.threads</a> &gt; <span class="el_source">GameLogicThread.java</span></div><h1>GameLogicThread.java</h1><pre class="source lang-java linenums">package suga.engine.threads;
+
+import suga.engine.game.Game;
+
+import static java.lang.Thread.sleep;
+
+/**
+ * A thread used to run game logic once every 1/60th of a second.
+ *
+ * @author Sugaku
+ */
+public class GameLogicThread implements SugaThread {
+
+    /**
+     * Whether to exit the thread.
+     */
+<span class="nc" id="L17">    protected boolean stopped = false;</span>
+
+    /**
+     * Whether to simulate game logic or not.
+     */
+<span class="nc" id="L22">    protected boolean paused = false;</span>
+
+    /**
+     * The game that should be called once every 1/60th of a second.
+     */
+    private final Game game;
+
+    /**
+     * A constant on how fast game logic should be called.
+     */
+    private final int LOGIC_RATE;
+
+    /**
+     * Creates a new GameLogicThread.
+     *
+     * @param game The game to run.
+     * @param rate How many times the logic should be run per second as a maximum.
+     */
+<span class="nc" id="L40">    public GameLogicThread (Game game, int rate) {</span>
+<span class="nc" id="L41">        this.game = game;</span>
+<span class="nc" id="L42">        LOGIC_RATE = rate;</span>
+<span class="nc" id="L43">        game.setThread(this);</span>
+<span class="nc" id="L44">    }</span>
+
+    /**
+     * Sets whether the thread is paused or not.
+     *
+     * @param val Whether the thread should be paused or not.
+     */
+    public void setPaused (boolean val) {
+<span class="nc" id="L52">        paused = val;</span>
+<span class="nc" id="L53">    }</span>
+
+    /**
+     * Accessor method for the current status of the thread.
+     *
+     * @return Whether the thread is paused currently or not.
+     */
+    public boolean getPaused () {
+<span class="nc" id="L61">        return paused;</span>
+    }
+
+    /**
+     * Sets whether the thread is stopped or not.
+     *
+     * @param val Whether the thread should be stopped.
+     */
+    public void setStopped (boolean val) {
+<span class="nc" id="L70">        stopped = val;</span>
+<span class="nc" id="L71">    }</span>
+
+    /**
+     * Accessor method for the current status of the thread.
+     *
+     * @return Whether this thread has been stopped or not.
+     */
+    public boolean getStopped () {
+<span class="nc" id="L79">        return stopped;</span>
+    }
+
+    /**
+     * Called to run the Game logic thread.
+     */
+    @Override
+    public void run () {
+<span class="nc" id="L87">        long lastFinished = 0;</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">        while (!stopped) {</span>
+<span class="nc" id="L89">            long logicTime = System.currentTimeMillis() - lastFinished;</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">            if (logicTime &lt; (1000 / LOGIC_RATE)) {</span>
+                try {
+                    //noinspection BusyWait
+<span class="nc" id="L93">                    sleep((1000 / LOGIC_RATE) - logicTime);</span>
+<span class="nc" id="L94">                } catch (Exception e) {</span>
+<span class="nc" id="L95">                    e.printStackTrace();</span>
+<span class="nc" id="L96">                }</span>
+            }
+<span class="nc" id="L98">            lastFinished = System.currentTimeMillis();</span>
+<span class="nc" id="L99">            game.processInput();</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            if (!paused) game.loop();</span>
+<span class="nc" id="L101">        }</span>
+<span class="nc" id="L102">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

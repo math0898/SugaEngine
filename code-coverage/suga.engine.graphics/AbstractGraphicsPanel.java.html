@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AbstractGraphicsPanel.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine.graphics</a> &gt; <span class="el_source">AbstractGraphicsPanel.java</span></div><h1>AbstractGraphicsPanel.java</h1><pre class="source lang-java linenums">package suga.engine.graphics;
+
+import suga.engine.threads.SugaThread;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.Serial;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * A graphics panel is used to draw graphics to the computer screen. It can either be 3d or 2d.
+ *
+ * @author Sugaku
+ */
+<span class="nc" id="L18">public abstract class AbstractGraphicsPanel extends JPanel implements GraphicsPanel {</span>
+
+    /**
+     * The serial version of the panel.
+     */
+    @Serial
+    private static final long serialVersionUID = 9879187320923L;
+
+    /**
+     * A map of drawing listeners with their priority.
+     */
+<span class="nc" id="L29">    protected volatile Map&lt;DrawListener.Priorities, ArrayList&lt;DrawListener&gt;&gt; drawingListeners = new HashMap&lt;&gt;();</span>
+
+    /**
+     * The thread that is currently running this GraphicsPanel. May be null in some cases.
+     */
+<span class="nc" id="L34">    protected SugaThread thread = null;</span>
+
+    /**
+     * A boolean used to check if paint is being called for the first time, or a subsequent time.
+     */
+<span class="nc" id="L39">    private boolean immediatePaint = true;</span>
+
+    /**
+     * Calls every program that would like add pixels to the panel before it's displayed.
+     *
+     * @param width The width of the pixels that can be defined.
+     * @param height The height of the pixels that can be defined.
+     */
+    public void drawing (int width, int height) {
+<span class="nc" id="L48">        DrawListener.Priorities[] order = new DrawListener.Priorities[]{</span>
+                DrawListener.Priorities.BACKGROUND,
+                DrawListener.Priorities.FOREGROUND,
+                DrawListener.Priorities.GUI };
+<span class="nc bnc" id="L52" title="All 2 branches missed.">        if (immediatePaint) {</span>
+            // This is used to prevent the paintImmediately() call from accidentally accessing DrawListeners whilst
+            //  they're being registered.
+<span class="nc" id="L55">            immediatePaint = false;</span>
+<span class="nc" id="L56">            return;</span>
+        }
+<span class="nc bnc" id="L58" title="All 2 branches missed.">        for (DrawListener.Priorities priorities : order) {</span>
+<span class="nc" id="L59">            ArrayList&lt;DrawListener&gt; listeners = drawingListeners.get(priorities);</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">            if (listeners != null)</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">                for (DrawListener l : listeners)</span>
+<span class="nc" id="L62">                    l.applyChanges(width, height, this);</span>
+        }
+<span class="nc" id="L64">    }</span>
+
+    /**
+     * Sets the thread that is calling repaint on this GraphicsPanel.
+     *
+     * @param thread The thread that will be calling repaint() on this object.
+     */
+    public final void setThread (SugaThread thread) {
+<span class="nc" id="L72">        this.thread = thread;</span>
+<span class="nc" id="L73">    }</span>
+
+    /**
+     * Adds the drawing listener to this Graphics2d instance.
+     *
+     * @param listener The listener to register.
+     */
+    public final void registerListener (DrawListener listener) {
+<span class="nc" id="L81">        registerListener(DrawListener.Priorities.FOREGROUND, listener);</span>
+<span class="nc" id="L82">    }</span>
+
+    /**
+     * Adds the drawing listener to this Graphics2d instance with the given priority.
+     *
+     * @param priority The priority to register the listener at.
+     * @param listener The listener to register.
+     */
+    public final void registerListener (DrawListener.Priorities priority, DrawListener listener) {
+<span class="nc bnc" id="L91" title="All 2 branches missed.">        if (!drawingListeners.containsKey(priority)) drawingListeners.put(priority, new ArrayList&lt;&gt;());</span>
+<span class="nc" id="L92">        drawingListeners.get(priority).add(listener);</span>
+<span class="nc" id="L93">    }</span>
+
+    /**
+     * De-registers all draw listeners for this panel. New ones need to be added with
+     * {@link #registerListener(DrawListener)}.
+     */
+    public final void clearListeners () {
+<span class="nc" id="L100">        drawingListeners = new HashMap&lt;&gt;();</span>
+<span class="nc" id="L101">    }</span>
+
+    /**
+     * Used to set the values of pixels.
+     *
+     * @param x The x to set.
+     * @param y The y to set.
+     * @param c The color to set the pixel to.
+     */
+    public abstract void setPixel (int x, int y, Color c);
+
+    /**
+     * Used to create a rectangle of pixels assigned to a particular color.
+     *
+     * @param x The top left most corner of the rectangle.
+     * @param y The top left most corner of the rectangle.
+     * @param width How wide the rectangle is.
+     * @param height How tall the rectangle is.
+     * @param c The color to set the rectangle to.
+     */
+    public abstract void setRectangle (int x, int y, int width, int height, Color c);
+
+    /**
+     * Used to set a block of pixels with the given radius.
+     *
+     * @param x The x position to center this 'big pixel'.
+     * @param y The y position to center this 'big pixel'.
+     * @param r The radius of this 'big pixel'.
+     * @param c The color to set these pixels to.
+     */
+    public abstract void setBigPixel (int x, int y, int r, Color c);
+
+    /**
+     * Adds the given image to the list of images to draw this frame. Attempts to load an image from resources.
+     *
+     * @param x The x position of this image.
+     * @param y The y position of this image.
+     * @param width The width of this image.
+     * @param height The height of this image.
+     * @param path The path of the image to draw on screen.
+     */
+    public abstract void addImage (int x, int y, int width, int height, String path);
+
+    /**
+     * Adds the given image to the list of images to draw this frame.
+     *
+     * @param x The x position of this image.
+     * @param y The y position of this image.
+     * @param width The width of this image.
+     * @param height The height of this image.
+     * @param image The image to draw to the screen.
+     */
+    public abstract void addImage (int x, int y, int width, int height, BufferedImage image);
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GraphicsThread.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine.threads</a> &gt; <span class="el_source">GraphicsThread.java</span></div><h1>GraphicsThread.java</h1><pre class="source lang-java linenums">package suga.engine.threads;
+
+import suga.engine.graphics.AbstractGraphicsPanel;
+
+import static java.lang.Thread.sleep;
+
+/**
+ * A thread used to refresh the graphics of a panel as fast as possible.
+ *
+ * @author Sugaku
+ */
+public class GraphicsThread implements SugaThread {
+
+    /**
+     * Whether to exit the thread.
+     */
+<span class="nc" id="L17">    protected boolean stopped = false;</span>
+
+    /**
+     * Whether to simulate game logic or not.
+     */
+<span class="nc" id="L22">    protected boolean paused = false;</span>
+
+    /**
+     * The panel that should be redrawn every frame.
+     */
+    private final AbstractGraphicsPanel panel;
+
+    /**
+     * The time that this graphics thread was started. Used in calculating average frame rate.
+     */
+<span class="nc" id="L32">    private static long startTime = 0;</span>
+
+    /**
+     * The number of frames that have been rendered since the thread started.
+     */
+<span class="nc" id="L37">    private static long frames = 0;</span>
+
+    /**
+     * The target frame rate for this GraphicsThread.
+     */
+    private final int FRAME_RATE;
+
+    /**
+     * Creates a new graphics thread with the given panel.
+     *
+     * @param panel The panel to refresh for every frame.
+     */
+<span class="nc" id="L49">    public GraphicsThread (AbstractGraphicsPanel panel, int frameRate) {</span>
+<span class="nc" id="L50">        this.panel = panel;</span>
+<span class="nc" id="L51">        FRAME_RATE = frameRate;</span>
+<span class="nc" id="L52">        panel.setThread(this);</span>
+<span class="nc" id="L53">    }</span>
+
+    /**
+     * Sets whether the thread is paused or not.
+     *
+     * @param val Whether the thread should be paused or not.
+     */
+    public void setPaused (boolean val) {
+<span class="nc" id="L61">        paused = val;</span>
+<span class="nc" id="L62">    }</span>
+
+    /**
+     * Accessor method for the current status of the thread.
+     *
+     * @return Whether the thread is paused currently or not.
+     */
+    public boolean getPaused () {
+<span class="nc" id="L70">        return paused;</span>
+    }
+
+    /**
+     * Sets whether the thread is stopped or not.
+     *
+     * @param val Whether the thread should be stopped.
+     */
+    public void setStopped (boolean val) {
+<span class="nc" id="L79">        stopped = val;</span>
+<span class="nc" id="L80">    }</span>
+
+    /**
+     * Accessor method for the current status of the thread.
+     *
+     * @return Whether this thread has been stopped or not.
+     */
+    public boolean getStopped () {
+<span class="nc" id="L88">        return stopped;</span>
+    }
+
+    /**
+     * Called to run the Graphics thread.
+     */
+    @Override
+    public void run () {
+<span class="nc" id="L96">        startTime = System.currentTimeMillis();</span>
+<span class="nc" id="L97">        long lastFinished = 0;</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">        while (!stopped) {</span>
+<span class="nc" id="L99">            long drawTime = System.currentTimeMillis() - lastFinished;</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            if (drawTime &lt; (1000 / FRAME_RATE)) {</span>
+                try {
+                    //noinspection BusyWait
+<span class="nc" id="L103">                    sleep((int) ((1000 / FRAME_RATE) - drawTime));</span>
+<span class="nc" id="L104">                } catch (Exception e) {</span>
+<span class="nc" id="L105">                    e.printStackTrace();</span>
+<span class="nc" id="L106">                }</span>
+            }
+<span class="nc" id="L108">            lastFinished = System.currentTimeMillis();</span>
+<span class="nc bnc" id="L109" title="All 2 branches missed.">            if (!paused) panel.repaint();</span>
+<span class="nc" id="L110">            frames++;</span>
+<span class="nc" id="L111">        }</span>
+<span class="nc" id="L112">    }</span>
+
+    /**
+     * Returns the average frame rate while this GraphicsThread has been running.
+     *
+     * @return The average frame rate of this thread since starting.
+     */
+    public static double getFPS () {
+<span class="nc" id="L120">        return (frames * 1.0) / ((System.currentTimeMillis() - startTime) / 1000.0);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

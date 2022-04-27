@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicPhysicsEngine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine.physics</a> &gt; <span class="el_source">BasicPhysicsEngine.java</span></div><h1>BasicPhysicsEngine.java</h1><pre class="source lang-java linenums">package suga.engine.physics;
+
+import suga.engine.physics.collidables.Collidable;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * The PhysicsEngine has a list of all the objects currently in the world and checks every logic cycle whether any are
+ * currently colliding. If they are they the appropriate method is called.
+ *
+ * @author Sugaku
+ */
+<span class="fc" id="L14">public class BasicPhysicsEngine implements PhysicsEngine {</span>
+
+    /**
+     * A list of objects that should be called for collision logic.
+     */
+<span class="fc" id="L19">    protected List&lt;Collidable&gt; collidables = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * A list of objects that should have their position and velocity updated.
+     */
+<span class="fc" id="L24">    protected List&lt;Physical&gt; physicals = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * Checks all objects in the list for collisions with other objects. Quite a costly method may require optimization.
+     */
+    public void checkCollisions () {
+<span class="fc bfc" id="L30" title="All 2 branches covered.">        for (int i = 0; i &lt; collidables.size(); i++) {</span>
+<span class="fc" id="L31">            Collidable master = collidables.get(i);</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">            for (int j = i; j &lt; collidables.size(); j++) {</span>
+<span class="pc bpc" id="L33" title="1 of 2 branches missed.">                if (i == j) continue;</span>
+<span class="nc" id="L34">                Collidable temp = collidables.get(j); // How many times are collisions called on a single object?</span>
+<span class="nc" id="L35">                boolean touching = false;</span>
+<span class="nc" id="L36">                boolean colliding = false;</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">                for (Vector v : temp.getHitBox().getTestPoints()) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">                    if (colliding) break;</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">                    if (master.getHitBox().isInside(v)) colliding = true;</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">                    else if (master.getHitBox().touching(v)) touching = true;</span>
+<span class="nc" id="L41">                }</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">                for (Vector v : master.getHitBox().getTestPoints()) {</span>
+<span class="nc bnc" id="L43" title="All 2 branches missed.">                    if (colliding) break;</span>
+<span class="nc bnc" id="L44" title="All 2 branches missed.">                    if (temp.getHitBox().isInside(v)) colliding = true;</span>
+<span class="nc bnc" id="L45" title="All 2 branches missed.">                    else if (temp.getHitBox().touching(v)) touching = true;</span>
+<span class="nc" id="L46">                }</span>
+<span class="nc bnc" id="L47" title="All 2 branches missed.">                if (colliding) {</span>
+<span class="nc" id="L48">                    Collidable mc = master.clone(); // Save values in master.</span>
+<span class="nc" id="L49">                    master.collision(temp);</span>
+<span class="nc" id="L50">                    temp.collision(mc);</span>
+                }
+<span class="nc bnc" id="L52" title="All 4 branches missed.">                if (touching &amp;&amp; !colliding) {</span>
+<span class="nc" id="L53">                    Collidable mc = master.clone(); // Save values in master.</span>
+<span class="nc" id="L54">                    master.touch(temp.clone());</span>
+<span class="nc" id="L55">                    temp.touch(mc);</span>
+                }
+            }
+        }
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Updates the position of all physical objects in the physics engine.
+     */
+    @Override
+    public void update () {
+<span class="nc" id="L66">        physicals.forEach(Physical::update);</span>
+<span class="nc" id="L67">    }</span>
+
+    /**
+     * Adds a physical object to the list of objects to be checked for their movement logic ran.
+     *
+     * @param object The physical object to be added to the list.
+     */
+    @Override
+    public void addPhysical (Physical object) {
+<span class="nc" id="L76">        physicals.add(object);</span>
+<span class="nc" id="L77">    }</span>
+
+    /**
+     * Adds a collidable object to the list of objects to be checked for collisions.
+     *
+     * @param object The collidable object to be added to the list.
+     */
+    @Override
+    public void addCollidable (Collidable object) {
+<span class="nc" id="L86">        collidables.add(object);</span>
+<span class="nc" id="L87">    }</span>
+
+    /**
+     * Adds a new object to the Physics Engine.
+     *
+     * @param object The object to add to the physics engine.
+     */
+    public void addObject (Collidable object) {
+<span class="fc" id="L95">        collidables.add(object);</span>
+<span class="fc" id="L96">        physicals.add(object);</span>
+<span class="fc" id="L97">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

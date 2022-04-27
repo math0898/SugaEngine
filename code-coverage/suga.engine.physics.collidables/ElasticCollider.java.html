@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ElasticCollider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine.physics.collidables</a> &gt; <span class="el_source">ElasticCollider.java</span></div><h1>ElasticCollider.java</h1><pre class="source lang-java linenums">package suga.engine.physics.collidables;
+
+import suga.engine.physics.Vector;
+import suga.engine.physics.hitboxes.HitBox;
+
+/**
+ * An ElasticCollider is a collider which results in perfectly elastic collisions.
+ *
+ * @author Sugaku
+ */
+public class ElasticCollider implements Collidable {
+
+    /**
+     * The mass of this ElasticCollider.
+     */
+    protected double mass;
+
+    /**
+     * The current position of this ElasticCollider.
+     */
+    protected Vector pos;
+
+    /**
+     * The current velocity of this ElasticCollider.
+     */
+    protected Vector velocity;
+
+    /**
+     * The current acceleration of ElasticCollider.
+     */
+    protected Vector acceleration;
+
+    /**
+     * The current HitBox of this ElasticCollider.
+     */
+    protected HitBox hitBox;
+
+    /**
+     * Creates a new ElasticCollider with the given position, velocity, acceleration, mass, and HitBox.
+     *
+     * @param pos The position of this ElasticCollider.
+     * @param vel The velocity of this ElasticCollider.
+     * @param accel The acceleration of this ElasticCollider.
+     * @param mass The mass of this ElasticCollider.
+     * @param hitBox The hitBox that should be used by this ElasticCollider.
+     */
+<span class="fc" id="L47">    public ElasticCollider (Vector pos, Vector vel, Vector accel, double mass, HitBox hitBox) {</span>
+<span class="fc" id="L48">        this.pos = pos.clone();</span>
+<span class="fc" id="L49">        this.velocity = vel.clone();</span>
+<span class="fc" id="L50">        this.acceleration = accel.clone();</span>
+<span class="fc" id="L51">        this.mass = mass;</span>
+<span class="fc" id="L52">        this.hitBox = hitBox;</span>
+<span class="fc" id="L53">    }</span>
+
+    /**
+     * Gets the center position of this collidable object.
+     *
+     * @return The center position of this collidable object.
+     */
+    @Override
+    public Vector getPos () {
+<span class="fc" id="L62">        return pos;</span>
+    }
+
+    /**
+     * Sets the position of this collidable object.
+     *
+     * @param pos The new position for this collidable object.
+     */
+    @Override
+    public void setPos (Vector pos) {
+<span class="fc" id="L72">        this.pos = pos;</span>
+<span class="fc" id="L73">    }</span>
+
+    /**
+     * Gets the current velocity of this physical object.
+     *
+     * @return The current velocity of this object.
+     */
+    @Override
+    public Vector getVelocity () {
+<span class="fc" id="L82">        return velocity;</span>
+    }
+
+    /**
+     * Sets the current velocity of this physical object.
+     *
+     * @param vel The new velocity for this object.
+     */
+    @Override
+    public void setVelocity (Vector vel) {
+<span class="fc" id="L92">        velocity = vel;</span>
+<span class="fc" id="L93">    }</span>
+
+    /**
+     * Gets the current acceleration of this physical object.
+     *
+     * @return The current acceleration of this object.
+     */
+    @Override
+    public Vector getAcceleration () {
+<span class="nc" id="L102">        return acceleration;</span>
+    }
+
+    /**
+     * Sets the current acceleration of this physical object.
+     *
+     * @param accel The new acceleration for this object.
+     */
+    @Override
+    public void setAcceleration (Vector accel) {
+<span class="nc" id="L112">        acceleration = accel;</span>
+<span class="nc" id="L113">    }</span>
+
+    /**
+     * Accessor method for the mass of this object. Mass numbers larger than int max should be considered unmovable.
+     *
+     * @return The mass of this object.
+     */
+    @Override
+    public double getMass () {
+<span class="nc" id="L122">        return mass;</span>
+    }
+
+    /**
+     * Sets the mass of this object.
+     *
+     * @param mass The new mass of this object.
+     */
+    @Override
+    public void setMass (double mass) {
+<span class="nc" id="L132">        this.mass = mass;</span>
+<span class="nc" id="L133">    }</span>
+
+    /**
+     * Updates this object's location based on the acceleration, velocity, and current position.
+     */
+    @Override
+    public void update () {
+<span class="nc" id="L140">        pos.add(velocity);</span>
+<span class="nc" id="L141">        velocity.add(acceleration);</span>
+<span class="nc" id="L142">    }</span>
+
+    /**
+     * Gets the HitBox currently being used by this collidable object.
+     *
+     * @return The hit box being used by this collidable object.
+     */
+    @Override
+    public HitBox getHitBox () {
+<span class="nc" id="L151">        return hitBox;</span>
+    }
+
+    /**
+     * Assigns the given HitBox to this collidable object. Will likely result in the modification of HitBox location.
+     *
+     * @param hitBox The new HitBox to assign to this Collidable object.
+     */
+    @Override
+    public void setHitBox (HitBox hitBox) {
+<span class="nc" id="L161">        this.hitBox = hitBox;</span>
+<span class="nc" id="L162">        hitBox.setPos(pos); // Sync positions.</span>
+<span class="nc" id="L163">    }</span>
+
+    /**
+     * Runs collision logic. May, but in general should not modify the object passed.
+     *
+     * @param obj The object that this collidable collided with.
+     */
+    @Override
+    public void collision (Collidable obj) {
+<span class="nc" id="L172">        touch(obj);</span>
+<span class="nc" id="L173">    }</span>
+
+    /**
+     * Runs touching logic. May modify the object passed.
+     *
+     * @param obj The object that this collidable is touching.
+     */
+    @Override
+    public void touch (Collidable obj) {
+<span class="nc bnc" id="L182" title="All 2 branches missed.">        if (obj.getMass() &lt; Integer.MAX_VALUE) {</span>
+<span class="nc" id="L183">            Vector v = obj.getVelocity();</span>
+<span class="nc bnc" id="L184" title="All 2 branches missed.">            velocity.setX((obj.getMass() * v.getX() * v.getX()) / (mass * v.getX() &lt;= 0 ? -1 : 1));</span>
+<span class="nc bnc" id="L185" title="All 2 branches missed.">            velocity.setY((obj.getMass() * v.getY() * v.getY()) / (mass * v.getY() &lt;= 0 ? -1 : 1));</span>
+<span class="nc bnc" id="L186" title="All 2 branches missed.">            velocity.setZ((obj.getMass() * v.getZ() * v.getZ()) / (mass * v.getZ() &lt;= 0 ? -1 : 1));</span>
+<span class="nc" id="L187">        } else velocity.scale(-1);</span>
+<span class="nc" id="L188">    }</span>
+
+    /**
+     * Returns a deep copy of this collidable object. Used to preserve values of velocity, position, and acceleration
+     * during collision calculations.
+     *
+     * @return A copy of this object with the same position, velocity, and acceleration.
+     */
+    @SuppressWarnings(&quot;MethodDoesntCallSuperMethod&quot;)
+    @Override
+    public ElasticCollider clone () {
+<span class="nc" id="L199">        return new ElasticCollider(pos, velocity, acceleration, mass, hitBox);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

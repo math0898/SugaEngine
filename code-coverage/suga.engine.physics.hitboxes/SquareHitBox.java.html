@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SquareHitBox.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine.physics.hitboxes</a> &gt; <span class="el_source">SquareHitBox.java</span></div><h1>SquareHitBox.java</h1><pre class="source lang-java linenums">package suga.engine.physics.hitboxes;
+
+import suga.engine.graphics.GraphicsPanel;
+import suga.engine.physics.Vector;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+/**
+ * Every collidable object needs a HitBox. This is a box where if a test point overlaps with a box then a collision
+ * occurs. This hit box does not interact with the z component of objects, and thus makes a
+ *
+ * @author Sugaku
+ */
+public class SquareHitBox implements HitBox {
+
+    /**
+     * The current position of the game object.
+     */
+<span class="fc" id="L22">    protected Vector pos = Vector.ZERO;</span>
+
+    /**
+     * The width of the HitBox.
+     */
+    protected final double width;
+
+    /**
+     * The height of the HitBox.
+     */
+    protected final double height;
+
+    /**
+     * Creates a new square hit box with the given position and relative sizes.
+     *
+     * @param width  The width of the hit box.
+     * @param height The height of the hit box.
+     * @param pos    The center position of this hit box.
+     */
+    public SquareHitBox (double width, double height, Vector pos) {
+<span class="fc" id="L42">        this(width, height);</span>
+<span class="fc" id="L43">        this.pos = pos;</span>
+<span class="fc" id="L44">    }</span>
+
+    /**
+     * Creates a new square hit box with the given relative sizes in the horizontal and vertical directions. This hit
+     * box will be centered at (0, 0, 0) until pos is updated with {@link #setPos(Vector)}.
+     *
+     * @param width  The width of the hit box.
+     * @param height The height of the hit box.
+     */
+<span class="fc" id="L53">    public SquareHitBox (double width, double height) {</span>
+<span class="fc" id="L54">        this.width = width;</span>
+<span class="fc" id="L55">        this.height = height;</span>
+<span class="fc" id="L56">    }</span>
+
+    /**
+     * Accessor method for the height of this HitBox.
+     *
+     * @return The height value of this HitBox.
+     */
+    public double getHeight () {
+<span class="fc" id="L64">        return height;</span>
+    }
+
+    /**
+     * Accessor method for the width of this HitBox.
+     *
+     * @return The width value of this HitBox.
+     */
+    public double getWidth () {
+<span class="fc" id="L73">        return width;</span>
+    }
+
+    /**
+     * Tests whether the given point is within this HitBox or not.
+     *
+     * @param test The point to test. Represented in vector form.
+     * @return True if and only if the test point is inside this HitBox.
+     */
+    @Override
+    public boolean isInside (Vector test) {
+<span class="fc bfc" id="L84" title="All 4 branches covered.">        if (test.getX() &gt; pos.getX() - (width / 2.0) &amp;&amp; test.getX() &lt; pos.getX() + (width / 2.0))</span>
+<span class="fc bfc" id="L85" title="All 4 branches covered.">            return test.getY() &gt; pos.getY() - (height / 2.0) &amp;&amp; test.getY() &lt; pos.getY() + (height / 2.0);</span>
+<span class="fc" id="L86">        return false;</span>
+    }
+
+    /**
+     * Tests whether the given point is touching this HitBox or not.
+     *
+     * @param test The point to test. Represented in vector form.
+     * @return True if and only if the test point is on the boundary of this HitBox.
+     */
+    @Override
+    public boolean touching (Vector test) {
+<span class="fc bfc" id="L97" title="All 4 branches covered.">        if (test.getX() == pos.getX() - (width / 2.0) || test.getX() == pos.getX() + (width / 2.0))</span>
+<span class="fc bfc" id="L98" title="All 4 branches covered.">            return test.getY() &gt;= pos.getY() - (height / 2.0) &amp;&amp; test.getY() &lt;= pos.getY() + (height / 2.0);</span>
+<span class="fc bfc" id="L99" title="All 4 branches covered.">        else if (test.getY() == pos.getY() - (height / 2.0) || test.getY() == pos.getY() + (height / 2.0))</span>
+<span class="fc bfc" id="L100" title="All 4 branches covered.">            return test.getX() &gt;= pos.getX() - (width / 2.0) &amp;&amp; test.getX() &lt;= pos.getX() + (width / 2.0);</span>
+<span class="fc" id="L101">        return false;</span>
+    }
+
+    /**
+     * Returns a collection of test points to determine if this HitBox is colliding with another.
+     *
+     * @return A list of test points to look for collisions at.
+     */
+    @Override
+    public Collection&lt;Vector&gt; getTestPoints () {
+<span class="fc" id="L111">        List&lt;Vector&gt; vectors = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L112">        vectors.add(new Vector(pos.getX() + (width / 2.0), pos.getY() + (height / 2.0), pos.getZ()));</span>
+<span class="fc" id="L113">        vectors.add(new Vector(pos.getX() + (width / 2.0), pos.getY() - (height / 2.0), pos.getZ()));</span>
+<span class="fc" id="L114">        vectors.add(new Vector(pos.getX() - (width / 2.0), pos.getY() + (height / 2.0), pos.getZ()));</span>
+<span class="fc" id="L115">        vectors.add(new Vector(pos.getX() - (width / 2.0), pos.getY() - (height / 2.0), pos.getZ()));</span>
+<span class="fc" id="L116">        return  vectors;</span>
+    }
+
+    /**
+     * Accessor method for the position of the HitBox.
+     *
+     * @return Returns the current position of this HitBox.
+     */
+    @Override
+    public Vector getPos () {
+<span class="fc" id="L126">        return pos;</span>
+    }
+
+    /**
+     * Sets the center position of this hit box. Used to center hit boxes on game objects.
+     *
+     * @param pos The new center position of this hit box.
+     */
+    @Override
+    public void setPos (Vector pos) {
+<span class="fc" id="L136">        this.pos = pos;</span>
+<span class="fc" id="L137">    }</span>
+
+    /**
+     * Draws this hit box to the given graphics panel. Different hit boxes may appear differently when drawn.
+     *
+     * @param panel The panel to draw the hit box test points to.
+     */
+    @Override
+    public void drawHitBox (GraphicsPanel panel) {
+<span class="fc" id="L146">        int y = (int) (pos.getY() + (height / 2.0));</span>
+<span class="fc" id="L147">        int x = (int) (pos.getX() - (width / 2.0));</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        for (int i = x; i &lt;= (int) (pos.getX() + (width / 2.0)); i++) panel.setPixel(i, y, Color.BLUE.brighter());</span>
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        for (int i = (int) (pos.getY() - (height / 2.0)); i &lt;= y; i++) panel.setPixel(x, i, Color.BLUE.brighter());</span>
+<span class="fc" id="L150">        y = (int) (pos.getY() - (height / 2.0));</span>
+<span class="fc" id="L151">        x = (int) (pos.getX() + (width / 2.0));</span>
+<span class="fc bfc" id="L152" title="All 2 branches covered.">        for (int i = (int) (pos.getX() - (width / 2.0)); i &lt;= x; i++) panel.setPixel(i, y, Color.BLUE.brighter());</span>
+<span class="fc bfc" id="L153" title="All 2 branches covered.">        for (int i = y; i &lt;= (int) (pos.getY() + (height / 2.0)); i++) panel.setPixel(x, i, Color.BLUE.brighter());</span>
+<span class="fc" id="L154">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

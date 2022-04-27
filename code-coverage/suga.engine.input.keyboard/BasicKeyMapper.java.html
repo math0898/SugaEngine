@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicKeyMapper.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine.input.keyboard</a> &gt; <span class="el_source">BasicKeyMapper.java</span></div><h1>BasicKeyMapper.java</h1><pre class="source lang-java linenums">package suga.engine.input.keyboard;
+
+/**
+ * The default KeyMapper works by creating an array the size of the maximally supported keycode value and storing the
+ * resulting enum values at each keycode index.
+ *
+ * @author Sugaku
+ */
+public class BasicKeyMapper implements KeyMapper {
+
+    /**
+     * The array used to convert between keycodes and keys.
+     */
+<span class="nc" id="L14">    protected KeyValues[] values = new KeyValues[256];</span>
+
+    /**
+     * Constructs the BasicKeyMapper. Initializes everything to null before iterating through the values of KeyValues.
+     */
+<span class="nc" id="L19">    public BasicKeyMapper () {</span>
+<span class="nc bnc" id="L20" title="All 2 branches missed.">        for (int i = 0; i &lt; 255; i++)</span>
+<span class="nc" id="L21">            values[i] = null;</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        for (KeyValues v : KeyValues.values())</span>
+<span class="nc" id="L23">            values[v.getValue()] = v;</span>
+<span class="nc" id="L24">    }</span>
+
+    /**
+     * Converts the given keycode into a KeyValue.
+     *
+     * @param keycode The keycode to convert into a value.
+     * @return The enum value of the given key.
+     */
+    @Override
+    public KeyValues convert (int keycode) {
+<span class="nc" id="L34">        return values[keycode];</span>
+    }
+
+    /**
+     * Sets the given keycode to the given enum value. Will replace the current result from that keycode.
+     *
+     * @param keycode The keycode to change the mapping of.
+     * @param key     The new key to map that keycode to.
+     */
+    @Override
+    public void set (int keycode, KeyValues key) {
+<span class="nc bnc" id="L45" title="All 4 branches missed.">        if (keycode &lt; 0 || keycode &gt; 255) throw new IllegalArgumentException(&quot;Keycode not supported [0,255]: &quot; + keycode);</span>
+<span class="nc" id="L46">        values[keycode] = key;</span>
+<span class="nc" id="L47">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

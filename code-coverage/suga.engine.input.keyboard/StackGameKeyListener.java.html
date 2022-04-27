@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>StackGameKeyListener.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine.input.keyboard</a> &gt; <span class="el_source">StackGameKeyListener.java</span></div><h1>StackGameKeyListener.java</h1><pre class="source lang-java linenums">package suga.engine.input.keyboard;
+
+import javax.swing.*;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Stack;
+
+/**
+ * The StackGameKeyListener creates a stack of pressed, and depressed events which are then accessed with accessor
+ * methods to be read by the game.
+ *
+ * @author Sugaku
+ */
+public class StackGameKeyListener implements GameKeyListener {
+
+    /**
+     * The KeyMapper being used by this listener.
+     */
+    protected KeyMapper mapper;
+
+    /**
+     * A collection of keys that are currently being held.
+     */
+<span class="nc" id="L25">    protected Collection&lt;KeyValues&gt; heldKeys = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * A stack of keys that have been pressed and need to be handled by the game.
+     */
+<span class="nc" id="L30">    protected Stack&lt;KeyValues&gt; keysPressed = new Stack&lt;&gt;();</span>
+
+    /**
+     * A stack of keys that have been depressed and need to be handled by the game.
+     */
+<span class="nc" id="L35">    protected Stack&lt;KeyValues&gt; keysReleased = new Stack&lt;&gt;();</span>
+
+    /**
+     * Creates a new StackGameKeyListener for use in a game. Uses the BasicKeyMapper by default.
+     *
+     * @param frame The JFrame that this KeyListener is using.
+     */
+    public StackGameKeyListener (JFrame frame) {
+<span class="nc" id="L43">        this(frame, new BasicKeyMapper());</span>
+<span class="nc" id="L44">    }</span>
+
+    /**
+     * Creates a new StackGameKeyListener for use in a game.
+     *
+     * @param frame  The JFrame that this KeyListener is using.
+     * @param mapper The KeyMapper to be used by this KeyListener.
+     */
+<span class="nc" id="L52">    public StackGameKeyListener (JFrame frame, KeyMapper mapper) {</span>
+<span class="nc" id="L53">        frame.addKeyListener(this);</span>
+<span class="nc" id="L54">        this.mapper = mapper;</span>
+<span class="nc" id="L55">    }</span>
+
+    /**
+     * Invoked when a key has been typed.
+     * See the class description for {@link KeyEvent} for a definition of
+     * a key typed event.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void keyTyped (KeyEvent e) {
+
+<span class="nc" id="L67">    }</span>
+
+    /**
+     * Invoked when a key has been pressed.
+     * See the class description for {@link KeyEvent} for a definition of
+     * a key pressed event.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void keyPressed (KeyEvent e) {
+<span class="nc" id="L78">        KeyValues key = mapper.convert(e.getKeyCode());</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">        if (heldKeys.contains(key)) return;</span>
+<span class="nc" id="L80">        keysPressed.add(key);</span>
+<span class="nc" id="L81">        heldKeys.add(key);</span>
+<span class="nc" id="L82">    }</span>
+
+    /**
+     * Invoked when a key has been released.
+     * See the class description for {@link KeyEvent} for a definition of
+     * a key released event.
+     *
+     * @param e the event to be processed
+     */
+    @Override
+    public void keyReleased (KeyEvent e) {
+<span class="nc" id="L93">        KeyValues key = mapper.convert(e.getKeyCode());</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">        if (!heldKeys.contains(key)) return;</span>
+<span class="nc" id="L95">        keysReleased.add(key);</span>
+<span class="nc" id="L96">        heldKeys.remove(key);</span>
+<span class="nc" id="L97">    }</span>
+
+    /**
+     * Accessor method for the stack of keys that has been pressed. Should be used by games to read key presses.
+     *
+     * @return The stack of keys that have been pressed.
+     */
+    @Deprecated // Remove v2.*.*
+    public Stack&lt;Integer&gt; getKeysPressed () {
+<span class="nc" id="L106">        Stack&lt;Integer&gt; s = new Stack&lt;&gt;();</span>
+<span class="nc bnc" id="L107" title="All 2 branches missed.">        for (KeyValues k : keysPressed) s.add(k.getValue());</span>
+<span class="nc" id="L108">        return s;</span>
+    }
+
+    /**
+     * Accessor method for the stack of keys that have been depressed. Should be used by games to read key presses.
+     *
+     * @return The stack of keys that have been depressed.
+     */
+    @Deprecated // Remove v2.*.*
+    public Stack&lt;Integer&gt; getKeysDepressed () {
+<span class="nc" id="L118">        Stack&lt;Integer&gt; s = new Stack&lt;&gt;();</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (KeyValues k : keysReleased) s.add(k.getValue());</span>
+<span class="nc" id="L120">        return s;</span>
+    }
+
+    /**
+     * Overrides the currently used KeyMapper with a new KeyMapper.
+     *
+     * @param mapping The new mapping to apply to this key listener.
+     */
+    @Override
+    public void setKeyMapping (KeyMapper mapping) {
+<span class="nc" id="L130">        mapper = mapping;</span>
+<span class="nc" id="L131">    }</span>
+
+    /**
+     * Accessor method for the currently used KeyMapper. Helpful for modifying mappings.
+     *
+     * @return The KeyMapper instance being used by this KeyMapper.
+     */
+    @Override
+    public KeyMapper getKeyMapping () {
+<span class="nc" id="L140">        return mapper;</span>
+    }
+
+    /**
+     * Checks whether the given key is currently being held or not.
+     *
+     * @param key The key to check if it's being held or not.
+     * @return True if the key is currently being held, otherwise false.
+     */
+    @Override
+    public boolean isHeld (KeyValues key) {
+<span class="nc" id="L151">        return heldKeys.contains(key);</span>
+    }
+
+    /**
+     * Returns a stack of key presses that have not yet been handled.
+     *
+     * @return The 'to handle' stack of key presses.
+     */
+    @Override
+    public Stack&lt;KeyValues&gt; getKeyPresses () {
+<span class="nc" id="L161">        return keysPressed;</span>
+    }
+
+    /**
+     * Returns a stack of key releases that have not yet been handled.
+     *
+     * @return The 'to handle' stack of key releases.
+     */
+    @Override
+    public Stack&lt;KeyValues&gt; getKeyReleases () {
+<span class="nc" id="L171">        return keysReleased;</span>
+    }
+
+    /**
+     * Sets the frame that this key listener is listening to. Does not deregister with the old frame.
+     *
+     * @param frame The new frame to listen to.
+     */
+    public void setFrame (JFrame frame) {
+<span class="nc" id="L180">        frame.addKeyListener(this);</span>
+<span class="nc" id="L181">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Graphics2d.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine.graphics</a> &gt; <span class="el_source">Graphics2d.java</span></div><h1>Graphics2d.java</h1><pre class="source lang-java linenums">package suga.engine.graphics;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * A 2d graphics window that can be manipulated with the given methods.
+ *
+ * @author Sugaku
+ */
+<span class="nc" id="L16">public class Graphics2d extends AbstractGraphicsPanel {</span>
+
+    /**
+     * A list of pixels that need to be updated in the next frame.
+     */
+<span class="nc" id="L21">    private ArrayList&lt;Pixel&gt; updatePoints = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * An ArrayList of images that need to be drawn to the screen.
+     */
+<span class="nc" id="L26">    private List&lt;DrawImage&gt; images = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * Represents an image to draw on the screen.
+     *
+     * @param x The x position of the image.
+     * @param y The y position of the image.
+     * @param width The width of the image.
+     * @param height The height of the image.
+     * @param image The actual image to draw.
+     * @author Sugaku
+     */
+<span class="nc" id="L38">    public record DrawImage (int x, int y, int width, int height, BufferedImage image) { }</span>
+
+    /**
+     * Represents a single pixel in 2d space with its own color and position.
+     *
+     * @param x The x position of this pixel.
+     * @param y The y position of this pixel.
+     * @param color The color of the pixel.
+     * @author Sugaku
+     */
+<span class="nc" id="L48">    public record Pixel (int x, int y, Color color) { }</span>
+
+    /**
+     * Called during runtime to repaint the graphics.
+     *
+     * @param graphics The graphics object to manipulate and use in drawing.
+     */
+    @Override
+    public void paintComponent (Graphics graphics) {
+<span class="nc" id="L57">        super.paintComponent(graphics);</span>
+<span class="nc" id="L58">        drawing(getWidth(), getHeight());</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">        for (Pixel p : updatePoints) {</span>
+<span class="nc" id="L60">            graphics.setColor(p.color());</span>
+<span class="nc" id="L61">            graphics.fillRect(p.x(), p.y(), 1, 1);</span>
+<span class="nc" id="L62">        }</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        for (DrawImage i : images) {</span>
+<span class="nc" id="L64">            graphics.drawImage(i.image(), i.x(), i.y(), i.width(), i.height(), null);</span>
+<span class="nc" id="L65">        }</span>
+<span class="nc" id="L66">        updatePoints = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L67">        images = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L68">    }</span>
+
+    /**
+     * Used to set the values of pixels.
+     *
+     * @param x The x to set.
+     * @param y The y to set.
+     * @param c The color to set the pixel to.
+     */
+    @Override
+    public void setPixel (int x, int y, Color c) {
+<span class="nc" id="L79">        updatePoints.add(new Pixel(x, y, c));</span>
+<span class="nc" id="L80">    }</span>
+
+    /**
+     * Used to create a rectangle of pixels assigned to a particular color.
+     *
+     * @param x The top left most corner of the rectangle.
+     * @param y The top left most corner of the rectangle.
+     * @param width How wide the rectangle is.
+     * @param height How tall the rectangle is.
+     * @param c The color to set the rectangle to.
+     */
+    @Override
+    public void setRectangle (int x, int y, int width, int height, Color c) {
+<span class="nc bnc" id="L93" title="All 2 branches missed.">        for (int i = x; i &lt; width + x; i++)</span>
+<span class="nc bnc" id="L94" title="All 2 branches missed.">            for (int j = y; j &lt; height + y; j++)</span>
+<span class="nc" id="L95">                updatePoints.add(new Pixel(i, j, c));</span>
+<span class="nc" id="L96">    }</span>
+
+    /**
+     * Used to set a block of pixels with the given radius.
+     *
+     * @param x The x position to center this 'big pixel'.
+     * @param y The y position to center this 'big pixel'.
+     * @param r The radius of this 'big pixel'.
+     * @param c The color to set these pixels to.
+     */
+    @Override
+    public void setBigPixel (int x, int y, int r, Color c) {
+<span class="nc" id="L108">        setRectangle(x - (r / 2), y - (r / 2), r, r, c);</span>
+<span class="nc" id="L109">    }</span>
+
+    /**
+     * Adds the given image to the list of images to draw this frame. Attempts to load an image from resources.
+     *
+     * @param x The x position of this image.
+     * @param y The y position of this image.
+     * @param width The width of this image.
+     * @param height The height of this image.
+     * @param path The path of the image to draw on screen.
+     */
+    @Override
+    public void addImage (int x, int y, int width, int height, String path) {
+<span class="nc" id="L122">        InputStream inputStream = this.getClass().getResourceAsStream(path);</span>
+<span class="nc bnc" id="L123" title="All 2 branches missed.">        if (inputStream == null) {</span>
+<span class="nc" id="L124">            System.out.println(&quot;Attempted to load '&quot; + path + &quot;' and failed.&quot;);</span>
+<span class="nc" id="L125">            return;</span>
+        }
+        try {
+<span class="nc" id="L128">            BufferedImage image = ImageIO.read(inputStream);</span>
+<span class="nc" id="L129">            images.add(new DrawImage(x, y, width, height, image));</span>
+<span class="nc" id="L130">        } catch (IOException exception) {</span>
+<span class="nc" id="L131">            exception.printStackTrace();</span>
+<span class="nc" id="L132">        }</span>
+<span class="nc" id="L133">    }</span>
+
+    /**
+     * Adds the given image to the list of images to draw this frame.
+     *
+     * @param x The x position of this image.
+     * @param y The y position of this image.
+     * @param width The width of this image.
+     * @param height The height of this image.
+     * @param image The image to draw to the screen.
+     */
+    @Override
+    public void addImage (int x, int y, int width, int height, BufferedImage image) {
+<span class="nc" id="L146">        images.add(new DrawImage(x, y, width, height, image));</span>
+<span class="nc" id="L147">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>BasicGame.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine.game</a> &gt; <span class="el_source">BasicGame.java</span></div><h1>BasicGame.java</h1><pre class="source lang-java linenums">package suga.engine.game;
+
+import suga.engine.game.objects.AbstractAIAgent;
+import suga.engine.game.objects.AbstractGameObject;
+import suga.engine.graphics.DrawListener;
+import suga.engine.graphics.AbstractGraphicsPanel;
+import suga.engine.input.mouse.BasicMouseListener;
+import suga.engine.physics.BasicPhysicsEngine;
+import suga.engine.physics.PhysicsEngine;
+import suga.engine.threads.SugaThread;
+import suga.engine.graphics.GraphicsPanel;
+import suga.engine.input.keyboard.GameKeyListener;
+import suga.engine.input.keyboard.KeyValues;
+
+import java.awt.event.MouseEvent;
+import java.util.*;
+
+/**
+ * Games require a main game loop to run along with game components that need to be run every game cycle.
+ *
+ * @author Sugaku
+ */
+public class BasicGame implements Game {
+
+    /**
+     * A list of game objects for this game. Their logic should be called every cycle.
+     */
+<span class="fc" id="L28">    protected Map&lt;String, AbstractGameObject&gt; objects = new HashMap&lt;&gt;();</span>
+
+    /**
+     * The physics engine that will be used with this game.
+     */
+<span class="fc" id="L33">    protected PhysicsEngine physics = new BasicPhysicsEngine();</span>
+
+    /**
+     * A list of AIAgents that should have their logic run every cycle.
+     */
+<span class="fc" id="L38">    protected List&lt;AbstractAIAgent&gt; agents = new ArrayList&lt;&gt;();</span>
+
+    /**
+     * A Map of scenes indexed by name.
+     */
+<span class="fc" id="L43">    protected Map&lt;String, AbstractScene&gt; scenes = new HashMap&lt;&gt;();</span>
+
+    /**
+     * The currently loaded scene object.
+     */
+    protected AbstractScene loadedScene;
+
+    /**
+     * The graphics panel that should be used to register draw listeners to.
+     */
+    protected GraphicsPanel panel;
+
+    /**
+     * The key listener that is being used by this game.
+     */
+    protected GameKeyListener keyListener;
+
+    /**
+     * The mouse listener that is being used by this game.
+     */
+    protected BasicMouseListener mouseListener;
+
+    /**
+     * The thread that is currently running this Game. May be null in some cases.
+     */
+<span class="fc" id="L68">    protected SugaThread thread = null;</span>
+
+    /**
+     * Creates a new game with the given panel used to register GameObjects as draw listeners to.
+     *
+     * @param panel The panel that GameObjects should register as a listener to.
+     * @param listener The game key listener being used by this game object.
+     * @param mouseListener The mouse listener being using by this game object.
+     */
+<span class="fc" id="L77">    public BasicGame (GraphicsPanel panel, GameKeyListener listener, BasicMouseListener mouseListener) {</span>
+<span class="fc" id="L78">        this.panel = panel;</span>
+<span class="fc" id="L79">        keyListener = listener;</span>
+<span class="fc" id="L80">        this.mouseListener = mouseListener;</span>
+<span class="fc" id="L81">    }</span>
+
+    /**
+     * Sets the thread that is calling loop() on this Game.
+     *
+     * @param thread The thread that will be calling loop() on this object.
+     */
+    @Override
+    public final void setThread (SugaThread thread) {
+<span class="fc" id="L90">        this.thread = thread;</span>
+<span class="fc" id="L91">    }</span>
+
+    /**
+     * Sets the graphics panel being used by this game.
+     *
+     * @param panel The panel to assign to this game.
+     */
+    @Override
+    public void setPanel (AbstractGraphicsPanel panel) {
+<span class="nc" id="L100">        this.panel = panel;</span>
+<span class="nc" id="L101">    }</span>
+
+    /**
+     * Sets the key listener currently being used by this game.
+     *
+     * @param listener The new key listener that this game should use.
+     */
+    @Override
+    public void setKeyListener (GameKeyListener listener) {
+<span class="nc" id="L110">        this.keyListener = listener;</span>
+<span class="nc" id="L111">    }</span>
+
+    /**
+     * Sets the mouse listener currently being used by this game.
+     *
+     * @param listener The new mouse listener that this game should use.
+     */
+    @Override
+    public void setMouseListener (BasicMouseListener listener) {
+<span class="nc" id="L120">        this.mouseListener = listener;</span>
+<span class="nc" id="L121">    }</span>
+
+    /**
+     * Accessor method for the thread that is calling loop(). This can be used to determine whether the game has stopped
+     * or paused.
+     *
+     * @return The thread that is running this game instance.
+     */
+    @Override
+    public final SugaThread getThread () {
+<span class="fc" id="L131">        return thread;</span>
+    }
+
+    /**
+     * The main logic loop for the game. Will be called depending on the rate of the logic thread.
+     */
+    @Override
+    public void loop () {
+<span class="fc" id="L139">        physics.checkCollisions();</span>
+<span class="fc bfc" id="L140" title="All 2 branches covered.">        for (AbstractAIAgent a : agents) a.logic();</span>
+<span class="fc bfc" id="L141" title="All 2 branches covered.">        for (AbstractGameObject gO : objects.values()) gO.runLogic();</span>
+<span class="fc" id="L142">    }</span>
+
+    /**
+     * Processes inputs given by players. Is run during pause.
+     */
+    @Override
+    public void processInput () {
+<span class="fc" id="L149">        Stack&lt;MouseEvent&gt; mice = mouseListener.getEvents();</span>
+<span class="pc bpc" id="L150" title="1 of 2 branches missed.">        while (mice.size() &gt; 0) {</span>
+<span class="nc" id="L151">            MouseEvent e = mice.pop();</span>
+<span class="nc bnc" id="L152" title="All 2 branches missed.">            loadedScene.mouseInput(e.getPoint(), e.getButton() == 1);</span>
+<span class="nc" id="L153">        }</span>
+<span class="fc" id="L154">        Stack&lt;KeyValues&gt; keys = keyListener.getKeyPresses();</span>
+<span class="pc bpc" id="L155" title="1 of 2 branches missed.">        while (keys.size() &gt; 0)</span>
+<span class="nc" id="L156">            loadedScene.keyboardInput(keys.pop(), true);</span>
+<span class="fc" id="L157">        keys = keyListener.getKeyReleases();</span>
+<span class="pc bpc" id="L158" title="1 of 2 branches missed.">        while (keys.size() &gt; 0)</span>
+<span class="nc" id="L159">            loadedScene.keyboardInput(keys.pop(), false);</span>
+<span class="fc" id="L160">    }</span>
+
+    /**
+     * Adds a GameObject by the given name.
+     *
+     * @param name The name of the game object. Can be used later to remove the item.
+     * @param object The game object to add.
+     */
+    @Override
+    public void addGameObject (String name, AbstractGameObject object) {
+<span class="fc" id="L170">        objects.put(name, object);</span>
+<span class="fc" id="L171">        panel.registerListener(object);</span>
+<span class="fc" id="L172">        physics.addObject(object);</span>
+<span class="fc" id="L173">    }</span>
+
+    /**
+     * Accessor method for game objects.
+     *
+     * @param name The name of the object to attempt to get.
+     * @return The found object or null.
+     */
+    @Override
+    public AbstractGameObject getGameObject (String name) {
+<span class="fc" id="L183">        return objects.get(name);</span>
+    }
+
+    /**
+     * Registers a new AI agent so that it can be called every tick after collisions but before object logic.
+     *
+     * @param agent The AIAgent to add into the list of agents.
+     */
+    @Override
+    public void addAgent (AbstractAIAgent agent) {
+<span class="fc" id="L193">        agents.add(agent);</span>
+<span class="fc" id="L194">    }</span>
+
+    /**
+     * Registers a new DrawingListener. This will not register anything beyond the draw method. Usually used by UI,
+     * hence the name.
+     *
+     * @param listener The draw listener that should be registered to this panel.
+     */
+    @Override
+    public void addDrawingListener (DrawListener listener) {
+<span class="fc" id="L204">        panel.registerListener(listener);</span>
+<span class="fc" id="L205">    }</span>
+
+    /**
+     * Clears all AIAgents, physics managers, GameObjects, and PanelListeners.
+     */
+    @Override
+    public void clear () {
+<span class="fc" id="L212">        physics = new BasicPhysicsEngine();</span>
+<span class="fc" id="L213">        agents = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L214">        objects = new HashMap&lt;&gt;();</span>
+<span class="fc" id="L215">        panel.clearListeners();</span>
+<span class="fc" id="L216">    }</span>
+
+    /**
+     * Attempts to load the given scene. If successful with return true, if un-found or loading fails, will return
+     * false.
+     *
+     * @param name The name of the scene to attempt loading.
+     */
+    @Override
+    public boolean loadScene (String name) {
+<span class="fc" id="L226">        AbstractScene scene = scenes.get(name);</span>
+<span class="fc bfc" id="L227" title="All 2 branches covered.">        if (scene == null) return false;</span>
+<span class="fc bfc" id="L228" title="All 2 branches covered.">        if (scene.load(this)) {</span>
+<span class="fc" id="L229">            loadedScene = scene;</span>
+<span class="fc" id="L230">            return true;</span>
+        }
+<span class="fc" id="L232">        return false;</span>
+    }
+
+    /**
+     * Accessor method for the graphics panel used by the server.
+     *
+     * @return The panel used by the server.
+     */
+    @Override
+    public GraphicsPanel getPanel () {
+<span class="fc" id="L242">        return panel;</span>
+    }
+
+    /**
+     * Accessor method for the mouse listener used by the server.
+     *
+     * @return The mouse listener used by the server.
+     */
+    @Override
+    public BasicMouseListener getMouseListener () {
+<span class="fc" id="L252">        return mouseListener;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
