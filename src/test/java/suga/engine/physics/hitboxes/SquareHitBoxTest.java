@@ -2,6 +2,8 @@ package suga.engine.physics.hitboxes;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 import org.mockito.Mockito;
 import suga.engine.graphics.GraphicsPanel;
 import suga.engine.physics.Vector;
@@ -56,27 +58,12 @@ class SquareHitBoxTest {
     /**
      * Checks if the given point is along the boundary of the hit box or not. Should return false for interior points.
      */
-    @Test
-    void touching () {
-        assertFalse(hitBox.touching(Vector.ZERO), "The origin should be the center of the test hit box, and thus inside.");
-        for (int x : new int[]{ -5, -5, 5, 5 })
-            for (int y : new int[]{ -5, 5, -5, 5 })
-                assertFalse(hitBox.touching(new Vector(x, y, 0)), "Should be inside of hit box (" + x + ", " + y + ").");
-        for (int w : new int[]{ -10, 10 }) {
-            assertTrue(hitBox.touching(new Vector(w, 3, 0)), "Should be on boundary of hit box (" + w + ", " + 3 + ").");
-            assertTrue(hitBox.touching(new Vector(3, w, 0)), "Should be on boundary of hit box (" + 3 + ", " + w + ").");
-        }
-        for (int x : new int[]{ -15, -15, 15, 15 })
-            for (int y : new int[]{ -15, 15, -15, 15 })
-                assertFalse(hitBox.isInside(new Vector(x, y, 0)), "Should be outside of hit box (" + x + ", " + y + ").");
-        assertFalse(hitBox.isInside(new Vector(5, 15, 0)), "Should be outside of hit box (5, 15).");
-        assertFalse(hitBox.isInside(new Vector(5, -15, 0)), "Should be outside of hit box (5, -15).");
-        assertFalse(hitBox.isInside(new Vector(-5, 15, 0)), "Should be outside of hit box (-5, 15).");
-        assertFalse(hitBox.isInside(new Vector(-5, -15, 0)), "Should be outside of hit box (-5, -15).");
-        assertFalse(hitBox.isInside(new Vector(15, 5, 0)), "Should be outside of hit box (15, 5).");
-        assertFalse(hitBox.isInside(new Vector(15, -5, 0)), "Should be outside of hit box (15, -5).");
-        assertFalse(hitBox.isInside(new Vector(-15, 5, 0)), "Should be outside of hit box (-15, 5).");
-        assertFalse(hitBox.isInside(new Vector(-15, -5, 0)), "Should be outside of hit box (-15, -5).");
+    @ParameterizedTest
+    @CsvFileSource(resources = "/suga/engine/physics/hitboxes/SquareHitBox/touching.csv", numLinesToSkip = 2, delimiter = ',')
+    void touching (int width, int height, int cx, int cy, int cz, int x, int y, int z, boolean expected, String reason) {
+        HitBox hitBox = new SquareHitBox(width, height, new Vector(cx, cy, cz));
+        Vector testPoint = new Vector(x, y, z);
+        assertEquals(hitBox.touching(testPoint), expected, reason + " HitBox:" + hitBox + " TestPoint:" + testPoint);
     }
 
     /**
