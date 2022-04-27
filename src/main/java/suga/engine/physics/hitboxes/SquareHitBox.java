@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Sugaku
  */
-public class SquareHitBox implements HitBox {
+public class SquareHitBox implements HitBox { // todo equals method.
 
     /**
      * The current position of the game object.

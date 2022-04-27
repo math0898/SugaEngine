@@ -198,4 +198,29 @@ public class ElasticCollider implements Collidable {
     public ElasticCollider clone () {
         return new ElasticCollider(pos, velocity, acceleration, mass, hitBox);
     }
+
+    /**
+     * Two ElasticColliders are equal if the fields are the same.
+     *
+     * @param obj The object to check if it is equal to 'this'.
+     * @return True if and only if the two objects are equivalent. Two objects are equivalent if field values are the
+     *         same even if they don't share objects.
+     */
+    @Override
+    public boolean equals (Object obj) {
+        if (obj instanceof ElasticCollider collider) {
+            if (pos != null) {
+                if (!pos.equals(collider.pos)) return false;
+            } else if (collider.pos != null) return false;
+            if (velocity != null) {
+                if (!velocity.equals(collider.velocity)) return false;
+            } else if (collider.velocity != null) return false;
+            if (acceleration != null) {
+                if (!acceleration.equals(collider.acceleration)) return false;
+            } else if (collider.acceleration != null) return false;
+            if (mass != collider.mass) return false;
+            if (hitBox != null) return hitBox.equals(collider.hitBox);
+            else return collider.hitBox == null;
+        } else return false;
+    }
 }

@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
  *
  * @author Sugaku
  */
-class ElasticColliderTest { // todo implement
+class ElasticColliderTest {
 
     /**
      * An elastic collider used to test each method.
@@ -62,7 +62,7 @@ class ElasticColliderTest { // todo implement
      */
     @Test
     void getVelocity () {
-        assertEquals(new Vector(0, 1, 0), collider.getVelocity(), "Velocity should start at (0, 0, 0)");
+        assertEquals(new Vector(0, 1, 0), collider.getVelocity(), "Velocity should start at (0, 1, 0)");
         Vector v = collider.getVelocity();
         v.add(new Vector(1, 1, 1));
         assertEquals(new Vector(1, 2, 1), collider.getVelocity(), "The returned position object shouldn't be a clone, and thus can be modified" +
@@ -90,55 +90,62 @@ class ElasticColliderTest { // todo implement
      */
     @Test
     void getAcceleration () {
-//        assertEquals(Vector.ZERO, collider.getAcceleration(), "Acceleration should start at (0, 0, 0).");
-//        Vector v = collider.getAcceleration();
-//        v.add(new Vector(1, 1, 1));
-//        assertEquals(new Vector(1, 2, 1), collider.getAcceleration(), "The returned acceleration object shouldn't be a clone, and thus can be modified" +
-//                "to modify the acceleration of the elastic collider.");
+        Vector v = new Vector(0, 1, 0);
+        collider.setVelocity(v);
+        assertEquals(v, collider.getAcceleration(), "Acceleration should start at (0, 1, 0).");
+        v = collider.getAcceleration();
+        v.add(new Vector(1, 1, 1));
+        assertEquals(new Vector(1, 2, 1), collider.getAcceleration(), "The returned acceleration object shouldn't be a clone, and thus can be modified" +
+                "to modify the acceleration of the elastic collider.");
     }
 
+    /**
+     * Expected behavior is to override the acceleration object being used by the object. Modifying the object after
+     * setting it to the acceleration of the collider should modify the collider's acceleration.
+     */
     @Test
     void setAcceleration () {
-//        fail("Un-implemented");
+        Vector v = new Vector(0, 1, 0);
+        collider.setAcceleration(v);
+        assertEquals(v, collider.getAcceleration(), "Collider should use given velocity vector.");
+        v.scale(5);
+        v.add(new Vector(-123, 9872, 98));
+        v.scale(3, -1, 2);
+        assertEquals(v, collider.getAcceleration(), "Collider shouldn't create a copy of vector.");
     }
 
     @Test
     void getMass () {
-//        fail("Un-implemented");
+        fail("Un-implemented");
     }
 
     @Test
     void setMass () {
-//        fail("Un-implemented");
+        fail("Un-implemented");
     }
 
     @Test
     void update () {
-//        fail("Un-implemented");
+        fail("Un-implemented");
     }
 
     @Test
     void getHitBox () {
-//        fail("Un-implemented");
+        fail("Un-implemented");
     }
 
     @Test
     void setHitBox () {
-//        fail("Un-implemented");
+        fail("Un-implemented");
     }
 
     @Test
     void collision () {
-//        fail("Un-implemented");
+        fail("Un-implemented");
     }
 
     @Test
     void touch () {
-//        fail("Un-implemented");
-    }
-
-    @Test
-    void testClone () {
-//        fail("Un-implemented");
+        fail("Un-implemented");
     }
 }
