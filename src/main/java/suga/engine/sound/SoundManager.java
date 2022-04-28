@@ -1,62 +1,96 @@
-//package suga.engine.sound;
-//
-////import org.lwjgl.openal.*;
-//
-///**
-// * The SoundManager class is used to play sound to the player.
-// *
-// * @author Sugaku
-// */
-//public class SoundManager {
-//
-//    /**
-//     *
-//     */
-//    int alSource;
-//
-//    /**
-//     *
-//     */
-//    int alSampleSet;
-//
-//    /**
-//     * The context being used by this SoundManager.
-//     */
-//    long context;
-//
-//    /**
-//     * The ALC device being used by this SoundManager.
-//     */
-//    long device;
-//
-//    /**
-//     * Creates a new SoundManager. Attempts to get a lineOut from the AudioSystem which has volume control.
-//     */
-//    public SoundManager () {
-//        /* Essentially C++ code follows. Abandon hope all yee who tread here with Java notions. */
-////        ALCapabilities capabilities = AL.getCapabilities();
-////        AL.setCurrentThread(capabilities);
-////        device = ALC11.alcOpenDevice(ByteBuffer.allocateDirect(ALC11.ALC_DEFAULT_DEVICE_SPECIFIER));
-////        context = ALC11.alcCreateContext(device, (int[]) null);
-////        ALC11.alcMakeContextCurrent(context);
-//    }
-//
-//    /**
-//     * Plays the audio resource at the given location.
-//     *
-//     * @param path The path to the audio clip resource.
-//     */
-//    public void play (String path) {
-////        try {
-////            alSource = AL11.alGenSources();
-////            alSampleSet = AL11.alGenBuffers();
-////            byte[] alBuffer = Objects.requireNonNull(this.getClass().getResourceAsStream(path)).readAllBytes();
-////            AL11.alBufferData(alSampleSet, AL10.AL_FORMAT_STEREO8, ByteBuffer.wrap(alBuffer), AL11.AL_FREQUENCY);
-////            AL11.alSourcei(alSource, AL10.AL_BUFFER, alSampleSet);
-////            AL11.alSourcei(alSource, AL10.AL_LOOPING, AL10.AL_TRUE);
-////            AL11.alSourcePlay(alSource);
-////        } catch (IOException e) {
-////            e.printStackTrace();
-////        }
-//    }
-//}
+package suga.engine.sound;
+
+/**
+ * The SoundManager is used to manage sounds being played to the player. It includes systems for ambience tracks as well
+ * as specific sound effects.
+ *
+ * @author Sugaku
+ */
+public interface SoundManager {
+
+    /**
+     * Clears the list of sounds currently loaded by the SoundManager. Should be called before loading a new scene to
+     * prevent too many files from being stored in RAM.
+     */
+    void clearSounds ();
+
+    /**
+     * Adds a new sound effect to the sound manager which can then be played upon request.
+     *
+     * @param name The name of the sound effect.
+     * @param path The path to the sound effect. The system will first search class resources then the local disk.
+     * @return True if the effect is found and then added to the SoundManager. Otherwise, false.
+     */
+    boolean addSoundEffect (String name, String path);
+
+    /**
+     * Removes sound effects with the given name.
+     *
+     * @param name The name of the sound effect to remove.
+     */
+    void removeSoundEffect (String name);
+
+    /**
+     * Plays a specific sound effect with 50% volume.
+     *
+     * @param name The sound effect to play.
+     */
+    void playSoundEffect (String name);
+
+    /**
+     * Plays a specific sound effect with the given volume.
+     *
+     * @param name The sound effect to play.
+     * @param vol  The volume to play the sound effect at. Range: [0, 1]
+     */
+    void playSoundEffect (String name, double vol);
+
+    /**
+     * Adds a new music track to be played in the background on demand.
+     *
+     * @param name The name of the music track.
+     * @param path The path of the music track. The system will first search class resources then the local disk.
+     * @return True if the music track is found and then added to the SoundManager. Otherwise, false.
+     */
+    boolean addMusicTrack (String name, String path);
+
+    /**
+     * Removes music tracks with the given name.
+     *
+     * @param name The name of the music track to remove.
+     */
+    void removeMusicTrack (String name);
+
+    /**
+     * Plays a specific music track at 50% volume. This track will repeat until another track is called, or it is
+     * requested that music playback stops.
+     *
+     * @param name The name of the music track to play.
+     */
+    void playMusicTrack (String name);
+
+    /**
+     * Plays a specific music track with the given volume. This track will repeat until another track is called, or it
+     * is requested that music playback stops.
+     *
+     * @param name The name of the music track to play.
+     * @param vol  The volume to play the music track at. Range: [0, 1]
+     */
+    void playMusicTrack (String name, double vol);
+
+    /**
+     * Stops the currently playing music track without starting a new one.
+     */
+    void stopMusic ();
+
+    /**
+     * Adds a new ambience sound to be played in the background on an interval. Probability for the sound to play slowly
+     * increases until it's played at which point the probability becomes zero again.
+     *
+     * @param interval The interval after which the sound would have been played at least once. The time unit is millis.
+     * @param name     The name of the ambience sound.
+     * @param path     The path of the ambience sound. The system will first search class resources then the local disk.
+     * @return True if the ambience sound is found and then added to the SoundManager. Otherwise, false.
+     */
+    boolean addAmbienceEffect (int interval, String name, String path);
+}
