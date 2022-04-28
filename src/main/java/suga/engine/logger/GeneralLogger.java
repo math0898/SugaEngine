@@ -67,8 +67,12 @@ public class GeneralLogger implements Logger {
     @Override
     public void log (Exception exception, Level level) {
         log(exception.getMessage(), level);
-        for (StackTraceElement se : exception.getStackTrace())
+        int i = 0;
+        for (StackTraceElement se : exception.getStackTrace()) {
+            if (i >= 10) break;
+            i++;
             log(se.toString(), level);
+        }
     }
 
     /**
