@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - JavaxSoundManagerTest</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>JavaxSoundManagerTest</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/suga.engine.sound.html">suga.engine.sound</a> &gt; JavaxSoundManagerTest</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">13</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">1m40.15s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div id="tabs">
+<ul class="tabLinks">
+<li>
+<a href="#tab0">Tests</a>
+</li>
+<li>
+<a href="#tab1">Standard output</a>
+</li>
+</ul>
+<div id="tab0" class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">addAmbienceEffect()</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">addMusicTrack()</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">addSoundEffect()</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">ambienceSoundRoll()</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">clearSounds()</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">playMusicTrack()</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">playSoundEffect()</td>
+<td class="success">1m40.15s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">removeAmbienceEffect()</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">removeMusicTrack()</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">removeSoundEffect()</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">stopMusic()</td>
+<td class="success">0.001s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testPlayMusicTrack()</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+<tr>
+<td class="success">testPlaySoundEffect()</td>
+<td class="success">0s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div id="tab1" class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>?[0;0m?[0;36m ____                    _____             _            
+?[0;36m/ ___| _   _  __ _  __ _| ____|_ __   __ _(_)_ __   ___ 
+?[0;36m\___ \| | | |/ _` |/ _` |  _| | '_ \ / _` | | '_ \ / _ \
+?[0;36m ___) | |_| | (_| | (_| | |___| | | | (_| | | | | |  __/
+?[0;36m|____/ \__,_|\__, |\__,_|_____|_| |_|\__, |_|_| |_|\___|
+?[0;36m             |___/                   |___/             
+?[1;90m[?[0;0mINFO?[1;90m] ?[0;0mUsing general logger. This can be changed using GameEngine.setLogger(logger).
+?[1;90m[?[0;31mEXCEPTION?[1;90m] ?[0;31mJavaxSoundManager: An exception occurred attempting to convert the input stream to a clip.
+?[1;90m[?[0;31mEXCEPTION?[1;90m] ?[0;31mStream of unsupported format
+?[0;31m        java.desktop/javax.sound.sampled.AudioSystem.getAudioInputStream(AudioSystem.java:1014)
+?[0;31m        suga.engine.sound.JavaxSoundManager.findClip(JavaxSoundManager.java:61)
+?[0;31m        suga.engine.sound.JavaxSoundManager.addSoundEffect(JavaxSoundManager.java:103)
+?[0;31m        suga.engine.sound.JavaxSoundManagerTest.playSoundEffect(JavaxSoundManagerTest.java:33)
+?[0;31m        java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0;31m        java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+?[0;31m        java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[0;31m        java.base/java.lang.reflect.Method.invoke(Method.java:567)
+?[0;31m        org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:725)
+?[0;31m        org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+?[1;90m[?[0;31mEXCEPTION?[1;90m] ?[0;31mJavaxSoundManager: Was unable to add sound effect by the name of: failed-mp3
+?[1;90m[?[0;31mEXCEPTION?[1;90m] ?[0;31mJavaxSoundManager: Clip was not found as a resource, and an exception occurred searching the disk.
+?[1;90m[?[0;31mEXCEPTION?[1;90m] ?[0;31m/home/sugaku/Music/BladeAndSoul.flac (No such file or directory)
+?[0;31m        java.base/java.io.FileInputStream.open0(Native Method)
+?[0;31m        java.base/java.io.FileInputStream.open(FileInputStream.java:211)
+?[0;31m        java.base/java.io.FileInputStream.&lt;init&gt;(FileInputStream.java:153)
+?[0;31m        java.base/java.io.FileInputStream.&lt;init&gt;(FileInputStream.java:108)
+?[0;31m        suga.engine.sound.JavaxSoundManager.findClip(JavaxSoundManager.java:58)
+?[0;31m        suga.engine.sound.JavaxSoundManager.addSoundEffect(JavaxSoundManager.java:103)
+?[0;31m        suga.engine.sound.JavaxSoundManagerTest.playSoundEffect(JavaxSoundManagerTest.java:34)
+?[0;31m        java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+?[0;31m        java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:78)
+?[0;31m        java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+?[1;90m[?[0;31mEXCEPTION?[1;90m] ?[0;31mJavaxSoundManager: Was unable to add sound effect by the name of: failed-not-found
+?[1;90m[?[0;36mDEBUG?[1;90m] ?[0;36mJavaxSoundManager: Added sound effect by the name of: test-effect
+?[1;90m[?[0;33mWARNING?[1;90m] ?[0;33mJavaxSoundManager: Attempted to modify volume of clip but action is not supported.
+?[1;90m[?[0;36mDEBUG?[1;90m] ?[0;36mJavaxSoundManager: Played requested sound effect: test-effect
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="http://www.gradle.org">Gradle 7.1</a> at Apr 28, 2022, 6:21:09 PM</p>
+</div>
+</div>
+</body>
+</html>

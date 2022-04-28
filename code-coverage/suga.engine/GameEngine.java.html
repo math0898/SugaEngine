@@ -1,7 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameEngine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine</a> &gt; <span class="el_source">GameEngine.java</span></div><h1>GameEngine.java</h1><pre class="source lang-java linenums">package suga.engine;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameEngine.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SugaEngine</a> &gt; <a href="index.source.html" class="el_package">suga.engine</a> &gt; <span class="el_source">GameEngine.java</span></div><h1>GameEngine.java</h1><pre class="source lang-java linenums">package suga.engine;
 
 import suga.engine.graphics.AbstractGraphicsPanel;
 import suga.engine.input.mouse.BasicMouseListener;
+import suga.engine.logger.GeneralLogger;
+import suga.engine.logger.Logger;
 import suga.engine.threads.GameLogicThread;
 import suga.engine.threads.GraphicsThread;
 import suga.engine.threads.SugaThread;
@@ -13,11 +15,11 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 
 /**
- * A collection of static methods that are used to make starting and closing a game easier.
+ * A collection of static methods that are used to make starting, closing and managing a game easier.
  *
  * @author Sugaku
  */
-<span class="nc" id="L20">public class GameEngine {</span>
+<span class="nc" id="L22">public class GameEngine {</span>
 
     /**
      * The currently opened frame.
@@ -35,26 +37,54 @@ import java.awt.event.WindowEvent;
     protected static SugaThread logic;
 
     /**
+     * The logger currently being used by the GameEngine.
+     */
+<span class="fc" id="L42">    protected static Logger logger = new GeneralLogger();</span>
+
+    /**
      * An enum of pre-defined resolutions to open a game window at.
      *
      * @author Sugaku
      */
-<span class="nc" id="L42">    public enum Window {</span>
+<span class="nc" id="L49">    public enum Window {</span>
 
         /**
          * Creates the window at the largest possible resolution in full screen mode.
          */
-<span class="nc" id="L47">        FULL_SCREEN</span>
+<span class="nc" id="L54">        FULL_SCREEN</span>
     }
+
+    /**
+     * Accessor method for the logger being used by the GameEngine.
+     *
+     * @return The logger currently in use by the GameEngine.
+     */
+    public static Logger getLogger () {
+<span class="fc" id="L63">        return logger;</span>
+    }
+
+    /**
+     * Setter method for the logger being used by the GameEngine.
+     *
+     * @param logger The new logger for the GameEngine to use.
+     */
+    public static void setLogger (Logger logger) {
+<span class="nc" id="L72">        GameEngine.logger.log(&quot;GameEngine: Switching to a new logger.&quot;);</span>
+<span class="nc" id="L73">        GameEngine.logger = logger;</span>
+<span class="nc" id="L74">        GameEngine.logger.log(&quot;GameEngine: Switched logger.&quot;);</span>
+<span class="nc" id="L75">    }</span>
 
     /**
      * Closes both the logic and graphics thread.
      */
     public static void stop () {
-<span class="nc" id="L54">        graphics.setStopped(true);</span>
-<span class="nc" id="L55">        logic.setStopped(true);</span>
-<span class="nc" id="L56">        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));</span>
-<span class="nc" id="L57">    }</span>
+<span class="nc" id="L81">        logger.log(&quot;GameEngine: Stopping the game.&quot;);</span>
+<span class="nc" id="L82">        graphics.setStopped(true);</span>
+<span class="nc" id="L83">        logic.setStopped(true);</span>
+<span class="nc" id="L84">        logger.log(&quot;GameEngine: Stopped logic and graphics threads.&quot;);</span>
+<span class="nc" id="L85">        frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));</span>
+<span class="nc" id="L86">        logger.log(&quot;GameEngine: Sent request to close frame.&quot;);</span>
+<span class="nc" id="L87">    }</span>
 
     /**
      * Creates a new game window with all the possible configuration options being specified.
@@ -74,21 +104,24 @@ import java.awt.event.WindowEvent;
     public static void launchGameWindow (int width, int height, String name, boolean border, AbstractGraphicsPanel panel,
                                          Color background, int logicRate, int frameRate, GameKeyListener keyListener,
                                          BasicMouseListener mouseListener, Game game) {
-<span class="nc" id="L77">        panel.setBackground(background);</span>
-<span class="nc" id="L78">        frame = new JFrame(name);</span>
-<span class="nc" id="L79">        frame.setSize(width, height);</span>
-<span class="nc" id="L80">        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
-<span class="nc" id="L81">        frame.getContentPane().add(panel, BorderLayout.CENTER);</span>
-<span class="nc" id="L82">        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);</span>
-<span class="nc bnc" id="L83" title="All 2 branches missed.">        frame.setUndecorated(!border);</span>
-<span class="nc" id="L84">        frame.setVisible(true);</span>
-<span class="nc" id="L85">        graphics = new GraphicsThread(panel, frameRate);</span>
-<span class="nc" id="L86">        game.setPanel(panel);</span>
-<span class="nc" id="L87">        keyListener.setFrame(frame);</span>
-<span class="nc" id="L88">        mouseListener.setFrame(frame);</span>
-<span class="nc" id="L89">        game.setKeyListener(keyListener);</span>
-<span class="nc" id="L90">        game.setMouseListener(mouseListener);</span>
-<span class="nc" id="L91">        logic = new GameLogicThread(game, logicRate);</span>
-<span class="nc" id="L92">    }</span>
+<span class="nc" id="L107">        logger.log(&quot;GameEngine: Starting the game window.&quot;);</span>
+<span class="nc" id="L108">        panel.setBackground(background);</span>
+<span class="nc" id="L109">        frame = new JFrame(name);</span>
+<span class="nc" id="L110">        frame.setSize(width, height);</span>
+<span class="nc" id="L111">        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L112">        frame.getContentPane().add(panel, BorderLayout.CENTER);</span>
+<span class="nc" id="L113">        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);</span>
+<span class="nc bnc" id="L114" title="All 2 branches missed.">        frame.setUndecorated(!border);</span>
+<span class="nc" id="L115">        frame.setVisible(true);</span>
+<span class="nc" id="L116">        graphics = new GraphicsThread(panel, frameRate);</span>
+<span class="nc" id="L117">        logger.log(&quot;GameEngine: Started graphics thread and window.&quot;);</span>
+<span class="nc" id="L118">        game.setPanel(panel);</span>
+<span class="nc" id="L119">        keyListener.setFrame(frame);</span>
+<span class="nc" id="L120">        mouseListener.setFrame(frame);</span>
+<span class="nc" id="L121">        game.setKeyListener(keyListener);</span>
+<span class="nc" id="L122">        game.setMouseListener(mouseListener);</span>
+<span class="nc" id="L123">        logic = new GameLogicThread(game, logicRate);</span>
+<span class="nc" id="L124">        logger.log(&quot;GameEngine: Linked input listeners and started game logic thread.&quot;);</span>
+<span class="nc" id="L125">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeneralLogger.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SugaEngine</a> &gt; <a href="index.source.html" class="el_package">suga.engine.logger</a> &gt; <span class="el_source">GeneralLogger.java</span></div><h1>GeneralLogger.java</h1><pre class="source lang-java linenums">package suga.engine.logger;
+
+/**
+ * The general logger prints all messages it receives to the console with ANSI color codes, a file located at
+ * ./logs/latest.log, and another file located at ./logs/&lt;date&gt;.log.
+ *
+ * @author Sugaku
+ */
+public class GeneralLogger implements Logger {
+
+    /**
+     * The level to start printing messages at.
+     */
+<span class="fc" id="L14">    private Level printLevel = Level.DEBUG;</span>
+
+    /**
+     * Initializes and creates the general logger object.
+     */
+<span class="fc" id="L19">    public GeneralLogger () {</span>
+<span class="fc" id="L20">        log(&quot;&quot;&quot;</span>
+                \u001B[0;36m ____                    _____             _           \s
+                \u001B[0;36m/ ___| _   _  __ _  __ _| ____|_ __   __ _(_)_ __   ___\s
+                \u001B[0;36m\\___ \\| | | |/ _` |/ _` |  _| | '_ \\ / _` | | '_ \\ / _ \\
+                \u001B[0;36m ___) | |_| | (_| | (_| | |___| | | | (_| | | | | |  __/
+                \u001B[0;36m|____/ \\__,_|\\__, |\\__,_|_____|_| |_|\\__, |_|_| |_|\\___|
+                \u001B[0;36m             |___/                   |___/            \s&quot;&quot;&quot;, Level.INFO, false);
+<span class="fc" id="L27">        log(&quot;Using general logger. This can be changed using GameEngine.setLogger(logger).&quot;);</span>
+        // todo initialize files
+<span class="fc" id="L29">    }</span>
+
+    /**
+     * Sets the level at which messages should be output. Messages at the given level will also be printed.
+     *
+     * @param level The level which to start printing messages at.
+     */
+    @Override
+    public void setLevel (Level level) {
+<span class="nc" id="L38">        printLevel = level;</span>
+<span class="nc" id="L39">    }</span>
+
+    /**
+     * Sends the given exception to the logger.
+     *
+     * @param exception The exception to print to the console.
+     */
+    @Override
+    public void log (Exception exception) {
+<span class="fc" id="L48">        log(exception, Level.EXCEPTION);</span>
+<span class="fc" id="L49">    }</span>
+
+    /**
+     * Sends a general message to the logger.
+     *
+     * @param message The message to send to the logger.
+     */
+    @Override
+    public void log (String message) {
+<span class="fc" id="L58">        log(message, Level.INFO);</span>
+<span class="fc" id="L59">    }</span>
+
+    /**
+     * Sends the given exception to the logger at a different level.
+     *
+     * @param exception The exception to print to the console.
+     * @param level     The level at which to send the exception to the console.
+     */
+    @Override
+    public void log (Exception exception, Level level) {
+<span class="fc" id="L69">        log(exception.getMessage(), level);</span>
+<span class="fc" id="L70">        int i = 0;</span>
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">        for (StackTraceElement se : exception.getStackTrace()) {</span>
+<span class="fc bfc" id="L72" title="All 2 branches covered.">            if (i &gt;= 10) break;</span>
+<span class="fc" id="L73">            i++;</span>
+<span class="fc" id="L74">            log(&quot;        &quot; + se.toString(), level, false);</span>
+        }
+<span class="fc" id="L76">    }</span>
+
+    /**
+     * Sends a message to the logger at a specific level.
+     *
+     * @param message The message to send to the logger.
+     * @param level   The level at which to send the message.
+     */
+    @Override
+    public void log (String message, Level level) {
+<span class="fc" id="L86">        log(message, level, true);</span>
+<span class="fc" id="L87">    }</span>
+
+    /**
+     * Sends a message to the logger with, or without, the level prefix at the given level.
+     *
+     * @param message The message to send to the logger.
+     * @param level   The level at which to send the message.
+     * @param prefix  Whether to send the level prefix with this message or not.
+     */
+    @Override
+    public void log (String message, Level level, boolean prefix) {
+<span class="pc bpc" id="L98" title="1 of 2 branches missed.">        if (level.getUrgency() &lt; printLevel.getUrgency()) return;</span>
+<span class="fc" id="L99">        String output = &quot;&quot;;</span>
+<span class="fc bfc" id="L100" title="All 2 branches covered.">        if (prefix) output += level.toString();</span>
+<span class="fc" id="L101">        else output += level.getColorCode();</span>
+<span class="fc" id="L102">        output += message;</span>
+        // todo files IO
+<span class="fc" id="L104">        System.out.println(output);</span>
+<span class="fc" id="L105">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

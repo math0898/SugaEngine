@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>JavaxSoundManager.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SugaEngine</a> &gt; <a href="index.source.html" class="el_package">suga.engine.sound</a> &gt; <span class="el_source">JavaxSoundManager.java</span></div><h1>JavaxSoundManager.java</h1><pre class="source lang-java linenums">package suga.engine.sound;
+
+import suga.engine.logger.Level;
+
+import javax.sound.sampled.*;
+import java.io.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
+import static suga.engine.GameEngine.getLogger;
+
+/**
+ * The JavaxSoundManager is a SoundManager that outputs sound using the classes provided by javax and javax.sampled.
+ *
+ * @author Sugaku
+ */
+<span class="pc bpc" id="L18" title="1 of 2 branches missed.">public class JavaxSoundManager implements SoundManager {</span>
+
+    /**
+     * A map of sound effects by their name.
+     */
+<span class="fc" id="L23">    private final Map&lt;String, Clip&gt; soundEffects = new HashMap&lt;&gt;();</span>
+
+    /**
+     * A map of music tracks by their name.
+     */
+<span class="fc" id="L28">    private final Map&lt;String, Clip&gt; musicTracks = new HashMap&lt;&gt;();</span>
+
+    /**
+     * The currently playing music track.
+     */
+<span class="fc" id="L33">    private Clip nowPlaying = null;</span>
+
+    /**
+     * A map of the ambience sound effects by their name.
+     */
+<span class="fc" id="L38">    private final Map&lt;String, Clip&gt; ambienceSounds = new HashMap&lt;&gt;();</span>
+
+    /**
+     * A map of the intervals at which to play ambience sounds.
+     */
+<span class="fc" id="L43">    private final Map&lt;String, Integer&gt; ambienceIntervals = new HashMap&lt;&gt;();</span>
+
+    /**
+     * Attempts to find the clip in the resource path, and if not found searches the local disk.
+     *
+     * @param path The path to attempt and find the clip at.
+     * @return Either the found clip or null.
+     */
+    protected Clip findClip (String path) {
+<span class="fc" id="L52">        Clip toReturn = null;</span>
+        try {
+<span class="fc" id="L54">            toReturn = AudioSystem.getClip();</span>
+<span class="fc" id="L55">            InputStream stream = getClass().getResourceAsStream(path);</span>
+<span class="pc bpc" id="L56" title="2 of 4 branches missed.">            if (InputStream.nullInputStream().equals(stream) || stream == null) {</span>
+                try {
+<span class="fc" id="L58">                    stream = new FileInputStream(path);</span>
+                    try {
+<span class="fc" id="L60">                        stream = new BufferedInputStream(stream);</span>
+<span class="fc" id="L61">                        toReturn.open(AudioSystem.getAudioInputStream(stream));</span>
+<span class="fc" id="L62">                    } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {</span>
+<span class="fc" id="L63">                        getLogger().log(&quot;JavaxSoundManager: An exception occurred attempting to convert the input stream to a clip.&quot;, Level.EXCEPTION);</span>
+<span class="fc" id="L64">                        getLogger().log(e);</span>
+<span class="fc" id="L65">                        return null;</span>
+<span class="fc" id="L66">                    }</span>
+<span class="fc" id="L67">                } catch (IOException e) {</span>
+<span class="fc" id="L68">                    getLogger().log(&quot;JavaxSoundManager: Clip was not found as a resource, and an exception occurred searching the disk.&quot;, Level.EXCEPTION);</span>
+<span class="fc" id="L69">                    getLogger().log(e);</span>
+<span class="fc" id="L70">                    return null;</span>
+<span class="fc" id="L71">                }</span>
+            }
+<span class="nc" id="L73">        } catch (LineUnavailableException e) {</span>
+<span class="nc" id="L74">            getLogger().log(&quot;JavaxSoundManager: Out line is not available.&quot;, Level.EXCEPTION);</span>
+<span class="nc" id="L75">            getLogger().log(e);</span>
+<span class="fc" id="L76">        }</span>
+<span class="fc" id="L77">        return toReturn;</span>
+    }
+
+    /**
+     * Clears the list of sounds currently loaded by the SoundManager. Should be called before loading a new scene to
+     * prevent too many files from being stored in RAM.
+     */
+    @Override
+    public void clearSounds () {
+<span class="nc" id="L86">        stopMusic();</span>
+<span class="nc" id="L87">        soundEffects.clear();</span>
+<span class="nc" id="L88">        musicTracks.clear();</span>
+<span class="nc" id="L89">        ambienceSounds.clear();</span>
+<span class="nc" id="L90">        ambienceIntervals.clear();</span>
+<span class="nc" id="L91">        getLogger().log(&quot;JavaxSoundManager: Cleared all loaded sounds.&quot;, Level.DEBUG);</span>
+<span class="nc" id="L92">    }</span>
+
+    /**
+     * Adds a new sound effect to the sound manager which can then be played upon request.
+     *
+     * @param name The name of the sound effect.
+     * @param path The path to the sound effect. The system will first search class resources then the local disk.
+     * @return True if the effect is found and then added to the SoundManager. Otherwise, false.
+     */
+    @Override
+    public boolean addSoundEffect (String name, String path) {
+<span class="fc" id="L103">        Clip c = findClip(path);</span>
+<span class="fc bfc" id="L104" title="All 2 branches covered.">        if (c == null) {</span>
+<span class="fc" id="L105">            getLogger().log(&quot;JavaxSoundManager: Was unable to add sound effect by the name of: &quot; + name, Level.EXCEPTION);</span>
+<span class="fc" id="L106">            return false;</span>
+        }
+<span class="fc" id="L108">        soundEffects.put(name, c);</span>
+<span class="fc" id="L109">        getLogger().log(&quot;JavaxSoundManager: Added sound effect by the name of: &quot; + name, Level.DEBUG);</span>
+<span class="fc" id="L110">        return true;</span>
+    }
+
+    /**
+     * Removes sound effects with the given name.
+     *
+     * @param name The name of the sound effect to remove.
+     */
+    @Override
+    public void removeSoundEffect (String name) {
+<span class="nc" id="L120">        soundEffects.remove(name).close();</span>
+<span class="nc" id="L121">        getLogger().log(&quot;JavaxSoundManager: Removed sound effect by the name of: &quot; + name, Level.DEBUG);</span>
+<span class="nc" id="L122">    }</span>
+
+    /**
+     * Plays a specific sound effect with 50% volume.
+     *
+     * @param name The sound effect to play.
+     */
+    @Override
+    public void playSoundEffect (String name) {
+<span class="nc" id="L131">        playSoundEffect(name, 0.5f);</span>
+<span class="nc" id="L132">    }</span>
+
+    /**
+     * Plays a specific sound effect with the given volume.
+     *
+     * @param name The sound effect to play.
+     * @param vol  The volume to play the sound effect at. Range: [0, 1]
+     */
+    @Override
+    public void playSoundEffect (String name, float vol) {
+<span class="fc" id="L142">        Clip effect = soundEffects.get(name);</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        if (effect != null) {</span>
+<span class="fc" id="L144">            effect.start();</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">            if (effect.isControlSupported(FloatControl.Type.VOLUME)) {</span>
+<span class="nc" id="L146">                FloatControl control = (FloatControl) effect.getControl(FloatControl.Type.VOLUME);</span>
+<span class="nc bnc" id="L147" title="All 4 branches missed.">                assert control != null; // Checked if supported first.</span>
+<span class="nc" id="L148">                control.setValue(vol);</span>
+<span class="pc" id="L149">            } else getLogger().log(&quot;JavaxSoundManager: Attempted to modify volume of clip but action is not supported.&quot;, Level.WARNING);</span>
+<span class="fc" id="L150">            getLogger().log(&quot;JavaxSoundManager: Played requested sound effect: &quot; + name, Level.DEBUG);</span>
+<span class="nc" id="L151">        } else getLogger().log(&quot;JavaxSoundManager: Effect was not found in the map of sound effects: &quot; + name, Level.EXCEPTION);</span>
+<span class="fc" id="L152">    }</span>
+
+    /**
+     * Adds a new music track to be played in the background on demand.
+     *
+     * @param name The name of the music track.
+     * @param path The path of the music track. The system will first search class resources then the local disk.
+     * @return True if the music track is found and then added to the SoundManager. Otherwise, false.
+     */
+    @Override
+    public boolean addMusicTrack (String name, String path) {
+<span class="nc" id="L163">        Clip c = findClip(path);</span>
+<span class="nc bnc" id="L164" title="All 2 branches missed.">        if (c == null) {</span>
+<span class="nc" id="L165">            getLogger().log(&quot;JavaxSoundManager: Was unable to add music track by the name of: &quot; + name, Level.EXCEPTION);</span>
+<span class="nc" id="L166">            return false;</span>
+        }
+<span class="nc" id="L168">        musicTracks.put(name, c);</span>
+<span class="nc" id="L169">        getLogger().log(&quot;JavaxSoundManager: Added music track by the name of: &quot; + name, Level.DEBUG);</span>
+<span class="nc" id="L170">        return true;</span>
+    }
+
+    /**
+     * Removes music tracks with the given name.
+     *
+     * @param name The name of the music track to remove.
+     */
+    @Override
+    public void removeMusicTrack (String name) {
+<span class="nc" id="L180">        musicTracks.remove(name).close();</span>
+<span class="nc" id="L181">        getLogger().log(&quot;JavaxSoundManager: Removed music track by the name of: &quot; + name, Level.DEBUG);</span>
+<span class="nc" id="L182">    }</span>
+
+    /**
+     * Plays a specific music track at 50% volume. This track will repeat until another track is called, or it is
+     * requested that music playback stops.
+     *
+     * @param name The name of the music track to play.
+     */
+    @Override
+    public void playMusicTrack (String name) {
+<span class="nc" id="L192">        playMusicTrack(name, 0.5f);</span>
+<span class="nc" id="L193">    }</span>
+
+    /**
+     * Plays a specific music track with the given volume. This track will repeat until another track is called, or it
+     * is requested that music playback stops.
+     *
+     * @param name The name of the music track to play.
+     * @param vol  The volume to play the music track at. Range: [0, 1]
+     */
+    @Override
+    public void playMusicTrack (String name, float vol) {
+<span class="nc" id="L204">        Clip track = musicTracks.get(name);</span>
+<span class="nc bnc" id="L205" title="All 2 branches missed.">        if (track != null) {</span>
+<span class="nc" id="L206">            stopMusic();</span>
+<span class="nc" id="L207">            track.start();</span>
+<span class="nc" id="L208">            track.loop(Clip.LOOP_CONTINUOUSLY);</span>
+<span class="nc" id="L209">            nowPlaying = track;</span>
+<span class="nc bnc" id="L210" title="All 2 branches missed.">            if (track.isControlSupported(FloatControl.Type.VOLUME)) {</span>
+<span class="nc" id="L211">                FloatControl control = (FloatControl) track.getControl(FloatControl.Type.VOLUME);</span>
+<span class="nc bnc" id="L212" title="All 4 branches missed.">                assert control != null; // Checked if supported first.</span>
+<span class="nc" id="L213">                control.setValue(vol);</span>
+<span class="nc" id="L214">            } else getLogger().log(&quot;JavaxSoundManager: Attempted to modify volume of clip but action is not supported.&quot;, Level.WARNING);</span>
+<span class="nc" id="L215">            getLogger().log(&quot;JavaxSoundManager: Played requested music track: &quot; + name, Level.DEBUG);</span>
+<span class="nc" id="L216">        } else getLogger().log(&quot;JavaxSoundManager: Track was not found in the map of music tracks: &quot; + name, Level.EXCEPTION);</span>
+<span class="nc" id="L217">    }</span>
+
+    /**
+     * Stops the currently playing music track without starting a new one.
+     */
+    @Override
+    public void stopMusic () {
+<span class="nc bnc" id="L224" title="All 2 branches missed.">        if (nowPlaying != null) {</span>
+<span class="nc" id="L225">            nowPlaying.stop();</span>
+<span class="nc" id="L226">            nowPlaying = null;</span>
+<span class="nc" id="L227">            getLogger().log(&quot;JavaxSoundManager: Stopped currently playing music track.&quot;, Level.DEBUG);</span>
+        }
+<span class="nc" id="L229">    }</span>
+
+    /**
+     * Adds a new ambience sound to be played in the background on an interval. Probability for the sound to play slowly
+     * increases until it's played at which point the probability becomes zero again.
+     *
+     * @param interval The interval after which the sound would have been played at least once. The time unit is the
+     *                 number of times ambienceSoundRoll is called.
+     * @param name     The name of the ambience sound.
+     * @param path     The path of the ambience sound. The system will first search class resources then the local disk.
+     * @return True if the ambience sound is found and then added to the SoundManager. Otherwise, false.
+     */
+    @Override
+    public boolean addAmbienceEffect (int interval, String name, String path) {
+<span class="nc" id="L243">        Clip c = findClip(path);</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">        if (c == null) {</span>
+<span class="nc" id="L245">            getLogger().log(&quot;JavaxSoundManager: Was unable to add ambience effect by the name of: &quot; + name, Level.EXCEPTION);</span>
+<span class="nc" id="L246">            return false;</span>
+        }
+<span class="nc" id="L248">        ambienceSounds.put(name, c);</span>
+<span class="nc" id="L249">        ambienceIntervals.put(name, interval);</span>
+<span class="nc" id="L250">        getLogger().log(&quot;JavaxSoundManager: Added ambience effect by the name of: &quot; + name, Level.DEBUG);</span>
+<span class="nc" id="L251">        return true;</span>
+    }
+
+    /**
+     * Removes ambience sounds with the given name.
+     *
+     * @param name The name of the ambience sound to remove.
+     */
+    @Override
+    public void removeAmbienceEffect (String name) {
+<span class="nc" id="L261">        ambienceSounds.remove(name).close();</span>
+<span class="nc" id="L262">        ambienceIntervals.remove(name);</span>
+<span class="nc" id="L263">        getLogger().log(&quot;JavaxSoundManager: Removed ambience effect by the name of: &quot; + name, Level.DEBUG);</span>
+<span class="nc" id="L264">    }</span>
+
+    /**
+     * When called rolls the dice on whether any ambience sounds should be played or not.
+     */
+    @Override
+    public void ambienceSoundRoll () {
+<span class="nc" id="L271">        Random rand = new Random();</span>
+<span class="nc" id="L272">        ambienceSounds.forEach((name, clip) -&gt; {</span>
+<span class="nc" id="L273">            double chance = 1.0 / ambienceIntervals.get(name);</span>
+<span class="nc bnc" id="L274" title="All 2 branches missed.">            if (rand.nextDouble() &lt;= chance) {</span>
+<span class="nc" id="L275">                clip.start();</span>
+<span class="nc" id="L276">                getLogger().log(&quot;JavaxSoundManager: Played ambience effect: &quot; + name, Level.VERBOSE);</span>
+            }
+<span class="nc" id="L278">        });</span>
+<span class="nc" id="L279">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

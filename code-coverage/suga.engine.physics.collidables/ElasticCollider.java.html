@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ElasticCollider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">Graphics2d</a> &gt; <a href="index.source.html" class="el_package">suga.engine.physics.collidables</a> &gt; <span class="el_source">ElasticCollider.java</span></div><h1>ElasticCollider.java</h1><pre class="source lang-java linenums">package suga.engine.physics.collidables;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ElasticCollider.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SugaEngine</a> &gt; <a href="index.source.html" class="el_package">suga.engine.physics.collidables</a> &gt; <span class="el_source">ElasticCollider.java</span></div><h1>ElasticCollider.java</h1><pre class="source lang-java linenums">package suga.engine.physics.collidables;
 
 import suga.engine.physics.Vector;
 import suga.engine.physics.hitboxes.HitBox;
@@ -99,7 +99,7 @@ public class ElasticCollider implements Collidable {
      */
     @Override
     public Vector getAcceleration () {
-<span class="nc" id="L102">        return acceleration;</span>
+<span class="fc" id="L102">        return acceleration;</span>
     }
 
     /**
@@ -109,8 +109,8 @@ public class ElasticCollider implements Collidable {
      */
     @Override
     public void setAcceleration (Vector accel) {
-<span class="nc" id="L112">        acceleration = accel;</span>
-<span class="nc" id="L113">    }</span>
+<span class="fc" id="L112">        acceleration = accel;</span>
+<span class="fc" id="L113">    }</span>
 
     /**
      * Accessor method for the mass of this object. Mass numbers larger than int max should be considered unmovable.
@@ -197,6 +197,31 @@ public class ElasticCollider implements Collidable {
     @Override
     public ElasticCollider clone () {
 <span class="nc" id="L199">        return new ElasticCollider(pos, velocity, acceleration, mass, hitBox);</span>
+    }
+
+    /**
+     * Two ElasticColliders are equal if the fields are the same.
+     *
+     * @param obj The object to check if it is equal to 'this'.
+     * @return True if and only if the two objects are equivalent. Two objects are equivalent if field values are the
+     *         same even if they don't share objects.
+     */
+    @Override
+    public boolean equals (Object obj) {
+<span class="nc bnc" id="L211" title="All 2 branches missed.">        if (obj instanceof ElasticCollider collider) {</span>
+<span class="nc bnc" id="L212" title="All 2 branches missed.">            if (pos != null) {</span>
+<span class="nc bnc" id="L213" title="All 2 branches missed.">                if (!pos.equals(collider.pos)) return false;</span>
+<span class="nc bnc" id="L214" title="All 2 branches missed.">            } else if (collider.pos != null) return false;</span>
+<span class="nc bnc" id="L215" title="All 2 branches missed.">            if (velocity != null) {</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">                if (!velocity.equals(collider.velocity)) return false;</span>
+<span class="nc bnc" id="L217" title="All 2 branches missed.">            } else if (collider.velocity != null) return false;</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">            if (acceleration != null) {</span>
+<span class="nc bnc" id="L219" title="All 2 branches missed.">                if (!acceleration.equals(collider.acceleration)) return false;</span>
+<span class="nc bnc" id="L220" title="All 2 branches missed.">            } else if (collider.acceleration != null) return false;</span>
+<span class="nc bnc" id="L221" title="All 2 branches missed.">            if (mass != collider.mass) return false;</span>
+<span class="nc bnc" id="L222" title="All 2 branches missed.">            if (hitBox != null) return hitBox.equals(collider.hitBox);</span>
+<span class="nc bnc" id="L223" title="All 2 branches missed.">            else return collider.hitBox == null;</span>
+<span class="nc" id="L224">        } else return false;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>

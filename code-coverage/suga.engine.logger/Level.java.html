@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Level.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SugaEngine</a> &gt; <a href="index.source.html" class="el_package">suga.engine.logger</a> &gt; <span class="el_source">Level.java</span></div><h1>Level.java</h1><pre class="source lang-java linenums">package suga.engine.logger;
+
+/**
+ * Levels for messages that are sent to loggers.
+ *
+ * @author Sugaku
+ */
+<span class="fc" id="L8">public enum Level {</span>
+
+    /**
+     * Fatal includes errors that are fatal and could result in a hard crash.
+     */
+<span class="fc" id="L13">    FATAL(&quot;\u001B[0;31m&quot;, 4),</span>
+
+    /**
+     * An error is a more extreme version of an exception that could cause problems in other areas.
+     */
+<span class="fc" id="L18">    ERROR(&quot;\u001B[0;31m&quot;, 3),</span>
+
+    /**
+     * An exception is simply an issue a single system ran into. It may result in reduced functionality for that system.
+     */
+<span class="fc" id="L23">    EXCEPTION(&quot;\u001B[0;31m&quot;, 2),</span>
+
+    /**
+     * Warning occurs when an issue arises when trying to use some additional functionality of a system. Core systems
+     * will work as intended however extra bells and whistles might not.
+     */
+<span class="fc" id="L29">    WARNING(&quot;\u001B[0;33m&quot;, 1),</span>
+
+    /**
+     * A general message reporting general information.
+     */
+<span class="fc" id="L34">    INFO(&quot;\u001B[0;0m&quot;, 0),</span>
+
+    /**
+     * A message that can be used for debugging processes and games.
+     */
+<span class="fc" id="L39">    DEBUG(&quot;\u001B[0;36m&quot;, -1),</span>
+
+    /**
+     * Messages that can sometimes be useful for debugging but often can simply clutter a log.
+     */
+<span class="fc" id="L44">    VERBOSE(&quot;\u001B[1;90m&quot;, -2);</span>
+
+    /**
+     * The ANSI code that could be used to color any messages sent at the specific level.
+     */
+    private final String colorCode;
+
+    /**
+     * The number version of the level. Used to compare levels to each other in terms of urgency.
+     */
+    private final int urgency;
+
+    /**
+     * The color of brackets to bound the level.
+     */
+<span class="fc" id="L59">    private final String BRACKET_COLOR = &quot;\u001B[1;90m&quot;;</span>
+
+    /**
+     * Creates a new Level with the given color code.
+     *
+     * @param color The ANSI color code associated with this logging level.
+     * @param urgency The urgency of the level. Higher numbers mean higher urgency.
+     */
+<span class="fc" id="L67">    Level (String color, int urgency) {</span>
+<span class="fc" id="L68">        colorCode = color;</span>
+<span class="fc" id="L69">        this.urgency = urgency;</span>
+<span class="fc" id="L70">    }</span>
+
+    /**
+     * Converts this level to a string with ANSI color codes included.
+     *
+     * @return The string version of this logging level with ANSI color codes.
+     */
+    @Override
+    public String toString () {
+<span class="fc" id="L79">        return BRACKET_COLOR + &quot;[&quot; + colorCode + super.toString() + BRACKET_COLOR + &quot;] &quot; + colorCode;</span>
+    }
+
+    /**
+     * Converts this level to a string with or without ANSI color codes included.
+     *
+     * @param ansi Whether to include ANSI color codes in the returned string.
+     * @return The string version of this logging level with ANSI color codes or not.
+     */
+    public String toString (boolean ansi) {
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        if (ansi) return BRACKET_COLOR + &quot;[&quot; + colorCode + super.toString() + BRACKET_COLOR + &quot;] &quot; + colorCode;</span>
+<span class="nc" id="L90">        else return &quot;[&quot; + super.toString() + &quot;] &quot;;</span>
+    }
+
+    /**
+     * Accessor method for the ANSI color code being used by this level.
+     *
+     * @return The ANSI color code attached to this log level.
+     */
+    public String getColorCode () {
+<span class="fc" id="L99">        return colorCode;</span>
+    }
+
+    /**
+     * Accessor method for the urgency level.
+     *
+     * @return The urgency level of the logging level.
+     */
+    public int getUrgency () {
+<span class="fc" id="L108">        return urgency;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
