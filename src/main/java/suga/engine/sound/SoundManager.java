@@ -6,7 +6,7 @@ package suga.engine.sound;
  *
  * @author Sugaku
  */
-public interface SoundManager {
+public interface SoundManager { // todo audio transitions, blending from one track to another, volume swells etc.
 
     /**
      * Clears the list of sounds currently loaded by the SoundManager. Should be called before loading a new scene to
@@ -43,7 +43,7 @@ public interface SoundManager {
      * @param name The sound effect to play.
      * @param vol  The volume to play the sound effect at. Range: [0, 1]
      */
-    void playSoundEffect (String name, double vol);
+    void playSoundEffect (String name, float vol);
 
     /**
      * Adds a new music track to be played in the background on demand.
@@ -76,7 +76,7 @@ public interface SoundManager {
      * @param name The name of the music track to play.
      * @param vol  The volume to play the music track at. Range: [0, 1]
      */
-    void playMusicTrack (String name, double vol);
+    void playMusicTrack (String name, float vol);
 
     /**
      * Stops the currently playing music track without starting a new one.
@@ -93,4 +93,16 @@ public interface SoundManager {
      * @return True if the ambience sound is found and then added to the SoundManager. Otherwise, false.
      */
     boolean addAmbienceEffect (int interval, String name, String path);
+
+    /**
+     * Removes ambience sounds with the given name.
+     *
+     * @param name The name of the ambience sound to remove.
+     */
+    void removeAmbienceEffect (String name);
+
+    /**
+     * When called rolls the dice on whether any ambience sounds should be played or not.
+     */
+    void ambienceSoundRoll ();
 }
