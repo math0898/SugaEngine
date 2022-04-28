@@ -9,11 +9,33 @@ package suga.engine.logger;
 public interface Logger { // todo how about a 'print level'?
 
     /**
+     * Sets the level at which messages should be output. Messages at the given level will also be printed.
+     *
+     * @param level The level which to start printing messages at.
+     */
+    void setLevel (Level level);
+
+    /**
+     * Sends the given exception to the logger.
+     *
+     * @param exception The exception to print to the console.
+     */
+    void log (Exception exception);
+
+    /**
      * Sends a general message to the logger.
      *
      * @param message The message to send to the logger.
      */
     void log (String message);
+
+    /**
+     * Sends the given exception to the logger at a different level.
+     *
+     * @param exception The exception to print to the console.
+     * @param level     The level at which to send the exception to the console.
+     */
+    void log (Exception exception, Level level);
 
     /**
      * Sends a message to the logger at a specific level.

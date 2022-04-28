@@ -30,6 +30,8 @@ public class JavaxSoundManagerTest {
 
     @Test
     void playSoundEffect () {
+        soundManager.addSoundEffect("failed-mp3", "/home/sugaku/Music/BladeAndSoul.mp3");
+        soundManager.addSoundEffect("failed-not-found", "/home/sugaku/Music/BladeAndSoul.flac");
         assertTrue(soundManager.addSoundEffect("test-effect", "/home/sugaku/Music/BladeAndSoul.wav"));
         soundManager.playSoundEffect("test-effect", 0.1f);
         try {

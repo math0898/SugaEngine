@@ -42,17 +42,57 @@ public class JavaxSoundManager implements SoundManager {
     private final Map<String, Integer> ambienceIntervals = new HashMap<>();
 
     /**
+     * Attempts to find the clip in the resource path, and if not found searches the local disk.
+     *
+     * @param path The path to attempt and find the clip at.
+     * @return Either the found clip or null.
+     */
+    protected Clip findClip (String path) { // todo could be nice to reduce the scope of this method.
+        Clip toReturn;
+        try {
+            toReturn = AudioSystem.getClip();
+        } catch (LineUnavailableException e) {
+            getLogger().log("JavaxSoundManager: Out line is not available.", Level.EXCEPTION);
+            getLogger().log(e);
+            return null;
+        }
+        InputStream stream = getClass().getResourceAsStream(path);
+        if (InputStream.nullInputStream().equals(stream) || stream == null) {
+            try {
+                stream = new FileInputStream(path);
+            } catch (IOException e) {
+                getLogger().log("JavaxSoundManager: Clip was not found as a resource, and an exception occurred searching the disk.", Level.EXCEPTION);
+                getLogger().log(e);
+                return null;
+            }
+        }
+        if (InputStream.nullInputStream().equals(stream)) {
+            getLogger().log("JavaxSoundManager: The found file, or resource, is a null input stream.", Level.EXCEPTION);
+            return null;
+        }
+        try {
+            stream = new BufferedInputStream(stream);
+            toReturn.open(AudioSystem.getAudioInputStream(stream));
+        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+            getLogger().log("JavaxSoundManager: An exception occurred attempting to convert the input stream to a clip.", Level.EXCEPTION);
+            getLogger().log(e);
+            return null;
+        }
+        return toReturn;
+    }
+
+    /**
      * Clears the list of sounds currently loaded by the SoundManager. Should be called before loading a new scene to
      * prevent too many files from being stored in RAM.
      */
     @Override
     public void clearSounds () {
-        if (nowPlaying != null) nowPlaying.stop();
-        nowPlaying = null;
+        stopMusic();
         soundEffects.clear();
         musicTracks.clear();
         ambienceSounds.clear();
         ambienceIntervals.clear();
+        getLogger().log("JavaxSoundManager: Cleared all loaded sounds.", Level.DEBUG);
     }
 
     /**
@@ -63,32 +103,14 @@ public class JavaxSoundManager implements SoundManager {
      * @return True if the effect is found and then added to the SoundManager. Otherwise, false.
      */
     @Override
-    public boolean addSoundEffect (String name, String path) { // todo refactor... this code will basically be repeated 3 times.
-        Clip c;
-        try {
-            c = AudioSystem.getClip();
-        } catch (LineUnavailableException e) {
-            e.printStackTrace();
-            return false;
-        }
-        InputStream stream = getClass().getResourceAsStream(path);
-        if (InputStream.nullInputStream().equals(stream) || stream == null) {
-            try {
-                stream = new FileInputStream(path);
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
-        }
-        if (InputStream.nullInputStream().equals(stream)) return false;
-        try {
-            stream = new BufferedInputStream(stream);
-            c.open(AudioSystem.getAudioInputStream(stream));
-        } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
-            e.printStackTrace();
+    public boolean addSoundEffect (String name, String path) {
+        Clip c = findClip(path);
+        if (c == null) {
+            getLogger().log("JavaxSoundManager: Was unable to add sound effect by the name of: " + name, Level.DEBUG);
             return false;
         }
         soundEffects.put(name, c);
+        getLogger().log("JavaxSoundManager: Added sound effect by the name of: " + name, Level.DEBUG);
         return true;
     }
 
@@ -99,7 +121,8 @@ public class JavaxSoundManager implements SoundManager {
      */
     @Override
     public void removeSoundEffect (String name) {
-        // todo
+        soundEffects.remove(name).close();
+        getLogger().log("JavaxSoundManager: Removed sound effect by the name of: " + name, Level.DEBUG);
     }
 
     /**
@@ -129,7 +152,7 @@ public class JavaxSoundManager implements SoundManager {
                 control.setValue(vol);
             } else getLogger().log("JavaxSoundManager: Attempted to modify volume of clip but action is not supported.", Level.WARNING);
             getLogger().log("JavaxSoundManager: Played requested sound effect: " + name, Level.DEBUG);
-        } else getLogger().log("JavaxSoundManager: Effect was not found in the map of sound effects.", Level.EXCEPTION);
+        } else getLogger().log("JavaxSoundManager: Effect was not found in the map of sound effects: " + name, Level.EXCEPTION);
     }
 
     /**
@@ -174,7 +197,19 @@ public class JavaxSoundManager implements SoundManager {
      */
     @Override
     public void playMusicTrack (String name, float vol) {
-        // todo
+        Clip track = musicTracks.get(name);
+        if (track != null) {
+            stopMusic();
+            track.start();
+            track.loop(Clip.LOOP_CONTINUOUSLY);
+            nowPlaying = track;
+            if (track.isControlSupported(FloatControl.Type.VOLUME)) {
+                FloatControl control = (FloatControl) track.getControl(FloatControl.Type.VOLUME);
+                assert control != null; // Checked if supported first.
+                control.setValue(vol);
+            } else getLogger().log("JavaxSoundManager: Attempted to modify volume of clip but action is not supported.", Level.WARNING);
+            getLogger().log("JavaxSoundManager: Played requested music track: " + name, Level.DEBUG);
+        } else getLogger().log("JavaxSoundManager: Track was not found in the map of music tracks: " + name, Level.EXCEPTION);
     }
 
     /**
@@ -182,7 +217,11 @@ public class JavaxSoundManager implements SoundManager {
      */
     @Override
     public void stopMusic () {
-        // todo
+        if (nowPlaying != null) {
+            nowPlaying.stop();
+            nowPlaying = null;
+            getLogger().log("JavaxSoundManager: Stopped currently playing music track.", Level.DEBUG);
+        }
     }
 
     /**

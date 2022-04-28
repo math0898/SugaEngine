@@ -69,7 +69,9 @@ public class GameEngine {
      * @param logger The new logger for the GameEngine to use.
      */
     public static void setLogger (Logger logger) {
+        GameEngine.logger.log("GameEngine: Switching to a new logger.");
         GameEngine.logger = logger;
+        GameEngine.logger.log("GameEngine: Switched logger.");
     }
 
     /**

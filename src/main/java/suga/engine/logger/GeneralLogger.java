@@ -9,6 +9,11 @@ package suga.engine.logger;
 public class GeneralLogger implements Logger {
 
     /**
+     * The level to start printing messages at.
+     */
+    private Level printLevel = Level.DEBUG;
+
+    /**
      * Initializes and creates the general logger object.
      */
     public GeneralLogger () {
@@ -24,6 +29,26 @@ public class GeneralLogger implements Logger {
     }
 
     /**
+     * Sets the level at which messages should be output. Messages at the given level will also be printed.
+     *
+     * @param level The level which to start printing messages at.
+     */
+    @Override
+    public void setLevel (Level level) {
+        printLevel = level;
+    }
+
+    /**
+     * Sends the given exception to the logger.
+     *
+     * @param exception The exception to print to the console.
+     */
+    @Override
+    public void log (Exception exception) {
+        log(exception, Level.EXCEPTION);
+    }
+
+    /**
      * Sends a general message to the logger.
      *
      * @param message The message to send to the logger.
@@ -31,6 +56,19 @@ public class GeneralLogger implements Logger {
     @Override
     public void log (String message) {
         log(message, Level.INFO);
+    }
+
+    /**
+     * Sends the given exception to the logger at a different level.
+     *
+     * @param exception The exception to print to the console.
+     * @param level     The level at which to send the exception to the console.
+     */
+    @Override
+    public void log (Exception exception, Level level) {
+        log(exception.getMessage(), level);
+        for (StackTraceElement se : exception.getStackTrace())
+            log(se.toString(), level);
     }
 
     /**
@@ -53,6 +91,7 @@ public class GeneralLogger implements Logger {
      */
     @Override
     public void log (String message, Level level, boolean prefix) {
+        if (level.getUrgency() < printLevel.getUrgency()) return;
         String output = "";
         if (prefix) output += level.toString();
         else output += level.getColorCode();
