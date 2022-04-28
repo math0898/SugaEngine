@@ -1,10 +1,7 @@
 package suga.engine.sound;
 
 import javax.sound.sampled.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,7 +68,7 @@ public class JavaxSoundManager implements SoundManager {
             return false;
         }
         InputStream stream = getClass().getResourceAsStream(path);
-        if (InputStream.nullInputStream().equals(stream)) {
+        if (InputStream.nullInputStream().equals(stream) || stream == null) {
             try {
                 stream = new FileInputStream(path);
             } catch (IOException e) {
@@ -79,8 +76,9 @@ public class JavaxSoundManager implements SoundManager {
                 return false;
             }
         }
-        if (InputStream.nullInputStream().equals(stream) || stream == null) return false;
+        if (InputStream.nullInputStream().equals(stream)) return false;
         try {
+            stream = new BufferedInputStream(stream);
             c.open(AudioSystem.getAudioInputStream(stream));
         } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
             e.printStackTrace();
