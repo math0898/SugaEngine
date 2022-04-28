@@ -2,6 +2,8 @@ package suga.engine;
 
 import suga.engine.graphics.AbstractGraphicsPanel;
 import suga.engine.input.mouse.BasicMouseListener;
+import suga.engine.logger.GeneralLogger;
+import suga.engine.logger.Logger;
 import suga.engine.threads.GameLogicThread;
 import suga.engine.threads.GraphicsThread;
 import suga.engine.threads.SugaThread;
@@ -13,7 +15,7 @@ import java.awt.*;
 import java.awt.event.WindowEvent;
 
 /**
- * A collection of static methods that are used to make starting and closing a game easier.
+ * A collection of static methods that are used to make starting, closing and managing a game easier.
  *
  * @author Sugaku
  */
@@ -35,6 +37,11 @@ public class GameEngine {
     protected static SugaThread logic;
 
     /**
+     * The logger currently being used by the GameEngine.
+     */
+    protected static Logger logger = new GeneralLogger();
+
+    /**
      * An enum of pre-defined resolutions to open a game window at.
      *
      * @author Sugaku
@@ -45,6 +52,24 @@ public class GameEngine {
          * Creates the window at the largest possible resolution in full screen mode.
          */
         FULL_SCREEN
+    }
+
+    /**
+     * Accessor method for the logger being used by the GameEngine.
+     *
+     * @return The logger currently in use by the GameEngine.
+     */
+    public static Logger getLogger () {
+        return logger;
+    }
+
+    /**
+     * Setter method for the logger being used by the GameEngine.
+     *
+     * @param logger The new logger for the GameEngine to use.
+     */
+    public static void setLogger (Logger logger) {
+        GameEngine.logger = logger;
     }
 
     /**

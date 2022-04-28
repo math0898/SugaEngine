@@ -82,4 +82,13 @@ public enum Level {
         if (ansi) return BRACKET_COLOR + "[" + COLOR_CODE + super.toString() + BRACKET_COLOR + "] " + COLOR_CODE;
         else return "[" + super.toString() + "] ";
     }
+
+    /**
+     * Accessor method for the ANSI color code being used by this level.
+     *
+     * @return The ANSI color code attached to this log level.
+     */
+    public String getColorCode () {
+        return COLOR_CODE;
+    }
 }

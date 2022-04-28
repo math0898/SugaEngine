@@ -1,9 +1,13 @@
 package suga.engine.sound;
 
+import suga.engine.logger.Level;
+
 import javax.sound.sampled.*;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+
+import static suga.engine.GameEngine.getLogger;
 
 /**
  * The JavaxSoundManager is a SoundManager that outputs sound using the classes provided by javax and javax.sampled.
@@ -123,10 +127,9 @@ public class JavaxSoundManager implements SoundManager {
                 FloatControl control = (FloatControl) effect.getControl(FloatControl.Type.VOLUME);
                 assert control != null; // Checked if supported first.
                 control.setValue(vol);
-            } else {
-                System.out.println("Audio System Error. Attempted to modify volume of clip but action is not supported.");
-            }
-        }
+            } else getLogger().log("JavaxSoundManager: Attempted to modify volume of clip but action is not supported.", Level.WARNING);
+            getLogger().log("JavaxSoundManager: Played requested sound effect: " + name, Level.DEBUG);
+        } else getLogger().log("JavaxSoundManager: Effect was not found in the map of sound effects.", Level.EXCEPTION);
     }
 
     /**
