@@ -18,7 +18,7 @@ public class GeneralLogger implements Logger {
                 \u001B[0;36m\\___ \\| | | |/ _` |/ _` |  _| | '_ \\ / _` | | '_ \\ / _ \\
                 \u001B[0;36m ___) | |_| | (_| | (_| | |___| | | | (_| | | | | |  __/
                 \u001B[0;36m|____/ \\__,_|\\__, |\\__,_|_____|_| |_|\\__, |_|_| |_|\\___|
-                \u001B[0;36m               |___/                   |___/            \s""", Level.INFO, false);
+                \u001B[0;36m             |___/                   |___/            \s""", Level.INFO, false);
         log("Using general logger. This can be changed using GameEngine.setLogger(logger).");
         // todo initialize files
     }
