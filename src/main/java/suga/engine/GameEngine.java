@@ -78,9 +78,12 @@ public class GameEngine {
      * Closes both the logic and graphics thread.
      */
     public static void stop () {
+        logger.log("GameEngine: Stopping the game.");
         graphics.setStopped(true);
         logic.setStopped(true);
+        logger.log("GameEngine: Stopped logic and graphics threads.");
         frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+        logger.log("GameEngine: Sent request to close frame.");
     }
 
     /**
@@ -101,6 +104,7 @@ public class GameEngine {
     public static void launchGameWindow (int width, int height, String name, boolean border, AbstractGraphicsPanel panel,
                                          Color background, int logicRate, int frameRate, GameKeyListener keyListener,
                                          BasicMouseListener mouseListener, Game game) {
+        logger.log("GameEngine: Starting the game window.");
         panel.setBackground(background);
         frame = new JFrame(name);
         frame.setSize(width, height);
@@ -110,11 +114,13 @@ public class GameEngine {
         frame.setUndecorated(!border);
         frame.setVisible(true);
         graphics = new GraphicsThread(panel, frameRate);
+        logger.log("GameEngine: Started graphics thread and window.");
         game.setPanel(panel);
         keyListener.setFrame(frame);
         mouseListener.setFrame(frame);
         game.setKeyListener(keyListener);
         game.setMouseListener(mouseListener);
         logic = new GameLogicThread(game, logicRate);
+        logger.log("GameEngine: Linked input listeners and started game logic thread.");
     }
 }

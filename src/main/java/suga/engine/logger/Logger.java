@@ -6,7 +6,7 @@ package suga.engine.logger;
  *
  * @author Sugaku
  */
-public interface Logger { // todo how about a 'print level'?
+public interface Logger { // todo logging an exception with an included message.
 
     /**
      * Sets the level at which messages should be output. Messages at the given level will also be printed.

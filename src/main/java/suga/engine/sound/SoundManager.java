@@ -87,7 +87,8 @@ public interface SoundManager { // todo audio transitions, blending from one tra
      * Adds a new ambience sound to be played in the background on an interval. Probability for the sound to play slowly
      * increases until it's played at which point the probability becomes zero again.
      *
-     * @param interval The interval after which the sound would have been played at least once. The time unit is millis.
+     * @param interval The interval after which the sound would have been played at least once. The time unit is the
+     *                 number of times ambienceSoundRoll is called.
      * @param name     The name of the ambience sound.
      * @param path     The path of the ambience sound. The system will first search class resources then the local disk.
      * @return True if the ambience sound is found and then added to the SoundManager. Otherwise, false.
