@@ -1,0 +1,35 @@
+HitBox: width, height, Center: x, y, z,  Test Point: x, y, z, Expected: true/false,  Reason: <string>
+
+20, 20,                  0, 0, 0,        0,    0, 0,                   false,             The origin should be the center of the test hit box - and thus inside.
+20, 20,                  0, 0, 0,        0,    5, 0,                   false,             Vertical center line of box just above origin - still interior.
+20, 20,                  0, 0, 0,       -5,    5, 0,                   false,             Top left quadrant of interior.
+20, 20,                  0, 0, 0,       -5,    0, 0,                   false,             Horizontal center line of box just left of origin - still interior.
+20, 20,                  0, 0, 0,       -5,   -5, 0,                   false,             Bottom left quadrant of interior.
+20, 20,                  0, 0, 0,        0,   -5, 0,                   false,             Vertical center line of the box just below origin - still interior.
+20, 20,                  0, 0, 0,        5,   -5, 0,                   false,             Bottom right quadrant of interior.
+20, 20,                  0, 0, 0,        5,    0, 0,                   false,             Horizontal center line of box just right of origin - still interior.
+20, 20,                  0, 0, 0,        5,    5, 0,                   false,             Top right quadrant of interior.
+20, 20,                  0, 0, 0,        0,   10, 0,                   true,              Vertical center line of box on upper boundary.
+20, 20,                  0, 0, 0,      -10,   10, 0,                   true,              Top left corner of box.
+20, 20,                  0, 0, 0,      -10,    0, 0,                   true,              Horizontal center line of box on lower boundary.
+20, 20,                  0, 0, 0,      -10,  -10, 0,                   true,              Bottom left corner of box.
+20, 20,                  0, 0, 0,        0,  -10, 0,                   true,              Vertical center line of box on lower boundary.
+20, 20,                  0, 0, 0,       10,  -10, 0,                   true,              Bottom right corner of box.
+20, 20,                  0, 0, 0,       10,    0, 0,                   true,              Horizontal center line of box on upper boundary.
+20, 20,                  0, 0, 0,       10,   10, 0,                   true,              Top right corner of box.
+20, 20,                  0, 0, 0,        0,   15, 0,                   false,             Vertical center line on exterior. (above)
+20, 20,                  0, 0, 0,      -10,   15, 0,                   false,             Above lower x boundary on exterior.
+20, 20,                  0, 0, 0,      -15,   15, 0,                   false,             Top left diagonal on exterior.
+20, 20,                  0, 0, 0,      -15,   10, 0,                   false,             Left upper y boundary on exterior.
+20, 20,                  0, 0, 0,      -15,    0, 0,                   false,             Horizontal center line on exterior. (left)
+20, 20,                  0, 0, 0,      -15,  -10, 0,                   false,             Left lower y boundary on exterior.
+20, 20,                  0, 0, 0,      -15,  -15, 0,                   false,             Lower left diagonal on exterior.
+20, 20,                  0, 0, 0,      -10,  -15, 0,                   false,             Bellow lower x boundary on exterior.
+20, 20,                  0, 0, 0,        0,  -15, 0,                   false,             Vertical center line on exterior. (bellow)
+20, 20,                  0, 0, 0,       10,  -15, 0,                   false,             Bellow upper x boundary on exterior.
+20, 20,                  0, 0, 0,       15,  -15, 0,                   false,             Lower right diagonal on exterior.
+20, 20,                  0, 0, 0,       15,  -10, 0,                   false,             Right lower y boundary on exterior.
+20, 20,                  0, 0, 0,       15,    0, 0,                   false,             Horizontal center line on exterior. (right)
+20, 20,                  0, 0, 0,       15,   10, 0,                   false,             Right upper y boundary on exterior.
+20, 20,                  0, 0, 0,       15,   15, 0,                   false,             Upper right diagonal on exterior.
+20, 20,                  0, 0, 0,       15,   10, 0,                   false,             Above upper x boundary on exterior.
