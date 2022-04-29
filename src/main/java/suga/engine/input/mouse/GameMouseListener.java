@@ -1,7 +1,31 @@
 package suga.engine.input.mouse;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Stack;
 
 public interface GameMouseListener extends MouseListener {
 
+    /**
+     * Returns the current position of the mouse.
+     *
+     * @return A point object which contains data about the current mouse position.
+     */
+    Point getMousePos ();
+
+    /**
+     * Sets the frame that this mouse listener is listening to. Does not deregister with the old frame.
+     *
+     * @param frame The new frame to listen to.
+     */
+    void setFrame (JFrame frame);
+
+    /**
+     * Accessor method for the stack of mouse events that need to be handled.
+     *
+     * @return The stack of mouse events.
+     */
+    Stack<MouseEvent> getEvents ();
 }

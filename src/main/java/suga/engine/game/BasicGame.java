@@ -5,6 +5,7 @@ import suga.engine.game.objects.AbstractGameObject;
 import suga.engine.graphics.DrawListener;
 import suga.engine.graphics.AbstractGraphicsPanel;
 import suga.engine.input.mouse.BasicMouseListener;
+import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.physics.BasicPhysicsEngine;
 import suga.engine.physics.PhysicsEngine;
 import suga.engine.threads.SugaThread;
@@ -60,7 +61,7 @@ public class BasicGame implements Game {
     /**
      * The mouse listener that is being used by this game.
      */
-    protected BasicMouseListener mouseListener;
+    protected GameMouseListener mouseListener;
 
     /**
      * The thread that is currently running this Game. May be null in some cases.
@@ -116,7 +117,7 @@ public class BasicGame implements Game {
      * @param listener The new mouse listener that this game should use.
      */
     @Override
-    public void setMouseListener (BasicMouseListener listener) {
+    public void setMouseListener (GameMouseListener listener) {
         this.mouseListener = listener;
     }
 
@@ -248,7 +249,7 @@ public class BasicGame implements Game {
      * @return The mouse listener used by the server.
      */
     @Override
-    public BasicMouseListener getMouseListener () {
+    public GameMouseListener getMouseListener () {
         return mouseListener;
     }
 }
