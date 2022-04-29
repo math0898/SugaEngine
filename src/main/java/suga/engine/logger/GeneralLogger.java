@@ -76,6 +76,19 @@ public class GeneralLogger implements Logger {
     }
 
     /**
+     * Sends the given exception to the logger at a different level, with the given message.
+     *
+     * @param message   The message to send alongside the exception.
+     * @param exception The exception to print to the console.
+     * @param level     The level at which to send the exception to the console.
+     */
+    @Override
+    public void log (String message, Exception exception, Level level) {
+        log(message, level);
+        log(exception, level);
+    }
+
+    /**
      * Sends a message to the logger at a specific level.
      *
      * @param message The message to send to the logger.

@@ -38,6 +38,15 @@ public interface Logger { // todo logging an exception with an included message.
     void log (Exception exception, Level level);
 
     /**
+     * Sends the given exception to the logger at a different level, with the given message.
+     *
+     * @param message   The message to send alongside the exception.
+     * @param exception The exception to print to the console.
+     * @param level     The level at which to send the exception to the console.
+     */
+    void log (String message, Exception exception, Level level);
+
+    /**
      * Sends a message to the logger at a specific level.
      *
      * @param message The message to send to the logger.

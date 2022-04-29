@@ -49,9 +49,8 @@ public class JavaxSoundManager implements SoundManager {
      * @return Either the found clip or null.
      */
     protected Clip findClip (String path) {
-        Clip toReturn = null;
         try {
-            toReturn = AudioSystem.getClip();
+            Clip toReturn = AudioSystem.getClip();
             InputStream stream = getClass().getResourceAsStream(path);
             if (InputStream.nullInputStream().equals(stream) || stream == null) {
                 try {
@@ -60,21 +59,19 @@ public class JavaxSoundManager implements SoundManager {
                         stream = new BufferedInputStream(stream);
                         toReturn.open(AudioSystem.getAudioInputStream(stream));
                     } catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
-                        getLogger().log("JavaxSoundManager: An exception occurred attempting to convert the input stream to a clip.", Level.EXCEPTION);
-                        getLogger().log(e);
+                        getLogger().log("JavaxSoundManager: An exception occurred attempting to convert the input stream to a clip.", e, Level.EXCEPTION);
                         return null;
                     }
                 } catch (IOException e) {
-                    getLogger().log("JavaxSoundManager: Clip was not found as a resource, and an exception occurred searching the disk.", Level.EXCEPTION);
-                    getLogger().log(e);
+                    getLogger().log("JavaxSoundManager: Clip was not found as a resource, and an exception occurred searching the disk.", e, Level.EXCEPTION);
                     return null;
                 }
             }
+            return toReturn;
         } catch (LineUnavailableException e) {
-            getLogger().log("JavaxSoundManager: Out line is not available.", Level.EXCEPTION);
-            getLogger().log(e);
+            getLogger().log("JavaxSoundManager: Out line is not available.", e, Level.EXCEPTION);
+            return null;
         }
-        return toReturn;
     }
 
     /**
