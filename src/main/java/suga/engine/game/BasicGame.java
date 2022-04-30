@@ -11,7 +11,7 @@ import suga.engine.physics.PhysicsEngine;
 import suga.engine.threads.SugaThread;
 import suga.engine.graphics.GraphicsPanel;
 import suga.engine.input.keyboard.GameKeyListener;
-import suga.engine.input.keyboard.KeyValues;
+import suga.engine.input.keyboard.KeyValue;
 
 import java.awt.event.MouseEvent;
 import java.util.*;
@@ -152,7 +152,7 @@ public class BasicGame implements Game {
             MouseEvent e = mice.pop();
             loadedScene.mouseInput(e.getPoint(), e.getButton() == 1);
         }
-        Stack<KeyValues> keys = keyListener.getKeyPresses();
+        Stack<KeyValue> keys = keyListener.getKeyPresses();
         while (keys.size() > 0)
             loadedScene.keyboardInput(keys.pop(), true);
         keys = keyListener.getKeyReleases();

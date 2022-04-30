@@ -22,17 +22,17 @@ public class StackGameKeyListener implements GameKeyListener {
     /**
      * A collection of keys that are currently being held.
      */
-    protected Collection<KeyValues> heldKeys = new ArrayList<>();
+    protected Collection<KeyValue> heldKeys = new ArrayList<>();
 
     /**
      * A stack of keys that have been pressed and need to be handled by the game.
      */
-    protected Stack<KeyValues> keysPressed = new Stack<>();
+    protected Stack<KeyValue> keysPressed = new Stack<>();
 
     /**
      * A stack of keys that have been depressed and need to be handled by the game.
      */
-    protected Stack<KeyValues> keysReleased = new Stack<>();
+    protected Stack<KeyValue> keysReleased = new Stack<>();
 
     /**
      * Creates a new StackGameKeyListener for use in a game. Uses the BasicKeyMapper by default.
@@ -75,7 +75,7 @@ public class StackGameKeyListener implements GameKeyListener {
      */
     @Override
     public void keyPressed (KeyEvent e) {
-        KeyValues key = mapper.convert(e.getKeyCode());
+        KeyValue key = mapper.convert(e.getKeyCode());
         if (heldKeys.contains(key)) return;
         keysPressed.add(key);
         heldKeys.add(key);
@@ -90,7 +90,7 @@ public class StackGameKeyListener implements GameKeyListener {
      */
     @Override
     public void keyReleased (KeyEvent e) {
-        KeyValues key = mapper.convert(e.getKeyCode());
+        KeyValue key = mapper.convert(e.getKeyCode());
         if (!heldKeys.contains(key)) return;
         keysReleased.add(key);
         heldKeys.remove(key);
@@ -104,7 +104,7 @@ public class StackGameKeyListener implements GameKeyListener {
     @Deprecated // Remove v2.*.*
     public Stack<Integer> getKeysPressed () {
         Stack<Integer> s = new Stack<>();
-        for (KeyValues k : keysPressed) s.add(k.getValue());
+        for (KeyValue k : keysPressed) s.add(k.getValue());
         return s;
     }
 
@@ -116,7 +116,7 @@ public class StackGameKeyListener implements GameKeyListener {
     @Deprecated // Remove v2.*.*
     public Stack<Integer> getKeysDepressed () {
         Stack<Integer> s = new Stack<>();
-        for (KeyValues k : keysReleased) s.add(k.getValue());
+        for (KeyValue k : keysReleased) s.add(k.getValue());
         return s;
     }
 
@@ -147,7 +147,7 @@ public class StackGameKeyListener implements GameKeyListener {
      * @return True if the key is currently being held, otherwise false.
      */
     @Override
-    public boolean isHeld (KeyValues key) {
+    public boolean isHeld (KeyValue key) {
         return heldKeys.contains(key);
     }
 
@@ -157,7 +157,7 @@ public class StackGameKeyListener implements GameKeyListener {
      * @return The 'to handle' stack of key presses.
      */
     @Override
-    public Stack<KeyValues> getKeyPresses () {
+    public Stack<KeyValue> getKeyPresses () {
         return keysPressed;
     }
 
@@ -167,7 +167,7 @@ public class StackGameKeyListener implements GameKeyListener {
      * @return The 'to handle' stack of key releases.
      */
     @Override
-    public Stack<KeyValues> getKeyReleases () {
+    public Stack<KeyValue> getKeyReleases () {
         return keysReleased;
     }
 

@@ -1,7 +1,6 @@
 package suga.engine;
 
 import suga.engine.graphics.AbstractGraphicsPanel;
-import suga.engine.input.mouse.BasicMouseListener;
 import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.logger.GeneralLogger;
 import suga.engine.logger.Logger;

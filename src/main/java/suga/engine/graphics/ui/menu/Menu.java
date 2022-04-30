@@ -1,7 +1,7 @@
 package suga.engine.graphics.ui.menu;
 
 import suga.engine.graphics.DrawListener;
-import suga.engine.input.keyboard.KeyValues;
+import suga.engine.input.keyboard.KeyValue;
 
 /**
  * A menu is an object used by the player to select something, or modify the value of something. It always contains
@@ -21,7 +21,7 @@ public interface Menu extends DrawListener {
      *
      * @param key The key that was pressed.
      */
-    void move (KeyValues key);
+    void move (KeyValue key);
 
     /**
      * Checks the position of the mouse to determine which option to highlight.

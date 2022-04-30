@@ -1,6 +1,6 @@
 package suga.engine.game;
 
-import suga.engine.input.keyboard.KeyValues;
+import suga.engine.input.keyboard.KeyValue;
 import java.awt.*;
 
 /**
@@ -32,7 +32,7 @@ public abstract class AbstractScene {
      * @param key     The value of the key pressed.
      * @param pressed True if the key was pressed, false if it was released.
      */
-    public abstract void keyboardInput (KeyValues key, boolean pressed);
+    public abstract void keyboardInput (KeyValue key, boolean pressed);
 
     /**
      * Passes a mouse input into the scene.

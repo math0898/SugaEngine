@@ -11,7 +11,7 @@ public class BasicKeyMapper implements KeyMapper {
     /**
      * The array used to convert between keycodes and keys.
      */
-    protected KeyValues[] values = new KeyValues[256];
+    protected KeyValue[] values = new KeyValue[256];
 
     /**
      * Constructs the BasicKeyMapper. Initializes everything to null before iterating through the values of KeyValues.
@@ -19,7 +19,7 @@ public class BasicKeyMapper implements KeyMapper {
     public BasicKeyMapper () {
         for (int i = 0; i < 255; i++)
             values[i] = null;
-        for (KeyValues v : KeyValues.values())
+        for (KeyValue v : KeyValue.values())
             values[v.getValue()] = v;
     }
 
@@ -30,7 +30,7 @@ public class BasicKeyMapper implements KeyMapper {
      * @return The enum value of the given key.
      */
     @Override
-    public KeyValues convert (int keycode) {
+    public KeyValue convert (int keycode) {
         return values[keycode];
     }
 
@@ -41,7 +41,7 @@ public class BasicKeyMapper implements KeyMapper {
      * @param key     The new key to map that keycode to.
      */
     @Override
-    public void set (int keycode, KeyValues key) {
+    public void set (int keycode, KeyValue key) {
         if (keycode < 0 || keycode > 255) throw new IllegalArgumentException("Keycode not supported [0,255]: " + keycode);
         values[keycode] = key;
     }
