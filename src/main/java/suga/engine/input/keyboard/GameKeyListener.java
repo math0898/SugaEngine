@@ -29,21 +29,21 @@ public interface GameKeyListener extends KeyListener {
      * @param key The key to check if it's being held or not.
      * @return True if the key is currently being held, otherwise false.
      */
-    boolean isHeld (KeyValues key);
+    boolean isHeld (KeyValue key);
 
     /**
      * Returns a stack of key presses that have not yet been handled.
      *
      * @return The 'to handle' stack of key presses.
      */
-    Stack<KeyValues> getKeyPresses ();
+    Stack<KeyValue> getKeyPresses ();
 
     /**
      * Returns a stack of key releases that have not yet been handled.
      *
      * @return The 'to handle' stack of key releases.
      */
-    Stack<KeyValues> getKeyReleases ();
+    Stack<KeyValue> getKeyReleases ();
 
     /**
      * Sets the frame that this key listener is listening to. Does not deregister with the old frame.

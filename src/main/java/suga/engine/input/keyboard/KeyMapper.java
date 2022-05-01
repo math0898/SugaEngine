@@ -13,7 +13,7 @@ public interface KeyMapper {
      * @param keycode The keycode to convert into a value.
      * @return The enum value of the given key.
      */
-    KeyValues convert (int keycode);
+    KeyValue convert (int keycode);
 
     /**
      * Sets the given keycode to the given enum value. Will replace the current result from that keycode.
@@ -21,5 +21,5 @@ public interface KeyMapper {
      * @param keycode The keycode to change the mapping of.
      * @param key     The new key to map that keycode to.
      */
-    void set (int keycode, KeyValues key);
+    void set (int keycode, KeyValue key);
 }

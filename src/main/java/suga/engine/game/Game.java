@@ -5,6 +5,7 @@ import suga.engine.game.objects.AbstractGameObject;
 import suga.engine.graphics.DrawListener;
 import suga.engine.graphics.AbstractGraphicsPanel;
 import suga.engine.input.mouse.BasicMouseListener;
+import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.threads.SugaThread;
 import suga.engine.graphics.GraphicsPanel;
 import suga.engine.input.keyboard.GameKeyListener;
@@ -42,7 +43,7 @@ public interface Game {
      *
      * @param listener The new mouse listener that this game should use.
      */
-    void setMouseListener (BasicMouseListener listener);
+    void setMouseListener (GameMouseListener listener);
 
     /**
      * Accessor method for the thread that is calling loop(). This can be used to determine whether the game has stopped
@@ -118,5 +119,5 @@ public interface Game {
      *
      * @return The mouse listener used by the server.
      */
-    BasicMouseListener getMouseListener ();
+    GameMouseListener getMouseListener ();
 }

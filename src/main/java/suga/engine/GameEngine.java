@@ -1,7 +1,7 @@
 package suga.engine;
 
 import suga.engine.graphics.AbstractGraphicsPanel;
-import suga.engine.input.mouse.BasicMouseListener;
+import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.logger.GeneralLogger;
 import suga.engine.logger.Logger;
 import suga.engine.threads.GameLogicThread;
@@ -103,7 +103,7 @@ public class GameEngine {
      */
     public static void launchGameWindow (int width, int height, String name, boolean border, AbstractGraphicsPanel panel,
                                          Color background, int logicRate, int frameRate, GameKeyListener keyListener,
-                                         BasicMouseListener mouseListener, Game game) {
+                                         GameMouseListener mouseListener, Game game) {
         logger.log("GameEngine: Starting the game window.");
         panel.setBackground(background);
         frame = new JFrame(name);

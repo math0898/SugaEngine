@@ -5,7 +5,7 @@ package suga.engine.input.keyboard;
  *
  * @author Sugaku
  */
-public enum KeyValues { // todo rename to KeyValue, requires Major version increment.
+public enum KeyValue {
 
     /**
      * The enter key maps to keycode '10'.
@@ -77,7 +77,7 @@ public enum KeyValues { // todo rename to KeyValue, requires Major version incre
      *
      * @param value The value to assign to this key.
      */
-    KeyValues (int value) {
+    KeyValue (int value) {
         this.value = value;
     }
 
@@ -97,8 +97,8 @@ public enum KeyValues { // todo rename to KeyValue, requires Major version incre
      * @return The enum value of the key if present, otherwise null.
      */
     @Deprecated
-    public static KeyValues toEnum (int code) { // Might be a bit slow for input handling. Perhaps prioritize more popular keys.
-        for (KeyValues k : KeyValues.values())  //  This would also be a good level for key remapping.
+    public static KeyValue toEnum (int code) { // Might be a bit slow for input handling. Perhaps prioritize more popular keys.
+        for (KeyValue k : KeyValue.values())  //  This would also be a good level for key remapping.
             if (k.getValue() == code)
                 return k;
         return null;

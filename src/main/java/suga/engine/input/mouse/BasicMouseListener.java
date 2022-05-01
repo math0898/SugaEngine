@@ -1,17 +1,26 @@
 package suga.engine.input.mouse;
 
+import suga.engine.logger.Level;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Stack;
 
-public class BasicMouseListener implements MouseListener {
+import static suga.engine.GameEngine.getLogger;
+
+/**
+ * The BasicMouseListener is a simple implementation of the GameMouseListener which only pays attention to mouse presses
+ * and mouse releases.
+ *
+ * @author Sugaku
+ */
+public class BasicMouseListener implements GameMouseListener {
 
     /**
      * A reference to the JFrame object that this GameMouseListener is listening to.
      */
-    protected final JFrame frame;
+    protected JFrame frame;
 
     /**
      * A stack of mouse click events that need to be processed.
@@ -19,13 +28,19 @@ public class BasicMouseListener implements MouseListener {
     protected Stack<MouseEvent> events = new Stack<>();
 
     /**
+     * Creates a new GameMouseListener without a JFrame
+     */
+    public BasicMouseListener () {
+        frame = null;
+    }
+
+    /**
      * Creates a new GameMouseListener with the given JFrame so that the mouse position can be grabbed at any point.
      *
      * @param frame The JFrame instance that this mouse listener should be listening to.
      */
     public BasicMouseListener (JFrame frame) {
-        this.frame = frame;
-        frame.addMouseListener(this);
+        setFrame(frame);
     }
 
     /**
@@ -33,7 +48,13 @@ public class BasicMouseListener implements MouseListener {
      *
      * @return A point object which contains data about the current mouse position.
      */
+    @Override
     public Point getMousePos () {
+        if (frame == null) {
+            getLogger().log("BasicMouseListener: Attempted to read mouse position when JFrame is not initialized.", Level.EXCEPTION);
+            return null;
+        }
+        getLogger().log("BasicMouseListener: Read mouse position: " + frame.getMousePosition(), Level.VERBOSE);
         return frame.getMousePosition();
     }
 
@@ -55,6 +76,7 @@ public class BasicMouseListener implements MouseListener {
      */
     @Override
     public void mousePressed (MouseEvent e) {
+        getLogger().log("BasicMouseListener: Received mouse pressed event: " + e, Level.VERBOSE);
         events.add(e);
     }
 
@@ -65,6 +87,7 @@ public class BasicMouseListener implements MouseListener {
      */
     @Override
     public void mouseReleased (MouseEvent e) {
+        getLogger().log("BasicMouseListener: Received mouse release event: " + e, Level.VERBOSE);
         events.add(e);
     }
 
@@ -93,6 +116,7 @@ public class BasicMouseListener implements MouseListener {
      *
      * @return The stack of mouse events.
      */
+    @Override
     public Stack<MouseEvent> getEvents () {
         return events;
     }
@@ -102,7 +126,10 @@ public class BasicMouseListener implements MouseListener {
      *
      * @param frame The new frame to listen to.
      */
+    @Override
     public void setFrame (JFrame frame) {
+        getLogger().log("BasicMouseListener: Assigning this listener to a new JFrame.", Level.DEBUG);
         frame.addMouseListener(this);
+        this.frame = frame;
     }
 }

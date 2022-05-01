@@ -1,7 +1,7 @@
 package suga.engine.graphics.ui.menu;
 
 import suga.engine.graphics.AbstractGraphicsPanel;
-import suga.engine.input.keyboard.KeyValues;
+import suga.engine.input.keyboard.KeyValue;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public abstract class BasicMenu implements Menu {
      * @param key The key that was pressed.
      */
     @Override
-    public void move (KeyValues key) {
+    public void move (KeyValue key) {
         switch (key) {
             case ARROW_UP -> currentSelection = (currentSelection - 1 + options.size()) % options.size();
             case ARROW_DOWN -> currentSelection = (currentSelection + 1 + options.size()) % options.size();
