@@ -8,6 +8,7 @@ import java.awt.*;
  *
  * @author Sugaku
  */
+@Deprecated // todo Remove references, implement.
 public abstract class AbstractScene {
 
     /**

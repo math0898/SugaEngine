@@ -15,6 +15,7 @@ import java.util.Map;
  *
  * @author Sugaku
  */
+@Deprecated // todo Remove references, implement.
 public abstract class AbstractGraphicsPanel extends JPanel implements GraphicsPanel {
 
     /**

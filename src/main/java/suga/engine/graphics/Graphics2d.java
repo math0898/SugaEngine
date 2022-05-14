@@ -13,6 +13,7 @@ import java.util.List;
  *
  * @author Sugaku
  */
+@Deprecated // todo Refactor.
 public class Graphics2d extends AbstractGraphicsPanel {
 
     /**

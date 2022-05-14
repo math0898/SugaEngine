@@ -21,6 +21,7 @@ import java.util.*;
  *
  * @author Sugaku
  */
+@Deprecated // todo Remove references, implement.
 public class BasicGame implements Game {
 
     /**

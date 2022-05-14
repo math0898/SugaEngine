@@ -5,6 +5,7 @@ package suga.engine.game.objects;
  *
  * @author Sugaku
  */
+@Deprecated // todo Remove references, implement.
 public abstract class AbstractAIAgent {
 
     /**
