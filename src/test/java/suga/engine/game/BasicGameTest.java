@@ -3,8 +3,8 @@ package suga.engine.game;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import suga.engine.game.objects.AbstractAIAgent;
-import suga.engine.game.objects.AbstractGameObject;
+import suga.engine.game.objects.AIAgent;
+import suga.engine.game.objects.GameObject;
 import suga.engine.input.mouse.BasicMouseListener;
 import suga.engine.physics.BasicPhysicsEngine;
 import suga.engine.graphics.DrawListener;
@@ -82,10 +82,10 @@ class BasicGameTest {
      */
     @Test
     void loop () {
-        AbstractGameObject o1 = mock(AbstractGameObject.class);
-        AbstractGameObject o2 = mock(AbstractGameObject.class);
-        AbstractAIAgent a1 = mock(AbstractAIAgent.class);
-        AbstractAIAgent a2 = mock(AbstractAIAgent.class);
+        GameObject o1 = mock(GameObject.class);
+        GameObject o2 = mock(GameObject.class);
+        AIAgent a1 = mock(AIAgent.class);
+        AIAgent a2 = mock(AIAgent.class);
         game.physics = mock(BasicPhysicsEngine.class);
         game.addAgent(a1);
         game.addAgent(a2);
@@ -93,14 +93,14 @@ class BasicGameTest {
         game.addGameObject("o2", o2);
         verify(o1, times(0)).runLogic();
         verify(o2, times(0)).runLogic();
-        verify(a1, times(0)).logic();
-        verify(a2, times(0)).logic();
+        verify(a1, times(0)).runLogic();
+        verify(a2, times(0)).runLogic();
         verify(game.physics, times(0)).checkCollisions();
         game.loop();
         verify(o1, times(1)).runLogic();
         verify(o2, times(1)).runLogic();
-        verify(a1, times(1)).logic();
-        verify(a2, times(1)).logic();
+        verify(a1, times(1)).runLogic();
+        verify(a2, times(1)).runLogic();
         verify(game.physics, times(1)).checkCollisions();
     }
 
@@ -123,9 +123,9 @@ class BasicGameTest {
      */
     @Test
     void addGameObject () {
-        AbstractGameObject o1 = mock(AbstractGameObject.class);
+        GameObject o1 = mock(GameObject.class);
         game.addGameObject("o1", o1);
-        verify(game.getPanel(), times(1)).registerListener(o1);
+        verify(game.getPanel(), times(1)).registerListener(o1.getDrawListener());
         assertEquals(o1, game.getGameObject("o1"), "Added object should be present.");
         game.loop();
         verify(o1, times(1)).runLogic();
@@ -136,7 +136,7 @@ class BasicGameTest {
      */
     @Test
     void getGameObject () {
-        AbstractGameObject o1 = mock(AbstractGameObject.class);
+        GameObject o1 = mock(GameObject.class);
         game.addGameObject("o1", o1);
         assertEquals(o1, game.getGameObject("o1"), "Should be able to get added object.");
         assertNull(game.getGameObject("not-added"), "Un-added game object should return null.");
@@ -149,12 +149,12 @@ class BasicGameTest {
      */
     @Test
     void addAgent () {
-        AbstractAIAgent a = mock(AbstractAIAgent.class);
+        AIAgent a = mock(AIAgent.class);
         game.loop();
-        verify(a, times(0)).logic();
+        verify(a, times(0)).runLogic();
         game.addAgent(a);
         game.loop(); // Assuming this is working correctly a.logic() should've been called.
-        verify(a, times(1)).logic();
+        verify(a, times(1)).runLogic();
     }
 
     /**
@@ -173,9 +173,9 @@ class BasicGameTest {
     @Test
     void clear () {
         PhysicsEngine physics = game.physics;
-        AbstractGameObject o = mock(AbstractGameObject.class);
+        GameObject o = mock(GameObject.class);
         game.addGameObject("obj", o);
-        AbstractAIAgent a = mock(AbstractAIAgent.class);
+        AIAgent a = mock(AIAgent.class);
         game.addAgent(a);
         GraphicsPanel p = mock(GraphicsPanel.class);
         game.panel = p;
@@ -192,9 +192,9 @@ class BasicGameTest {
      */
     @Test
     void loadScene () {
-        AbstractScene pass = mock(AbstractScene.class);
+        Scene pass = mock(Scene.class);
         when(pass.load(game)).thenReturn(true);
-        AbstractScene fail = mock(AbstractScene.class);
+        Scene fail = mock(Scene.class);
         when(fail.load(game)).thenReturn(false);
         game.scenes.put("pass", pass);
         game.scenes.put("fail", fail);

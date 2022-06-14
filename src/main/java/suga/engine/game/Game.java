@@ -1,10 +1,8 @@
 package suga.engine.game;
 
-import suga.engine.game.objects.AbstractAIAgent;
-import suga.engine.game.objects.AbstractGameObject;
+import suga.engine.game.objects.AIAgent;
+import suga.engine.game.objects.GameObject;
 import suga.engine.graphics.DrawListener;
-import suga.engine.graphics.AbstractGraphicsPanel;
-import suga.engine.input.mouse.BasicMouseListener;
 import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.threads.SugaThread;
 import suga.engine.graphics.GraphicsPanel;
@@ -29,7 +27,7 @@ public interface Game {
      *
      * @param panel The panel to assign to this game.
      */
-    void setPanel (AbstractGraphicsPanel panel);
+    void setPanel (GraphicsPanel panel);
 
     /**
      * Sets the key listener currently being used by this game.
@@ -69,7 +67,7 @@ public interface Game {
      * @param name The name of the game object. Can be used later to remove the item.
      * @param object The game object to add.
      */
-    void addGameObject (String name, AbstractGameObject object);
+    void addGameObject (String name, GameObject object);
 
     /**
      * Accessor method for game objects.
@@ -77,14 +75,14 @@ public interface Game {
      * @param name The name of the object to attempt to get.
      * @return The found object or null.
      */
-    AbstractGameObject getGameObject (String name);
+    GameObject getGameObject (String name);
 
     /**
      * Registers a new AI agent so that it can be called every tick after collisions but before object logic.
      *
      * @param agent The AIAgent to add into the list of agents.
      */
-    void addAgent (AbstractAIAgent agent);
+    void addAgent (AIAgent agent);
 
     /**
      * Registers a new DrawingListener. This will not register anything beyond the draw method. Usually used by UI,

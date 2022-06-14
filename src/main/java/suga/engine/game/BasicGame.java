@@ -1,13 +1,13 @@
 package suga.engine.game;
 
-import suga.engine.game.objects.AbstractAIAgent;
-import suga.engine.game.objects.AbstractGameObject;
+import suga.engine.game.objects.AIAgent;
+import suga.engine.game.objects.GameObject;
 import suga.engine.graphics.DrawListener;
-import suga.engine.graphics.AbstractGraphicsPanel;
 import suga.engine.input.mouse.BasicMouseListener;
 import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.physics.BasicPhysicsEngine;
 import suga.engine.physics.PhysicsEngine;
+import suga.engine.physics.collidables.Collidable;
 import suga.engine.threads.SugaThread;
 import suga.engine.graphics.GraphicsPanel;
 import suga.engine.input.keyboard.GameKeyListener;
@@ -21,13 +21,12 @@ import java.util.*;
  *
  * @author Sugaku
  */
-@Deprecated // todo Remove references, implement.
 public class BasicGame implements Game {
 
     /**
      * A list of game objects for this game. Their logic should be called every cycle.
      */
-    protected Map<String, AbstractGameObject> objects = new HashMap<>();
+    protected Map<String, GameObject> objects = new HashMap<>();
 
     /**
      * The physics engine that will be used with this game.
@@ -37,17 +36,17 @@ public class BasicGame implements Game {
     /**
      * A list of AIAgents that should have their logic run every cycle.
      */
-    protected List<AbstractAIAgent> agents = new ArrayList<>();
+    protected List<AIAgent> agents = new ArrayList<>();
 
     /**
      * A Map of scenes indexed by name.
      */
-    protected Map<String, AbstractScene> scenes = new HashMap<>();
+    protected Map<String, Scene> scenes = new HashMap<>();
 
     /**
      * The currently loaded scene object.
      */
-    protected AbstractScene loadedScene;
+    protected Scene loadedScene;
 
     /**
      * The graphics panel that should be used to register draw listeners to.
@@ -98,7 +97,7 @@ public class BasicGame implements Game {
      * @param panel The panel to assign to this game.
      */
     @Override
-    public void setPanel (AbstractGraphicsPanel panel) {
+    public void setPanel (GraphicsPanel panel) {
         this.panel = panel;
     }
 
@@ -139,8 +138,8 @@ public class BasicGame implements Game {
     @Override
     public void loop () {
         physics.checkCollisions();
-        for (AbstractAIAgent a : agents) a.logic();
-        for (AbstractGameObject gO : objects.values()) gO.runLogic();
+        for (AIAgent a : agents) a.runLogic();
+        for (GameObject gO : objects.values()) gO.runLogic();
     }
 
     /**
@@ -168,10 +167,12 @@ public class BasicGame implements Game {
      * @param object The game object to add.
      */
     @Override
-    public void addGameObject (String name, AbstractGameObject object) {
+    public void addGameObject (String name, GameObject object) {
         objects.put(name, object);
-        panel.registerListener(object);
-        physics.addObject(object);
+        DrawListener listener = object.getDrawListener();
+        if (listener != null) panel.registerListener(listener);
+        Collidable collidable = object.getCollider();
+        physics.addObject(collidable);
     }
 
     /**
@@ -181,7 +182,7 @@ public class BasicGame implements Game {
      * @return The found object or null.
      */
     @Override
-    public AbstractGameObject getGameObject (String name) {
+    public GameObject getGameObject (String name) {
         return objects.get(name);
     }
 
@@ -191,7 +192,7 @@ public class BasicGame implements Game {
      * @param agent The AIAgent to add into the list of agents.
      */
     @Override
-    public void addAgent (AbstractAIAgent agent) {
+    public void addAgent (AIAgent agent) {
         agents.add(agent);
     }
 
@@ -225,7 +226,7 @@ public class BasicGame implements Game {
      */
     @Override
     public boolean loadScene (String name) {
-        AbstractScene scene = scenes.get(name);
+        Scene scene = scenes.get(name);
         if (scene == null) return false;
         if (scene.load(this)) {
             loadedScene = scene;
