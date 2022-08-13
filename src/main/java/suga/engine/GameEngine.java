@@ -114,6 +114,7 @@ public class GameEngine {
         frame.setUndecorated(!border);
         frame.setVisible(true);
         graphics = new GraphicsThread(panel, frameRate);
+        graphics.start();
         logger.log("GameEngine: Started graphics thread and window.");
         game.setPanel(panel);
         keyListener.setFrame(frame);
@@ -121,6 +122,7 @@ public class GameEngine {
         game.setKeyListener(keyListener);
         game.setMouseListener(mouseListener);
         logic = new GameLogicThread(game, logicRate);
+        logic.start();
         logger.log("GameEngine: Linked input listeners and started game logic thread.");
     }
 }

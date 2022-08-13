@@ -35,4 +35,9 @@ public interface SugaThread extends Runnable {
      * @return Whether this thread has been stopped or not.
      */
     boolean getStopped ();
+
+    /**
+     * Starts this thread. Should be implemented by extending {@link Thread}.
+     */
+    void start ();
 }
