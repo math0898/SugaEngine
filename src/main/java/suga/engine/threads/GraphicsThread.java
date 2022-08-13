@@ -2,14 +2,12 @@ package suga.engine.threads;
 
 import suga.engine.graphics.GraphicsPanel;
 
-import static java.lang.Thread.sleep;
-
 /**
  * A thread used to refresh the graphics of a panel as fast as possible.
  *
  * @author Sugaku
  */
-public class GraphicsThread implements SugaThread {
+public class GraphicsThread extends Thread implements SugaThread {
 
     /**
      * Whether to exit the thread.

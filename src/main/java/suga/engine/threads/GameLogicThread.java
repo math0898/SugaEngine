@@ -2,14 +2,12 @@ package suga.engine.threads;
 
 import suga.engine.game.Game;
 
-import static java.lang.Thread.sleep;
-
 /**
  * A thread used to run game logic once every 1/60th of a second.
  *
  * @author Sugaku
  */
-public class GameLogicThread implements SugaThread {
+public class GameLogicThread extends Thread implements SugaThread {
 
     /**
      * Whether to exit the thread.
