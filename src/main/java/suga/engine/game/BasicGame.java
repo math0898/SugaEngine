@@ -1,10 +1,12 @@
 package suga.engine.game;
 
+import suga.engine.GameEngine;
 import suga.engine.game.objects.AIAgent;
 import suga.engine.game.objects.GameObject;
 import suga.engine.graphics.DrawListener;
 import suga.engine.input.mouse.BasicMouseListener;
 import suga.engine.input.mouse.GameMouseListener;
+import suga.engine.logger.Level;
 import suga.engine.physics.BasicPhysicsEngine;
 import suga.engine.physics.PhysicsEngine;
 import suga.engine.physics.collidables.Collidable;
@@ -223,7 +225,9 @@ public class BasicGame implements Game {
         physics = new BasicPhysicsEngine();
         agents = new ArrayList<>();
         objects = new HashMap<>();
-        panel.clearListeners();
+        if (panel != null) panel.clearListeners();
+        else GameEngine.getLogger().log("A clear of game objects was requested but this game does not have an active panel.", Level.WARNING);
+        GameEngine.getLogger().log("Cleared game objects.", Level.INFO);
     }
 
     /**
