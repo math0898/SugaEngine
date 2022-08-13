@@ -69,6 +69,14 @@ public class BasicGame implements Game {
     protected SugaThread thread = null;
 
     /**
+     * Creates a new game without a given panel and game input listeners. These should be set with setters before
+     * calling {@link #loop()}.
+     */
+    public BasicGame () {
+
+    }
+
+    /**
      * Creates a new game with the given panel used to register GameObjects as draw listeners to.
      *
      * @param panel The panel that GameObjects should register as a listener to.

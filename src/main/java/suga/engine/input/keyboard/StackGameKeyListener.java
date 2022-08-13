@@ -35,7 +35,23 @@ public class StackGameKeyListener implements GameKeyListener {
     protected Stack<KeyValue> keysReleased = new Stack<>();
 
     /**
-     * Creates a new StackGameKeyListener for use in a game. Uses the BasicKeyMapper by default.
+     * Creates a new StackGameKeyListener without binding it to a frame. Uses the BasicKeyMapper by default.
+     */
+    public StackGameKeyListener () {
+        this(new BasicKeyMapper());
+    }
+
+    /**
+     * Creates a new StackGameKeyListener without binding it to a frame.
+     *
+     * @param mapper The KeyMapper to be used by this KeyListener.
+     */
+    public StackGameKeyListener (BasicKeyMapper mapper) {
+        this.mapper = mapper;
+    }
+
+    /**
+     * Creates a new StackGameKeyListener for use in the given frame. Uses the BasicKeyMapper by default.
      *
      * @param frame The JFrame that this KeyListener is using.
      */
@@ -44,7 +60,7 @@ public class StackGameKeyListener implements GameKeyListener {
     }
 
     /**
-     * Creates a new StackGameKeyListener for use in a game.
+     * Creates a new StackGameKeyListener for use in the given frame.
      *
      * @param frame  The JFrame that this KeyListener is using.
      * @param mapper The KeyMapper to be used by this KeyListener.
