@@ -3,6 +3,7 @@ package suga.engine.game;
 import suga.engine.game.objects.AIAgent;
 import suga.engine.game.objects.GameObject;
 import suga.engine.graphics.DrawListener;
+import suga.engine.graphics.GraphicsPanel;
 import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.threads.SugaThread;
 import suga.engine.graphics.GraphicsPanelInterface;
@@ -27,7 +28,7 @@ public interface Game {
      *
      * @param panel The panel to assign to this game.
      */
-    void setPanel (GraphicsPanelInterface panel);
+    void setPanel (GraphicsPanel panel);
 
     /**
      * Sets the key listener currently being used by this game.

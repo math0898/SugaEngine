@@ -4,6 +4,7 @@ import suga.engine.GameEngine;
 import suga.engine.game.objects.AIAgent;
 import suga.engine.game.objects.GameObject;
 import suga.engine.graphics.DrawListener;
+import suga.engine.graphics.GraphicsPanel;
 import suga.engine.input.mouse.BasicMouseListener;
 import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.logger.Level;
@@ -53,7 +54,7 @@ public class BasicGame implements Game {
     /**
      * The graphics panel that should be used to register draw listeners to.
      */
-    protected GraphicsPanelInterface panel;
+    protected GraphicsPanel panel;
 
     /**
      * The key listener that is being used by this game.
@@ -85,7 +86,7 @@ public class BasicGame implements Game {
      * @param listener The game key listener being used by this game object.
      * @param mouseListener The mouse listener being using by this game object.
      */
-    public BasicGame (GraphicsPanelInterface panel, GameKeyListener listener, BasicMouseListener mouseListener) {
+    public BasicGame (GraphicsPanel panel, GameKeyListener listener, BasicMouseListener mouseListener) {
         this.panel = panel;
         keyListener = listener;
         this.mouseListener = mouseListener;
@@ -107,7 +108,7 @@ public class BasicGame implements Game {
      * @param panel The panel to assign to this game.
      */
     @Override
-    public void setPanel (GraphicsPanelInterface panel) {
+    public void setPanel (GraphicsPanel panel) {
         this.panel = panel;
     }
 
