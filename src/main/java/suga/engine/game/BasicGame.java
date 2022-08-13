@@ -9,7 +9,7 @@ import suga.engine.physics.BasicPhysicsEngine;
 import suga.engine.physics.PhysicsEngine;
 import suga.engine.physics.collidables.Collidable;
 import suga.engine.threads.SugaThread;
-import suga.engine.graphics.GraphicsPanel;
+import suga.engine.graphics.GraphicsPanelInterface;
 import suga.engine.input.keyboard.GameKeyListener;
 import suga.engine.input.keyboard.KeyValue;
 
@@ -51,7 +51,7 @@ public class BasicGame implements Game {
     /**
      * The graphics panel that should be used to register draw listeners to.
      */
-    protected GraphicsPanel panel;
+    protected GraphicsPanelInterface panel;
 
     /**
      * The key listener that is being used by this game.
@@ -75,7 +75,7 @@ public class BasicGame implements Game {
      * @param listener The game key listener being used by this game object.
      * @param mouseListener The mouse listener being using by this game object.
      */
-    public BasicGame (GraphicsPanel panel, GameKeyListener listener, BasicMouseListener mouseListener) {
+    public BasicGame (GraphicsPanelInterface panel, GameKeyListener listener, BasicMouseListener mouseListener) {
         this.panel = panel;
         keyListener = listener;
         this.mouseListener = mouseListener;
@@ -97,7 +97,7 @@ public class BasicGame implements Game {
      * @param panel The panel to assign to this game.
      */
     @Override
-    public void setPanel (GraphicsPanel panel) {
+    public void setPanel (GraphicsPanelInterface panel) {
         this.panel = panel;
     }
 
@@ -241,7 +241,7 @@ public class BasicGame implements Game {
      * @return The panel used by the server.
      */
     @Override
-    public GraphicsPanel getPanel () {
+    public GraphicsPanelInterface getPanel () {
         return panel;
     }
 

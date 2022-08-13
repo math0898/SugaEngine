@@ -1,6 +1,6 @@
 package suga.engine.graphics.ui.menu;
 
-import suga.engine.graphics.AbstractGraphicsPanel;
+import suga.engine.graphics.GraphicsPanel;
 import suga.engine.input.keyboard.KeyValue;
 
 import java.util.List;
@@ -41,7 +41,7 @@ public abstract class BasicMenu implements Menu {
      * @param panel  The panel to apply changes to.
      */
     @Override
-    public void applyChanges (int width, int height, AbstractGraphicsPanel panel) {
+    public void applyChanges (int width, int height, GraphicsPanel panel) {
 
     }
 

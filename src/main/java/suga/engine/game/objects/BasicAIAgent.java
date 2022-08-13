@@ -5,20 +5,19 @@ package suga.engine.game.objects;
  *
  * @author Sugaku
  */
-@Deprecated // todo Remove references, implement.
-public abstract class AbstractAIAgent {
+public abstract class BasicAIAgent {
 
     /**
      * The GameObject that this agent has control over.
      */
-    protected final AbstractGameObject object;
+    protected final GameObject object;
 
     /**
      * Creates a new AIAgent with control over the given object.
      *
      * @param object The GameObject that this AIAgent has control over.
      */
-    public AbstractAIAgent (AbstractGameObject object) {
+    public BasicAIAgent (GameObject object) {
         this.object = object;
     }
 

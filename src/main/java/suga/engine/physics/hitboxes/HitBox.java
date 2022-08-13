@@ -1,6 +1,6 @@
 package suga.engine.physics.hitboxes;
 
-import suga.engine.graphics.GraphicsPanel;
+import suga.engine.graphics.GraphicsPanelInterface;
 import suga.engine.physics.Vector;
 
 import java.util.Collection;
@@ -54,5 +54,5 @@ public interface HitBox {
      *
      * @param panel The panel to draw the hit box test points to.
      */
-    void drawHitBox (GraphicsPanel panel);
+    void drawHitBox (GraphicsPanelInterface panel);
 }

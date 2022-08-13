@@ -13,8 +13,7 @@ import java.util.List;
  *
  * @author Sugaku
  */
-@Deprecated // todo Refactor.
-public class Graphics2d extends AbstractGraphicsPanel {
+public class Graphics2d extends GraphicsPanel {
 
     /**
      * A list of pixels that need to be updated in the next frame.

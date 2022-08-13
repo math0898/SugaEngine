@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.mockito.Mockito;
-import suga.engine.graphics.GraphicsPanel;
+import suga.engine.graphics.GraphicsPanelInterface;
 import suga.engine.physics.Vector;
 
 import java.awt.*;
@@ -104,7 +104,7 @@ class SquareHitBoxTest {
      */
     @Test
     void drawHitBox () {
-        GraphicsPanel panel = mock(GraphicsPanel.class);
+        GraphicsPanelInterface panel = mock(GraphicsPanelInterface.class);
         hitBox.drawHitBox(panel);
         verify(panel, atLeastOnce()).setPixel(Mockito.any(int.class), Mockito.any(int.class), Mockito.any(Color.class));
     }

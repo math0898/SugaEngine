@@ -1,31 +1,30 @@
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'jacoco'
 }
 
 group 'io.github.math0898'
-version 'v2.1.1-ALPHA-2'
+version 'v2.1.1'
 
 repositories {
     mavenCentral()
 }
 
 compileJava {
-    options.release = 16
+    options.release = 18
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(16)
+        languageVersion = JavaLanguageVersion.of(18)
     }
 }
 
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
-    testImplementation 'org.mockito:mockito-core:4.5.1'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.9.0'
+    testImplementation 'org.mockito:mockito-core:4.6.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.0'
 }
 
 test {

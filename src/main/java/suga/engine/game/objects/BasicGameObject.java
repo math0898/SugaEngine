@@ -1,6 +1,6 @@
 package suga.engine.game.objects;
 
-import suga.engine.graphics.AbstractGraphicsPanel;
+import suga.engine.graphics.GraphicsPanel;
 import suga.engine.graphics.DrawListener;
 import suga.engine.physics.Physical;
 import suga.engine.physics.Vector;
@@ -10,14 +10,13 @@ import suga.engine.physics.Vector;
  *
  * @author Sugaku
  */
-@Deprecated // todo Remove references, implement.
-public class AbstractGameObject implements DrawListener, Physical {
+public class BasicGameObject implements DrawListener, Physical {
 
     /**
      * Creates a new Collidable object with the immutable property set to either true or false.
      *.
      */
-    public AbstractGameObject () {
+    public BasicGameObject () {
     }
 
     /**
@@ -37,7 +36,7 @@ public class AbstractGameObject implements DrawListener, Physical {
      * @param panel  The panel to apply changes to.
      */
     @Override
-    public void applyChanges (int width, int height, AbstractGraphicsPanel panel) {
+    public void applyChanges (int width, int height, GraphicsPanel panel) {
 
     }
 

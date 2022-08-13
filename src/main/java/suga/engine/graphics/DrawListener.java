@@ -35,5 +35,5 @@ public interface DrawListener {
      * @param height The height of the pixel map.
      * @param panel The panel to apply changes to.
      */
-    void applyChanges (int width, int height, AbstractGraphicsPanel panel);
+    void applyChanges (int width, int height, GraphicsPanel panel);
 }
