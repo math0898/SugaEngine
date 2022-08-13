@@ -8,7 +8,7 @@ import java.awt.*;
  *
  * @author Sugaku
  */
-public abstract class AbstractScene {
+public abstract class BasicScene implements Scene {
 
     /**
      * The game instance that this scene is associated with.
@@ -21,6 +21,7 @@ public abstract class AbstractScene {
      * @param game The game to load this scene into.
      * @return True if loading was successful. Otherwise, false.
      */
+    @Override
     public boolean load (Game game) {
         this.game = game;
         return true;

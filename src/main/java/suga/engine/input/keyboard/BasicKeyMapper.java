@@ -1,5 +1,9 @@
 package suga.engine.input.keyboard;
 
+import suga.engine.logger.Level;
+
+import static suga.engine.GameEngine.getLogger;
+
 /**
  * The default KeyMapper works by creating an array the size of the maximally supported keycode value and storing the
  * resulting enum values at each keycode index.
@@ -31,7 +35,10 @@ public class BasicKeyMapper implements KeyMapper {
      */
     @Override
     public KeyValue convert (int keycode) {
-        return values[keycode];
+        KeyValue toReturn = values[keycode];
+        if (keycode != toReturn.getValue())
+            getLogger().log("BasicKeyMapper: Converted: " + KeyValue.toEnum(keycode) + " => " + toReturn, Level.VERBOSE);
+        return toReturn;
     }
 
     /**
@@ -42,7 +49,11 @@ public class BasicKeyMapper implements KeyMapper {
      */
     @Override
     public void set (int keycode, KeyValue key) {
-        if (keycode < 0 || keycode > 255) throw new IllegalArgumentException("Keycode not supported [0,255]: " + keycode);
+        if (keycode < 0 || keycode > 255) {
+            getLogger().log("BasicKeyMapper: Given keycode not supported [0,255]: " + keycode, Level.EXCEPTION);
+            return;
+        }
+        getLogger().log("BasicKeyMapper: Remapped key " + KeyValue.toEnum(keycode) + " to " + key + ".", Level.DEBUG);
         values[keycode] = key;
     }
 }

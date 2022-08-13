@@ -5,6 +5,10 @@ package suga.engine.game.objects;
  *
  * @author Sugaku
  */
-public interface AIAgent extends GameObject {
+public interface AIAgent {
 
+    /**
+     * Called every logic frame to run the logic for this AIAgent.
+     */
+    void runLogic ();
 }

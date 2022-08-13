@@ -8,9 +8,51 @@ package suga.engine.input.keyboard;
 public enum KeyValue {
 
     /**
+     * The cancel key maps to keycode '3'.
+     */
+    CANCEL(3),
+
+    /**
+     * The backspace key maps to keycode '8'.
+     */
+    BACKSPACE(8),
+
+    /**
+     * The tab key maps to keycode '9'.
+     */
+    TAB(9),
+
+    /**
      * The enter key maps to keycode '10'.
      */
     ENTER(10),
+
+    /**
+     * The clear key maps to keycode '12'.
+     */
+    CLEAR(12),
+
+    /**
+     * The shift key maps to keycode '16'.
+     */
+    SHIFT(16),
+
+    /**
+     * The ctrl key maps to keycode '17'.
+     */
+    CTRL(17),
+
+    /**
+     * The alt key maps to keycode '18'.
+     */
+    ALT(18),
+
+    /**
+     * The pause key maps to keycode '19'.
+     */
+    PAUSE(19),
+
+    /* https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list */
 
     /**
      * The escape key maps to keycode 27.
@@ -91,12 +133,11 @@ public enum KeyValue {
     }
 
     /**
-     * Converts the given int keycode into an enum value from KeyValues. {@link KeyMapper}
+     * Converts the given int keycode into an enum value from KeyValues.
      *
      * @param code The code of the key pressed.
      * @return The enum value of the key if present, otherwise null.
      */
-    @Deprecated
     public static KeyValue toEnum (int code) { // Might be a bit slow for input handling. Perhaps prioritize more popular keys.
         for (KeyValue k : KeyValue.values())  //  This would also be a good level for key remapping.
             if (k.getValue() == code)

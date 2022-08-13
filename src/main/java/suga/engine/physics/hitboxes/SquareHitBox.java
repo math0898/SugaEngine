@@ -1,6 +1,6 @@
 package suga.engine.physics.hitboxes;
 
-import suga.engine.graphics.GraphicsPanel;
+import suga.engine.graphics.GraphicsPanelInterface;
 import suga.engine.physics.Vector;
 
 import java.awt.*;
@@ -142,7 +142,7 @@ public class SquareHitBox implements HitBox { // todo equals method.
      * @param panel The panel to draw the hit box test points to.
      */
     @Override
-    public void drawHitBox (GraphicsPanel panel) {
+    public void drawHitBox (GraphicsPanelInterface panel) {
         int y = (int) (pos.getY() + (height / 2.0));
         int x = (int) (pos.getX() - (width / 2.0));
         for (int i = x; i <= (int) (pos.getX() + (width / 2.0)); i++) panel.setPixel(i, y, Color.BLUE.brighter());

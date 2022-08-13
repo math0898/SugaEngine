@@ -1,6 +1,6 @@
 package suga.engine;
 
-import suga.engine.graphics.AbstractGraphicsPanel;
+import suga.engine.graphics.GraphicsPanel;
 import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.logger.GeneralLogger;
 import suga.engine.logger.Logger;
@@ -101,7 +101,7 @@ public class GameEngine {
      * @param mouseListener The mouse listener to use for this window. Will override active frame.
      * @param game          The game to attach to this window. Will override currently active panel or input listeners.
      */
-    public static void launchGameWindow (int width, int height, String name, boolean border, AbstractGraphicsPanel panel,
+    public static void launchGameWindow (int width, int height, String name, boolean border, GraphicsPanel panel,
                                          Color background, int logicRate, int frameRate, GameKeyListener keyListener,
                                          GameMouseListener mouseListener, Game game) {
         logger.log("GameEngine: Starting the game window.");

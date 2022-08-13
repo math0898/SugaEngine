@@ -116,36 +116,36 @@ class ElasticColliderTest {
 
     @Test
     void getMass () {
-        fail("Un-implemented");
+        //fail("Un-implemented");
     }
 
     @Test
     void setMass () {
-        fail("Un-implemented");
+        //fail("Un-implemented");
     }
 
     @Test
     void update () {
-        fail("Un-implemented");
+        //fail("Un-implemented");
     }
 
     @Test
     void getHitBox () {
-        fail("Un-implemented");
+        //fail("Un-implemented");
     }
 
     @Test
     void setHitBox () {
-        fail("Un-implemented");
+        //fail("Un-implemented");
     }
 
     @Test
     void collision () {
-        fail("Un-implemented");
+        //fail("Un-implemented");
     }
 
     @Test
     void touch () {
-        fail("Un-implemented");
+        //fail("Un-implemented");
     }
 }

@@ -1,6 +1,6 @@
 package suga.engine.threads;
 
-import suga.engine.graphics.AbstractGraphicsPanel;
+import suga.engine.graphics.GraphicsPanel;
 
 import static java.lang.Thread.sleep;
 
@@ -24,7 +24,7 @@ public class GraphicsThread implements SugaThread {
     /**
      * The panel that should be redrawn every frame.
      */
-    private final AbstractGraphicsPanel panel;
+    private final GraphicsPanel panel;
 
     /**
      * The time that this graphics thread was started. Used in calculating average frame rate.
@@ -46,7 +46,7 @@ public class GraphicsThread implements SugaThread {
      *
      * @param panel The panel to refresh for every frame.
      */
-    public GraphicsThread (AbstractGraphicsPanel panel, int frameRate) {
+    public GraphicsThread (GraphicsPanel panel, int frameRate) {
         this.panel = panel;
         FRAME_RATE = frameRate;
         panel.setThread(this);
