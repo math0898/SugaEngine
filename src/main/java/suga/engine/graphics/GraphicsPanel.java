@@ -1,5 +1,7 @@
 package suga.engine.graphics;
 
+import suga.engine.GameEngine;
+import suga.engine.logger.Level;
 import suga.engine.threads.SugaThread;
 
 import javax.swing.*;
@@ -7,6 +9,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.Serial;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -55,11 +58,15 @@ public abstract class GraphicsPanel extends JPanel implements GraphicsPanelInter
             immediatePaint = false;
             return;
         }
-        for (DrawListener.Priorities priorities : order) {
-            ArrayList<DrawListener> listeners = drawingListeners.get(priorities);
-            if (listeners != null)
-                for (DrawListener l : listeners)
-                    l.applyChanges(width, height, this);
+        try {
+            for (DrawListener.Priorities priorities : order) {
+                ArrayList<DrawListener> listeners = drawingListeners.get(priorities);
+                if (listeners != null)
+                    for (DrawListener l : listeners)
+                        l.applyChanges(width, height, this);
+            }
+        } catch (ConcurrentModificationException e) {
+            GameEngine.getLogger().log(e, Level.WARNING); // This sometimes occurs when loading while drawing a frame.
         }
     }
 

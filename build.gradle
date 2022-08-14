@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.github.math0898'
-version 'v2.2.3'
+version '2.3.1'
 
 repositories {
     mavenCentral()

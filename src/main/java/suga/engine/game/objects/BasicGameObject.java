@@ -2,21 +2,34 @@ package suga.engine.game.objects;
 
 import suga.engine.graphics.GraphicsPanel;
 import suga.engine.graphics.DrawListener;
-import suga.engine.physics.Physical;
+import suga.engine.physics.BasicPhysical;
 import suga.engine.physics.Vector;
+import suga.engine.physics.collidables.Collidable;
 
 /**
  * A game object has its own physical position within the world, and a DrawListener to draw it each frame.
  *
  * @author Sugaku
  */
-public class BasicGameObject implements DrawListener, Physical {
+public class BasicGameObject extends BasicPhysical implements DrawListener, GameObject {
 
     /**
-     * Creates a new Collidable object with the immutable property set to either true or false.
-     *.
+     * Creates a new BasicGameObject with zero vectors and a mass of 1.
      */
     public BasicGameObject () {
+        this(Vector.ZERO.clone(), Vector.ZERO.clone(), Vector.ZERO.clone(), 1);
+    }
+
+    /**
+     * Creates a new BasicGameObject with the given vel, acceleration, position, and mass.
+     *
+     * @param pos   The position to start this object at.
+     * @param vel   The initial velocity of this object.
+     * @param accel The acceleration of this object.
+     * @param mass  The mass of this object.
+     */
+    public BasicGameObject (Vector pos, Vector vel, Vector accel, double mass) {
+        super(pos, vel, accel, mass);
     }
 
     /**
@@ -29,6 +42,46 @@ public class BasicGameObject implements DrawListener, Physical {
     }
 
     /**
+     * Attaches a DrawListener to this GameObject.
+     *
+     * @param listener The DrawListener to attach to this GameObject.
+     */
+    @Override
+    public void setDrawListener (DrawListener listener) {
+
+    }
+
+    /**
+     * If present, returns the DrawListener associated with this GameObject. May be null.
+     *
+     * @return Either the DrawListener attached to this GameObject or null.
+     */
+    @Override
+    public DrawListener getDrawListener () {
+        return this;
+    }
+
+    /**
+     * Assigns a collider to this GameObject.
+     *
+     * @param collider The collider to assign to this GameObject.
+     */
+    @Override
+    public void setCollider (Collidable collider) {
+
+    }
+
+    /**
+     * Gets a collider that is present on this object. If none are present returns null.
+     *
+     * @return Either the Collider attached to this GameObject or null.
+     */
+    @Override
+    public Collidable getCollider () {
+        return null;
+    }
+
+    /**
      * Called every drawing frame so programs have a chance to make their voices heard on what gets drawn.
      *
      * @param width  The width of the pixel map.
@@ -37,100 +90,6 @@ public class BasicGameObject implements DrawListener, Physical {
      */
     @Override
     public void applyChanges (int width, int height, GraphicsPanel panel) {
-
-    }
-
-    /**
-     * Gets the center position of this collidable object. Modifying this position object will modify the position of
-     * the object.
-     *
-     * @return The center position of this collidable object.
-     */
-    @Override
-    public Vector getPos () {
-        return null;
-    }
-
-    /**
-     * Sets the position of this collidable object. Modifying the position object after passing it will modify the
-     * position of the object.
-     *
-     * @param pos The new position for this collidable object.
-     */
-    @Override
-    public void setPos (Vector pos) {
-
-    }
-
-    /**
-     * Gets the current velocity of this physical object. Modifying this velocity object will modify the velocity of the
-     * object.
-     *
-     * @return The current velocity of this object.
-     */
-    @Override
-    public Vector getVelocity () {
-        return null;
-    }
-
-    /**
-     * Sets the current velocity of this physical object. Modifying the velocity object after passing it will modify the
-     * velocity of the object.
-     *
-     * @param vel The new velocity for this object.
-     */
-    @Override
-    public void setVelocity (Vector vel) {
-
-    }
-
-    /**
-     * Gets the current acceleration of this physical object. Modifying this acceleration object will modify the
-     * acceleration of the object.
-     *
-     * @return The current acceleration of this object.
-     */
-    @Override
-    public Vector getAcceleration () {
-        return null;
-    }
-
-    /**
-     * Sets the current acceleration of this physical object. Modifying the acceleration object after passing it will
-     * modify the acceleration of the object.
-     *
-     * @param accel The new acceleration for this object.
-     */
-    @Override
-    public void setAcceleration (Vector accel) {
-
-    }
-
-    /**
-     * Accessor method for the mass of this object. Mass numbers larger than int max should be considered unmovable.
-     *
-     * @return The mass of this object.
-     */
-    @Override
-    public double getMass () {
-        return 0;
-    }
-
-    /**
-     * Sets the mass of this object.
-     *
-     * @param mass The new mass of this object.
-     */
-    @Override
-    public void setMass (double mass) {
-
-    }
-
-    /**
-     * Updates this object's location based on the acceleration, velocity, and current position.
-     */
-    @Override
-    public void update () {
 
     }
 }
