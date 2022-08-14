@@ -149,6 +149,7 @@ public class BasicGame implements Game {
     @Override
     public void loop () {
         physics.checkCollisions();
+        physics.update();
         for (AIAgent a : agents) a.runLogic();
         for (GameObject gO : objects.values()) gO.runLogic();
     }
