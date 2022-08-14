@@ -42,7 +42,8 @@ public class GraphicsThread extends Thread implements SugaThread {
     /**
      * Creates a new graphics thread with the given panel.
      *
-     * @param panel The panel to refresh for every frame.
+     * @param panel     The panel to refresh for every frame.
+     * @param frameRate The target frequency to draw frames at.
      */
     public GraphicsThread (GraphicsPanel panel, int frameRate) {
         this.panel = panel;

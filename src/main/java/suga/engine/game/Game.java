@@ -103,6 +103,7 @@ public interface Game {
      * false.
      *
      * @param name The name of the scene to attempt loading.
+     * @return True on a successful scene load.
      */
     boolean loadScene (String name);
 

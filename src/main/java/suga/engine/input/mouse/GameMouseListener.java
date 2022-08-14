@@ -6,6 +6,12 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Stack;
 
+/**
+ * A GameMouseListener is an extension of the MouseListener which includes an active position, attached frame, and
+ * getEvents() method.
+ *
+ * @author Sugaku
+ */
 public interface GameMouseListener extends MouseListener {
 
     /**

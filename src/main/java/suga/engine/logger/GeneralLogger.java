@@ -2,7 +2,7 @@ package suga.engine.logger;
 
 /**
  * The general logger prints all messages it receives to the console with ANSI color codes, a file located at
- * ./logs/latest.log, and another file located at ./logs/<date>.log.
+ * ./logs/latest.log, and another file located at ./logs/'date'.log.
  *
  * @author Sugaku
  */
