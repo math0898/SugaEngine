@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'io.github.math0898'
-version 'v2.2.2'
+version 'v2.2.3'
 
 repositories {
     mavenCentral()
@@ -18,6 +18,8 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(18)
     }
+    withSourcesJar()
+    withJavadocJar()
 }
 
 dependencies {
