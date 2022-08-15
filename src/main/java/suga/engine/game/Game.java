@@ -6,7 +6,6 @@ import suga.engine.graphics.DrawListener;
 import suga.engine.graphics.GraphicsPanel;
 import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.threads.SugaThread;
-import suga.engine.graphics.GraphicsPanelInterface;
 import suga.engine.input.keyboard.GameKeyListener;
 
 /**
@@ -112,7 +111,7 @@ public interface Game {
      *
      * @return The panel used by the server.
      */
-    GraphicsPanelInterface getPanel ();
+    GraphicsPanel getPanel ();
 
     /**
      * Accessor method for the mouse listener used by the server.

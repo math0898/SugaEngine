@@ -184,7 +184,7 @@ public class BasicGame implements Game {
         DrawListener listener = object.getDrawListener();
         if (listener != null) panel.registerListener(listener);
         Collidable collidable = object.getCollider();
-        physics.addObject(collidable);
+        if (collidable != null) physics.addObject(collidable);
     }
 
     /**
@@ -255,7 +255,7 @@ public class BasicGame implements Game {
      * @return The panel used by the server.
      */
     @Override
-    public GraphicsPanelInterface getPanel () {
+    public GraphicsPanel getPanel () {
         return panel;
     }
 
