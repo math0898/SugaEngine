@@ -7,12 +7,11 @@
     }
 </style>
 
-<details>
-    <summary>
-        <p><b>v2.1.1</b></p>
-    </summary>
-
-    <a href="https://math0898.github.io/GraphicsEngine/code-coverage/index.html">Code Coverage</a>
-    <br>
-    <a href="https://math0898.github.io/GraphicsEngine/test-results/index.html">Test Results</a>
-</details>
+<a href="https://math0898.github.io/SugaEngine/javadoc/index.html">Javadocs</a>
+<br>
+<br>
+<b>Outdated</b>
+<br>
+<a href="https://math0898.github.io/SugaEngine/code-coverage/index.html">Code Coverage</a>
+<br>
+<a href="https://math0898.github.io/SugaEngine/test-results/index.html">Test Results</a>
