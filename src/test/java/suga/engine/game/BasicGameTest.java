@@ -2,13 +2,11 @@ package suga.engine.game;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import suga.engine.game.objects.AIAgent;
 import suga.engine.game.objects.GameObject;
 import suga.engine.graphics.GraphicsPanel;
 import suga.engine.input.mouse.BasicMouseListener;
 import suga.engine.physics.BasicPhysicsEngine;
-import suga.engine.graphics.DrawListener;
 import suga.engine.input.keyboard.GameKeyListener;
 import suga.engine.physics.PhysicsEngine;
 import suga.engine.threads.SugaThread;
@@ -112,6 +110,7 @@ class BasicGameTest {
         when(game.getMouseListener().getEvents()).thenReturn(new Stack<>());
         when(game.keyListener.getKeyPresses()).thenReturn(new Stack<>());
         when(game.keyListener.getKeyReleases()).thenReturn(new Stack<>());
+        game.loadedScene = mock(Scene.class);
         game.processInput();
         verify(game.getMouseListener(), times(1)).getEvents();
         verify(game.keyListener, times(1)).getKeyPresses();
@@ -183,10 +182,8 @@ class BasicGameTest {
         game.addGameObject("obj", o);
         AIAgent a = mock(AIAgent.class);
         game.addAgent(a);
-        GraphicsPanel p = mock(GraphicsPanel.class);
-        game.panel = p;
+        game.panel = mock(GraphicsPanel.class);
         game.clear();
-//        verify(p, times(1)).clearListeners(); // todo
         assertNull(game.getGameObject("obj"), "Game should no longer contain added object after clear.");
         assertFalse(game.agents.contains(a), "Game should no longer contain added AIAgent after clear.");
         assertNotEquals(physics, game.physics, "Game should have a fresh physics system after clear.");
