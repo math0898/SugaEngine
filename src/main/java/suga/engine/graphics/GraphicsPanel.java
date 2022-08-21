@@ -69,7 +69,7 @@ public abstract class GraphicsPanel extends JPanel implements GraphicsPanelInter
     }
 
     /**
-     * Adds the drawing listener to this Graphics2d instance.
+     * Adds the drawing listener to this instance.
      *
      * @param listener The listener to register.
      */
@@ -78,7 +78,7 @@ public abstract class GraphicsPanel extends JPanel implements GraphicsPanelInter
     }
 
     /**
-     * Adds the drawing listener to this Graphics2d instance with the given priority.
+     * Adds the drawing listener to this instance with the given priority.
      *
      * @param priority The priority to register the listener at.
      * @param listener The listener to register.

@@ -35,10 +35,8 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
     /**
      * Called every logic frame to run the logic on this GameObject.
      */
-    @Deprecated // Physics engine will update object positions now using Physical.update();
     public void runLogic () {
-//        pos.add(velocity);
-//        if (velocity.magnitude() < 25 && accel.magnitude() > 0 || velocity.magnitude() > 25 && accel.magnitude() < 0) velocity.add(accel);
+
     }
 
     /**
