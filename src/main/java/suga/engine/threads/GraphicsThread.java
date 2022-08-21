@@ -1,5 +1,6 @@
 package suga.engine.threads;
 
+import suga.engine.GameEngine;
 import suga.engine.graphics.GraphicsPanel;
 
 /**
@@ -101,11 +102,17 @@ public class GraphicsThread extends Thread implements SugaThread {
                     //noinspection BusyWait
                     sleep((int) ((1000 / FRAME_RATE) - drawTime));
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    GameEngine.getLogger().log(e);
                 }
             }
             lastFinished = System.currentTimeMillis();
-            if (!paused) panel.repaint();
+            if (!paused) {
+                try {
+                    panel.repaint();
+                } catch (Exception e) {
+                    GameEngine.getLogger().log(e);
+                }
+            }
             frames++;
         }
     }

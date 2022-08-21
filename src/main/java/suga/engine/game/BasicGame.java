@@ -12,7 +12,6 @@ import suga.engine.physics.BasicPhysicsEngine;
 import suga.engine.physics.PhysicsEngine;
 import suga.engine.physics.collidables.Collidable;
 import suga.engine.threads.SugaThread;
-import suga.engine.graphics.GraphicsPanelInterface;
 import suga.engine.input.keyboard.GameKeyListener;
 import suga.engine.input.keyboard.KeyValue;
 
@@ -159,6 +158,10 @@ public class BasicGame implements Game {
      */
     @Override
     public void processInput () {
+        if (loadedScene == null) {
+            GameEngine.getLogger().log("BasicGame: No loaded scene. Cannot process inputs.", Level.WARNING);
+            return;
+        }
         Stack<MouseEvent> mice = mouseListener.getEvents();
         while (mice.size() > 0) {
             MouseEvent e = mice.pop();

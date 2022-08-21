@@ -1,5 +1,6 @@
 package suga.engine.threads;
 
+import suga.engine.GameEngine;
 import suga.engine.game.Game;
 
 /**
@@ -90,12 +91,18 @@ public class GameLogicThread extends Thread implements SugaThread {
                     //noinspection BusyWait
                     sleep((1000 / LOGIC_RATE) - logicTime);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    GameEngine.getLogger().log(e);
                 }
             }
             lastFinished = System.currentTimeMillis();
             game.processInput();
-            if (!paused) game.loop();
+            if (!paused) {
+                try {
+                    game.loop();
+                } catch (Exception e) {
+                    GameEngine.getLogger().log(e);
+                }
+            }
         }
     }
 }
