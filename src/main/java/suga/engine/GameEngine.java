@@ -1,14 +1,14 @@
 package suga.engine;
 
+import suga.engine.game.Game;
 import suga.engine.graphics.GraphicsPanel;
+import suga.engine.input.keyboard.GameKeyListener;
 import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.logger.GeneralLogger;
 import suga.engine.logger.Logger;
 import suga.engine.threads.GameLogicThread;
 import suga.engine.threads.GraphicsThread;
 import suga.engine.threads.SugaThread;
-import suga.engine.input.keyboard.GameKeyListener;
-import suga.engine.game.Game;
 
 import javax.swing.*;
 import java.awt.*;

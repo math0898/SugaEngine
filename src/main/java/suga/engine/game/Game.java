@@ -4,9 +4,9 @@ import suga.engine.game.objects.AIAgent;
 import suga.engine.game.objects.GameObject;
 import suga.engine.graphics.DrawListener;
 import suga.engine.graphics.GraphicsPanel;
+import suga.engine.input.keyboard.GameKeyListener;
 import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.threads.SugaThread;
-import suga.engine.input.keyboard.GameKeyListener;
 
 /**
  * Games require a main game loop to run along with game components that need to be run every game cycle.

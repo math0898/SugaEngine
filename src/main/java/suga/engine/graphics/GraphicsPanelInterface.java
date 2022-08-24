@@ -99,4 +99,10 @@ public interface GraphicsPanelInterface {
      * @param image The image to draw to the screen.
      */
     void addImage (int x, int y, int width, int height, BufferedImage image);
+
+    /**
+     * Called each frame by the GraphicsThread. This method should be inherited from JComponent but is defined in
+     * Component.
+     */
+    void repaint ();
 }

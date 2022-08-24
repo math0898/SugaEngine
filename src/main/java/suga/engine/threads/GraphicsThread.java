@@ -1,7 +1,7 @@
 package suga.engine.threads;
 
 import suga.engine.GameEngine;
-import suga.engine.graphics.GraphicsPanel;
+import suga.engine.graphics.GraphicsPanelInterface;
 
 /**
  * A thread used to refresh the graphics of a panel as fast as possible.
@@ -23,7 +23,7 @@ public class GraphicsThread extends Thread implements SugaThread {
     /**
      * The panel that should be redrawn every frame.
      */
-    private final GraphicsPanel panel;
+    private final GraphicsPanelInterface panel;
 
     /**
      * The time that this graphics thread was started. Used in calculating average frame rate.
@@ -46,7 +46,7 @@ public class GraphicsThread extends Thread implements SugaThread {
      * @param panel     The panel to refresh for every frame.
      * @param frameRate The target frequency to draw frames at.
      */
-    public GraphicsThread (GraphicsPanel panel, int frameRate) {
+    public GraphicsThread (GraphicsPanelInterface panel, int frameRate) {
         this.panel = panel;
         FRAME_RATE = frameRate;
         panel.setThread(this);
@@ -94,25 +94,48 @@ public class GraphicsThread extends Thread implements SugaThread {
     @Override
     public void run () {
         startTime = System.currentTimeMillis();
-        long lastFinished = 0;
+        frames = 0;
+//        long lastFinished = 0;
+        long remainingMillis = 1000;
         while (!stopped) {
-            long drawTime = System.currentTimeMillis() - lastFinished;
-            if (drawTime < (1000 / FRAME_RATE)) {
-                try {
-                    //noinspection BusyWait
-                    sleep((int) ((1000 / FRAME_RATE) - drawTime));
-                } catch (Exception e) {
-                    GameEngine.getLogger().log(e);
-                }
-            }
-            lastFinished = System.currentTimeMillis();
+            long runtime = 0;
             if (!paused) {
+                long frameStart = System.currentTimeMillis();
                 try {
                     panel.repaint();
                 } catch (Exception e) {
                     GameEngine.getLogger().log(e);
                 }
+                runtime = System.currentTimeMillis() - frameStart;
             }
+            if (remainingMillis <= runtime) remainingMillis = 1000;
+            remainingMillis -= runtime;
+            try {
+                int toWait = (int) (remainingMillis / (FRAME_RATE - (frames % FRAME_RATE))) - (int) runtime;
+                if (toWait < 0) toWait = 0;
+                System.out.println(toWait);
+                //noinspection BusyWait
+                sleep(toWait);
+            } catch (InterruptedException e) {
+                GameEngine.getLogger().log(e);
+            }
+//            long drawTime = System.currentTimeMillis() - lastFinished;
+//            if (drawTime < (1000 / FRAME_RATE)) {
+//                try {
+//                    //noinspection BusyWait
+//                    sleep((int) ((1000 / FRAME_RATE) - drawTime));
+//                } catch (Exception e) {
+//                    GameEngine.getLogger().log(e);
+//                }
+//            }
+//            lastFinished = System.currentTimeMillis();
+//            if (!paused) {
+//                try {
+//                    panel.repaint();
+//                } catch (Exception e) {
+//                    GameEngine.getLogger().log(e);
+//                }
+//            }
             frames++;
         }
     }
