@@ -1,7 +1,6 @@
 package suga.engine.threads;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.mockito.Mockito;
@@ -37,27 +36,8 @@ class GraphicsThreadTest {
     }
 
     /**
-     *
-     */
-    @Test
-    void setPaused() {
-    }
-
-    @Test
-    void getPaused() {
-    }
-
-    @Test
-    void setStopped() {
-    }
-
-    @Test
-    void getStopped() {
-    }
-
-    /**
      * Tests whether running the GraphicsThread reaches the intended frame rate.
-     */
+     */ // todo perhaps refactor into a k-tail test.
     @ParameterizedTest
     @CsvFileSource(resources = "/suga/engine/threads/run.csv", numLinesToSkip = 1, delimiter = ',')
     void run_PerformsCloseToRequest (int targetFps, long sampleTime) {
@@ -70,7 +50,7 @@ class GraphicsThreadTest {
             fail("Failed to wait for given duration.");
         }
         thread.setStopped(true);
-        GameEngine.getLogger().log("Graphics Thread Test: Wanted " + targetFps + "fps and got " + GraphicsThread.getFPS() + "fps. Error is " + (1 - (targetFps * 1.0 / GraphicsThread.getFPS())) + "%");
+        GameEngine.getLogger().log(String.format("Graphics Thread Test: Wanted %dfps and got %.2ffps. Error is %.2f %%", targetFps, GraphicsThread.getFPS(), (100 - ((targetFps * 100.0) / GraphicsThread.getFPS()))));
 //        assertEquals(targetFps, GraphicsThread.getFPS(), targetFps * error, "Graphics thread should run within " + error + "% of target fps.");
         // Results partially depend on test duration and device running them. My testing resulted in a margin of less
         //  than 1% most often. Regardless no need to fail builds based on the results of this test.

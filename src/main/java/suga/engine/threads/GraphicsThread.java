@@ -2,6 +2,7 @@ package suga.engine.threads;
 
 import suga.engine.GameEngine;
 import suga.engine.graphics.GraphicsPanelInterface;
+import suga.engine.logger.Level;
 
 /**
  * A thread used to refresh the graphics of a panel as fast as possible.
@@ -38,7 +39,7 @@ public class GraphicsThread extends Thread implements SugaThread {
     /**
      * The target frame rate for this GraphicsThread.
      */
-    private final int FRAME_RATE;
+    private int frameRate;
 
     /**
      * Creates a new graphics thread with the given panel.
@@ -48,8 +49,30 @@ public class GraphicsThread extends Thread implements SugaThread {
      */
     public GraphicsThread (GraphicsPanelInterface panel, int frameRate) {
         this.panel = panel;
-        FRAME_RATE = frameRate;
+        this.frameRate = frameRate;
         panel.setThread(this);
+    }
+
+    /**
+     * Sets the target frame rate of this GraphicsThread.
+     *
+     * @param val The new value for the target frame rate.
+     */
+    public void setFrameRate (int val) {
+        if (val <= 0) {
+            GameEngine.getLogger().log("GraphicsThread: Attempted to change target frame rate to " + val + ". Only natural numbers (no zero) allowed.", Level.EXCEPTION);
+            return;
+        }
+        this.frameRate = val;
+    }
+
+    /**
+     * Accessor method for the current target frame rate of the thread.
+     *
+     * @return The current target thread refresh rate.
+     */
+    public int getFrameRate () {
+        return frameRate;
     }
 
     /**
@@ -107,7 +130,7 @@ public class GraphicsThread extends Thread implements SugaThread {
                 runtime = System.currentTimeMillis() - frameStart;
             }
             try {
-                long toWait = Math.round(((1000.0 - ((System.currentTimeMillis() - startTime) % 1000)) / (FRAME_RATE - (frames % FRAME_RATE) )) - runtime);
+                long toWait = Math.round(((1000.0 - ((System.currentTimeMillis() - startTime) % 1000)) / (frameRate - (frames % frameRate) )) - runtime);
                 if (toWait < 0) toWait = 0;
                 //noinspection BusyWait
                 sleep(toWait);
