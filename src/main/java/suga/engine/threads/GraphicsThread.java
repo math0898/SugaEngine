@@ -106,8 +106,8 @@ public class GraphicsThread extends Thread implements SugaThread {
                 }
                 runtime = System.currentTimeMillis() - frameStart;
             }
-            try { // todo Needs to be slightly longer.
-                long toWait = ((1000 - (System.currentTimeMillis() % 1000)) / (FRAME_RATE - (frames % FRAME_RATE) )) - runtime;
+            try {
+                long toWait = Math.round(((1000.0 - ((System.currentTimeMillis() - startTime) % 1000)) / (FRAME_RATE - (frames % FRAME_RATE) )) - runtime);
                 if (toWait < 0) toWait = 0;
                 //noinspection BusyWait
                 sleep(toWait);
