@@ -21,25 +21,6 @@ import static org.junit.jupiter.api.Assertions.*;
 class GraphicsThreadTest {
 
     /**
-     * A dummy GraphicsPanel which should be runnable at incredible rates, unlike Mocks.
-     *
-     * @author Sugaku
-     */
-    private static class DummyPanel implements GraphicsPanelInterface {
-        public void drawing (int width, int height) {}
-        public void setThread (SugaThread thread) {}
-        public void registerListener (DrawListener listener) {}
-        public void registerListener (DrawListener.Priorities priority, DrawListener listener) {}
-        public void clearListeners () {}
-        public void setPixel (int x, int y, Color c) {}
-        public void setRectangle (int x, int y, int width, int height, Color c) {}
-        public void setBigPixel (int x, int y, int r, Color c) {}
-        public void addImage (int x, int y, int width, int height, String path) {}
-        public void addImage (int x, int y, int width, int height, BufferedImage image) {}
-        public void repaint () {}
-    }
-
-    /**
      * The thread currently under testing.
      */
     private GraphicsThread thread;
@@ -82,8 +63,8 @@ class GraphicsThreadTest {
      */
     @ParameterizedTest
     @CsvFileSource(resources = "/suga/engine/threads/run.csv", numLinesToSkip = 1, delimiter = ',')
-    void run (int targetFps, long sampleTime) {
-        final double error = 0.01; // We allow a 1% deviation from the target frame rate.
+    void run_PerformsCloseToRequest (int targetFps, long sampleTime) {
+        final double error = 0.02; // We allow a 2% deviation from the target frame rate.
         thread = new GraphicsThread(graphicsPanelInterface, targetFps);
         thread.start();
         try {
@@ -92,6 +73,6 @@ class GraphicsThreadTest {
             fail("Failed to wait for given duration.");
         }
         thread.setStopped(true);
-        assertEquals(targetFps, GraphicsThread.getFPS(), error, "Graphics thread should run within " + error + "% of target fps.");
+        assertEquals(targetFps, GraphicsThread.getFPS(), targetFps * error, "Graphics thread should run within " + error + "% of target fps.");
     }
 }

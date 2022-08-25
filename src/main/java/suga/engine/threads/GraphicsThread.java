@@ -95,8 +95,6 @@ public class GraphicsThread extends Thread implements SugaThread {
     public void run () {
         startTime = System.currentTimeMillis();
         frames = 0;
-//        long lastFinished = 0;
-        long remainingMillis = 1000;
         while (!stopped) {
             long runtime = 0;
             if (!paused) {
@@ -108,34 +106,14 @@ public class GraphicsThread extends Thread implements SugaThread {
                 }
                 runtime = System.currentTimeMillis() - frameStart;
             }
-            if (remainingMillis <= runtime) remainingMillis = 1000;
-            remainingMillis -= runtime;
-            try {
-                int toWait = (int) (remainingMillis / (FRAME_RATE - (frames % FRAME_RATE))) - (int) runtime;
+            try { // todo Needs to be slightly longer.
+                long toWait = ((1000 - (System.currentTimeMillis() % 1000)) / (FRAME_RATE - (frames % FRAME_RATE) )) - runtime;
                 if (toWait < 0) toWait = 0;
-                System.out.println(toWait);
                 //noinspection BusyWait
                 sleep(toWait);
             } catch (InterruptedException e) {
                 GameEngine.getLogger().log(e);
             }
-//            long drawTime = System.currentTimeMillis() - lastFinished;
-//            if (drawTime < (1000 / FRAME_RATE)) {
-//                try {
-//                    //noinspection BusyWait
-//                    sleep((int) ((1000 / FRAME_RATE) - drawTime));
-//                } catch (Exception e) {
-//                    GameEngine.getLogger().log(e);
-//                }
-//            }
-//            lastFinished = System.currentTimeMillis();
-//            if (!paused) {
-//                try {
-//                    panel.repaint();
-//                } catch (Exception e) {
-//                    GameEngine.getLogger().log(e);
-//                }
-//            }
             frames++;
         }
     }
