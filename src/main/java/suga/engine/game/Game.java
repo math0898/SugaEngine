@@ -98,6 +98,14 @@ public interface Game {
     void clear ();
 
     /**
+     * Attempts to load the starting scene for this game. If successful will return true, if un-found or loading fails,
+     * will return false.
+     *
+     * @return True on a successful first scene load.
+     */
+    boolean loadStartScene ();
+
+    /**
      * Attempts to load the given scene. If successful with return true, if un-found or loading fails, will return
      * false.
      *

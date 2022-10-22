@@ -236,6 +236,17 @@ public class BasicGame implements Game {
     }
 
     /**
+     * Attempts to load the starting scene for this game. If successful will return true, if un-found or loading fails,
+     * will return false.
+     *
+     * @return True on a successful first scene load.
+     */
+    @Override
+    public boolean loadStartScene () {
+        return loadScene("start");
+    }
+
+    /**
      * Attempts to load the given scene. If successful with return true, if un-found or loading fails, will return
      * false.
      *
