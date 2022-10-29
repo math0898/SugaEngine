@@ -1,4 +1,4 @@
-# Suga Engine
+# Suga Engine [![Maintainability](https://api.codeclimate.com/v1/badges/9f40eff9fa7a0f786159/maintainability)](https://codeclimate.com/github/math0898/SugaEngine/maintainability) [![Test Coverage](https://api.codeclimate.com/v1/badges/9f40eff9fa7a0f786159/test_coverage)](https://codeclimate.com/github/math0898/SugaEngine/test_coverage)
 
 The Suga Engine is a complete game engine written in Java written from scratch.
 
