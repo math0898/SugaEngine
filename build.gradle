@@ -1,6 +1,7 @@
 plugins {
     id 'java'
     id 'maven-publish'
+    id 'jacoco'
 }
 
 group 'io.github.math0898'
@@ -11,12 +12,22 @@ repositories {
 }
 
 compileJava {
-    options.release = 18
+    options.release = 19
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(18)
+        languageVersion = JavaLanguageVersion.of(19)
     }
     withSourcesJar()
     withJavadocJar()
@@ -57,4 +68,8 @@ publishing {
             }
         }
     }
+}
+
+check {
+    finalizedBy(jacocoTestReport)
 }
