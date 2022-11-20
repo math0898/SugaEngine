@@ -106,7 +106,7 @@ class SquareHitBoxTest {
     void drawHitBox () {
         GraphicsPanelInterface panel = mock(GraphicsPanelInterface.class);
         hitBox.drawHitBox(panel);
-        verify(panel, atLeastOnce()).setPixel(Mockito.any(int.class), Mockito.any(int.class), Mockito.any(Color.class));
+        verify(panel, atLeastOnce()).setRectangle(Mockito.any(int.class), Mockito.any(int.class), Mockito.any(int.class), Mockito.any(int.class), Mockito.any(Color.class));
     }
 
     /**
