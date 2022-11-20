@@ -155,10 +155,10 @@ public class SquareHitBox implements HitBox { // todo equals method.
      */
     @Override
     public void drawHitBox (GraphicsPanelInterface panel) {
-        for (int x = (int) (pos.getX() - (width / 2.0)); x <= (int) pos.getX() + (width / 2.0); x++)
-            for (int y = (int) (pos.getY() - (height / 2.0)); x <= (int) pos.getY() + (height / 2.0); y++) {
+        for (double x = pos.getX() - (width / 2.0); x <= pos.getX() + (width / 2.0); x++)
+            for (double y = pos.getY() - (height / 2.0); x <= pos.getY() + (height / 2.0); y++) {
                 if (isInside(new Vector(x, y, 0))) continue;
-                panel.setPixel(x, y, Color.BLUE.brighter());
+                panel.setPixel((int) x, (int) y, Color.BLUE.brighter());
             }
     }
 }
