@@ -25,27 +25,18 @@ public class BasicPhysicsEngine implements PhysicsEngine {
     protected List<Physical> physicals = new ArrayList<>();
 
     /**
-     * Checks if the two given HitBoxes are colliding or not.
+     * Checks if the test points in the points HitBox are inside or colliding with the given box HitBox.
      *
-     * @param hitBox1 The first given HitBox.
-     * @param hitBox2 The second given HitBox.
+     * @param points The first given HitBox. The test points are pulled from this HitBox.
+     * @param box    The second given HitBox. Test points are checked whether they're inside or touching this HitBox.
      * @return The result of the two HitBoxes as it relates to collisions.
      */
-    private CollisionResults testCollisions (HitBox hitBox1, HitBox hitBox2) {
-        HitBox b  = hitBox2;
+    private CollisionResults testCollisions (HitBox points, HitBox box) {
         boolean colliding = false;
         boolean touching = false;
-        // We run the following twice,
-        //     > Once with a = hitBox1, b = hitBox2
-        //     > again with a = hitBox2, b = hitBox1
-        // This is to catch cases where one of 'A' HitBox's test points are colliding with 'B' but none of 'B' are with 'A'.
-        // Think of a diamond and square with one corner of the diamond within the square.
-        for (HitBox a : new HitBox[]{ hitBox1, hitBox2 }) {
-            for (Vector v : a.getTestPoints()) {
-                if (b.isInside(v)) colliding = true;
-                if (b.isTouching(v)) touching = true;
-            }
-            b = hitBox1;
+        for (Vector v : points.getTestPoints()) {
+            if (box.isInside(v)) colliding = true;
+            if (box.isTouching(v)) touching = true;
         }
         return new CollisionResults(touching, colliding);
     }
@@ -59,7 +50,9 @@ public class BasicPhysicsEngine implements PhysicsEngine {
             for (int j = i; j < collidables.size(); j++) {
                 if (i == j) continue;
                 Collidable temp = collidables.get(j); // How many times are collisions called on a single object?
-                CollisionResults results = testCollisions(temp.getHitBox(), master.getHitBox());
+                CollisionResults r1 = testCollisions(temp.getHitBox(), master.getHitBox());
+                CollisionResults r2 = testCollisions(master.getHitBox(), temp.getHitBox());
+                CollisionResults results = CollisionResults.merge(r1, r2);
                 if (results.colliding()) {
                     Collidable mc = master.clone(); // Save values in master.
                     master.collision(temp);

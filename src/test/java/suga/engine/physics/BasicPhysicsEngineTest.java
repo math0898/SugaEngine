@@ -2,11 +2,9 @@ package suga.engine.physics;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import suga.engine.physics.collidables.Collidable;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 /**
  * Tests for the BasicPhysicsEngine to ensure it correctly implements PhysicsEngine.
@@ -29,10 +27,15 @@ class BasicPhysicsEngineTest {
     }
 
     /**
-     * TODO: implement
+     * The PhysicsEngine should poll each object and check if they collide with any other objects registered in the
+     * engine.
+     *
+     * TODO: Negate tests.
      */
     @Test
     void checkCollisions () {
+        // todo finish writing
+        engine.checkCollisions();
     }
 
     /**
@@ -40,9 +43,9 @@ class BasicPhysicsEngineTest {
      */
     @Test
     void update () {
-        Physical phy = Mockito.mock(Physical.class);
-        Collidable collidable = Mockito.mock(Collidable.class);
-        Collidable obj = Mockito.mock(Collidable.class);
+        Physical phy = mock(Physical.class);
+        Collidable collidable = mock(Collidable.class);
+        Collidable obj = mock(Collidable.class);
         engine.addPhysical(phy);
         engine.addCollidable(collidable);
         engine.addObject(obj);
