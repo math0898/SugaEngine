@@ -121,10 +121,9 @@ public class SquareHitBox implements HitBox { // todo equals method.
     @Override
     public Collection<Vector> getTestPoints () {
         List<Vector> vectors = new ArrayList<>();
-        vectors.add(new Vector(pos.getX() + (width / 2.0), pos.getY() + (height / 2.0), pos.getZ()));
-        vectors.add(new Vector(pos.getX() + (width / 2.0), pos.getY() - (height / 2.0), pos.getZ()));
-        vectors.add(new Vector(pos.getX() - (width / 2.0), pos.getY() + (height / 2.0), pos.getZ()));
-        vectors.add(new Vector(pos.getX() - (width / 2.0), pos.getY() - (height / 2.0), pos.getZ()));
+        for (double dx : new double[]{ width / 2.0, - width / 2.0 })
+            for (double dy : new double[]{ height / 2.0, - height / 2.0 })
+                vectors.add(new Vector(pos.getX() + dx, pos.getY() + dy, pos.getZ()));
         return  vectors;
     }
 
@@ -156,5 +155,7 @@ public class SquareHitBox implements HitBox { // todo equals method.
     @Override
     public void drawHitBox (GraphicsPanelInterface panel) {
         panel.setRectangle((int) (pos.getX() - (width / 2.0)) , (int) (pos.getY() - (height / 2.0)), (int) width, (int) height, Color.BLUE.brighter());
+        for (Vector v : getTestPoints())
+            panel.setPixel((int) v.getX(), (int) v.getY(), Color.red.brighter());
     }
 }
