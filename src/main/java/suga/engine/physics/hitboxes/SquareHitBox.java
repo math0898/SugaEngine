@@ -81,9 +81,8 @@ public class SquareHitBox implements HitBox { // todo equals method.
      */
     @Override
     public boolean isInside (Vector test) {
-        if (Math.abs(test.getX() - pos.getX()) < width / 2.0)
-            return Math.abs(test.getY() - pos.getY()) < height / 2.0;
-        return false;
+        return Math.abs(test.getX() - pos.getX()) < width / 2.0 &&
+                Math.abs(test.getY() - pos.getY()) < height / 2.0;
     }
 
     /**
