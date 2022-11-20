@@ -81,9 +81,8 @@ public class SquareHitBox implements HitBox { // todo equals method.
      */
     @Override
     public boolean isInside (Vector test) {
-        if (test.getX() > pos.getX() - (width / 2.0) && test.getX() < pos.getX() + (width / 2.0))
-            return test.getY() > pos.getY() - (height / 2.0) && test.getY() < pos.getY() + (height / 2.0);
-        return false;
+        return Math.abs(test.getX() - pos.getX()) < width / 2.0 &&
+                Math.abs(test.getY() - pos.getY()) < height / 2.0;
     }
 
     /**
@@ -93,12 +92,25 @@ public class SquareHitBox implements HitBox { // todo equals method.
      * @return True if and only if the test point is on the boundary of this HitBox.
      */
     @Override
-    public boolean touching (Vector test) {
-        if (test.getX() == pos.getX() - (width / 2.0) || test.getX() == pos.getX() + (width / 2.0))
-            return test.getY() >= pos.getY() - (height / 2.0) && test.getY() <= pos.getY() + (height / 2.0);
-        else if (test.getY() == pos.getY() - (height / 2.0) || test.getY() == pos.getY() + (height / 2.0))
-            return test.getX() >= pos.getX() - (width / 2.0) && test.getX() <= pos.getX() + (width / 2.0);
+    public boolean isTouching (Vector test) {
+        if (Math.abs(test.getX() - pos.getX()) == width / 2.0)
+            return Math.abs(test.getY() - pos.getY()) <= height / 2.0;
+        else if (Math.abs(test.getY() - pos.getY()) == height / 2.0)
+            return Math.abs(test.getX() - pos.getX()) <= width / 2.0;
         return false;
+    }
+
+    /**
+     * Tests whether the given point is touching this hit box or not.
+     *
+     * @see #isTouching(Vector)
+     * @param test The point to test. Represented in vector form.
+     * @return True if and only if the test point is on the boundary of this hit box.
+     */
+    @Override
+    @Deprecated
+    public boolean touching (Vector test) {
+        return isTouching(test);
     }
 
     /**

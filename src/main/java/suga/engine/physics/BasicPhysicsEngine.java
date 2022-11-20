@@ -1,6 +1,7 @@
 package suga.engine.physics;
 
 import suga.engine.physics.collidables.Collidable;
+import suga.engine.physics.hitboxes.HitBox;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,23 @@ public class BasicPhysicsEngine implements PhysicsEngine {
     protected List<Physical> physicals = new ArrayList<>();
 
     /**
+     * Checks if the test points in the points HitBox are inside or colliding with the given box HitBox.
+     *
+     * @param points The first given HitBox. The test points are pulled from this HitBox.
+     * @param box    The second given HitBox. Test points are checked whether they're inside or touching this HitBox.
+     * @return The result of the two HitBoxes as it relates to collisions.
+     */
+    private CollisionResults testCollisions (HitBox points, HitBox box) {
+        boolean colliding = false;
+        boolean touching = false;
+        for (Vector v : points.getTestPoints()) {
+            if (box.isInside(v)) colliding = true;
+            if (box.isTouching(v)) touching = true;
+        }
+        return new CollisionResults(touching, colliding);
+    }
+
+    /**
      * Checks all objects in the list for collisions with other objects. Quite a costly method may require optimization.
      */
     public void checkCollisions () {
@@ -32,24 +50,14 @@ public class BasicPhysicsEngine implements PhysicsEngine {
             for (int j = i; j < collidables.size(); j++) {
                 if (i == j) continue;
                 Collidable temp = collidables.get(j); // How many times are collisions called on a single object?
-                boolean touching = false;
-                boolean colliding = false;
-                for (Vector v : temp.getHitBox().getTestPoints()) {
-                    if (colliding) break;
-                    if (master.getHitBox().isInside(v)) colliding = true;
-                    else if (master.getHitBox().touching(v)) touching = true;
-                }
-                for (Vector v : master.getHitBox().getTestPoints()) {
-                    if (colliding) break;
-                    if (temp.getHitBox().isInside(v)) colliding = true;
-                    else if (temp.getHitBox().touching(v)) touching = true;
-                }
-                if (colliding) {
+                CollisionResults r1 = testCollisions(temp.getHitBox(), master.getHitBox());
+                CollisionResults r2 = testCollisions(master.getHitBox(), temp.getHitBox());
+                CollisionResults results = CollisionResults.merge(r1, r2);
+                if (results.colliding()) {
                     Collidable mc = master.clone(); // Save values in master.
                     master.collision(temp);
                     temp.collision(mc);
-                }
-                if (touching && !colliding) {
+                } else if (results.touching()) {
                     Collidable mc = master.clone(); // Save values in master.
                     master.touch(temp.clone());
                     temp.touch(mc);

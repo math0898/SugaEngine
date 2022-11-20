@@ -63,7 +63,7 @@ class SquareHitBoxTest {
     void touching (int width, int height, int cx, int cy, int cz, int x, int y, int z, boolean expected, String reason) {
         HitBox hitBox = new SquareHitBox(width, height, new Vector(cx, cy, cz));
         Vector testPoint = new Vector(x, y, z);
-        assertEquals(hitBox.touching(testPoint), expected, reason + " HitBox:" + hitBox + " TestPoint:" + testPoint);
+        assertEquals(hitBox.isTouching(testPoint), expected, reason + " HitBox:" + hitBox + " TestPoint:" + testPoint);
     }
 
     /**
