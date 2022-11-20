@@ -3,7 +3,10 @@ package suga.engine.physics;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import suga.engine.physics.collidables.Collidable;
+import suga.engine.physics.collidables.ElasticCollider;
+import suga.engine.physics.hitboxes.SquareHitBox;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.Mockito.*;
 
 /**
@@ -29,13 +32,15 @@ class BasicPhysicsEngineTest {
     /**
      * The PhysicsEngine should poll each object and check if they collide with any other objects registered in the
      * engine.
-     *
-     * TODO: Negate tests.
+     * TODO: Check accuracy instead of just errors.
      */
     @Test
     void checkCollisions () {
-        // todo finish writing
-        engine.checkCollisions();
+        Collidable col1 = new ElasticCollider(Vector.ZERO, Vector.ZERO, Vector.ZERO, 1.0, new SquareHitBox(0, 0));
+        Collidable col2 = new ElasticCollider(Vector.ZERO, Vector.ZERO, Vector.ZERO, 1.0, new SquareHitBox(10, 10));
+        engine.addCollidable(col1);
+        engine.addCollidable(col2);
+        assertDoesNotThrow(engine::checkCollisions);
     }
 
     /**
