@@ -3,7 +3,7 @@ on:
   - push
 env:
     CC_TEST_REPORTER_ID: 9ab019679aa4ac9becd37c68e24183f7c0e86a7a73a3ab4e9943aae06372939e
-    JACOCO_SOURCE_PATH: SugaEngine/src/main/java
+    JACOCO_SOURCE_PATH: src/main/java
 
 jobs:
   build:
