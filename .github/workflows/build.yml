@@ -53,5 +53,6 @@ jobs:
     - run: java --version
     - run: gradle --version --no-daemon
     - run: gradle check --no-daemon
+    - run: ls -la
     - run: ./cc-test-reporter format-coverage ./SugaEngine/build/reports/jacoco/test/jacocoTestReport.xml -d -t jacoco
     - run: ./cc-test-reporter upload-coverage
