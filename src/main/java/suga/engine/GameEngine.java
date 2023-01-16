@@ -22,24 +22,29 @@ import java.awt.event.WindowEvent;
 public class GameEngine {
 
     /**
+     * Reference to the single GameEngine that exists at runtime.
+     */
+    private static GameEngine globalEngine;
+
+    /**
      * The currently opened frame.
      */
-    protected static JFrame frame;
+    private JFrame frame;
 
     /**
      * The current graphics thread if one is running.
      */
-    protected static SugaThread graphics;
+    private SugaThread graphics;
 
     /**
      * The current game logic thread if one is running.
      */
-    protected static SugaThread logic;
+    private SugaThread logic;
 
     /**
      * The logger currently being used by the GameEngine.
      */
-    protected static Logger logger = new GeneralLogger();
+    private Logger logger = new GeneralLogger();
 
     /**
      * An enum of pre-defined resolutions to open a game window at.
@@ -55,11 +60,35 @@ public class GameEngine {
     }
 
     /**
+     * The GameEngine constructor.
+     */
+    protected GameEngine () {
+
+    }
+
+    /**
+     * Creates a new GameEngine object and assigns it to the static reference.
+     */
+    private static void createGameEngine () {
+        globalEngine = new GameEngine();
+    }
+
+    /**
+     * Accessor method to the global instance of the GameEngine.
+     *
+     * @return A reference to the GameEngine.
+     */
+    public static GameEngine getInstance () {
+        if (globalEngine == null) createGameEngine();
+        return globalEngine;
+    }
+
+    /**
      * Accessor method for the logger being used by the GameEngine.
      *
      * @return The logger currently in use by the GameEngine.
      */
-    public static Logger getLogger () {
+    public Logger getLogger () {
         return logger;
     }
 
@@ -68,16 +97,16 @@ public class GameEngine {
      *
      * @param logger The new logger for the GameEngine to use.
      */
-    public static void setLogger (Logger logger) {
-        GameEngine.logger.log("GameEngine: Switching to a new logger.");
-        GameEngine.logger = logger;
-        GameEngine.logger.log("GameEngine: Switched logger.");
+    public void setLogger (Logger logger) {
+        this.logger.log("GameEngine: Switching to a new logger.");
+        this.logger = logger;
+        this.logger.log("GameEngine: Switched logger.");
     }
 
     /**
      * Closes both the logic and graphics thread.
      */
-    public static void stop () {
+    public void stop () {
         logger.log("GameEngine: Stopping the game.");
         graphics.setStopped(true);
         logic.setStopped(true);
@@ -101,7 +130,7 @@ public class GameEngine {
      * @param mouseListener The mouse listener to use for this window. Will override active frame.
      * @param game          The game to attach to this window. Will override currently active panel or input listeners.
      */
-    public static void launchGameWindow (int width, int height, String name, boolean border, GraphicsPanel panel,
+    public void launchGameWindow (int width, int height, String name, boolean border, GraphicsPanel panel,
                                          Color background, int logicRate, int frameRate, GameKeyListener keyListener,
                                          GameMouseListener mouseListener, Game game) {
         logger.log("GameEngine: Starting the game window.");
