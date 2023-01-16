@@ -161,7 +161,7 @@ public class GameEngine {
         frame = new JFrame(name);
         window.modifyFrame(frame);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-        frame.setLocation(dim.width / 2, dim.height / 2);
+        frame.setLocation((dim.width / 2) + (dim.width / 4), (dim.height / 2) + (dim.height / 4));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(panel, BorderLayout.CENTER);
         frame.setVisible(true);
