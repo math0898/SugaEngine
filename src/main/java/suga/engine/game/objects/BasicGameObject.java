@@ -1,7 +1,7 @@
 package suga.engine.game.objects;
 
-import suga.engine.graphics.GraphicsPanel;
 import suga.engine.graphics.DrawListener;
+import suga.engine.graphics.GraphicsPanel;
 import suga.engine.physics.BasicPhysical;
 import suga.engine.physics.Vector;
 import suga.engine.physics.collidables.Collidable;

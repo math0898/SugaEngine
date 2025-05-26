@@ -8,27 +8,12 @@ import suga.engine.game.Game;
  *
  * @author Sugaku
  */
-public class GameLogicThread extends Thread implements SugaThread {
-
-    /**
-     * Whether to exit the thread.
-     */
-    protected boolean stopped = false;
-
-    /**
-     * Whether to simulate game logic or not.
-     */
-    protected boolean paused = false;
+public class GameLogicThread extends AbstractThread implements SugaThread {
 
     /**
      * The game that should be called once every 1/60th of a second.
      */
     private final Game game;
-
-    /**
-     * A constant on how fast game logic should be called.
-     */
-    private final int LOGIC_RATE;
 
     /**
      * Creates a new GameLogicThread.
@@ -37,45 +22,9 @@ public class GameLogicThread extends Thread implements SugaThread {
      * @param rate How many times the logic should be run per second as a maximum.
      */
     public GameLogicThread (Game game, int rate) {
+        super(rate);
         this.game = game;
-        LOGIC_RATE = rate;
         game.setThread(this);
-    }
-
-    /**
-     * Sets whether the thread is paused or not.
-     *
-     * @param val Whether the thread should be paused or not.
-     */
-    public void setPaused (boolean val) {
-        paused = val;
-    }
-
-    /**
-     * Accessor method for the current status of the thread.
-     *
-     * @return Whether the thread is paused currently or not.
-     */
-    public boolean getPaused () {
-        return paused;
-    }
-
-    /**
-     * Sets whether the thread is stopped or not.
-     *
-     * @param val Whether the thread should be stopped.
-     */
-    public void setStopped (boolean val) {
-        stopped = val;
-    }
-
-    /**
-     * Accessor method for the current status of the thread.
-     *
-     * @return Whether this thread has been stopped or not.
-     */
-    public boolean getStopped () {
-        return stopped;
     }
 
     /**
@@ -83,26 +32,29 @@ public class GameLogicThread extends Thread implements SugaThread {
      */
     @Override
     public void run () {
-        long lastFinished = 0;
+        startTime = System.currentTimeMillis();
+        frames = 0;
         while (!stopped) {
-            long logicTime = System.currentTimeMillis() - lastFinished;
-            if (logicTime < (1000 / LOGIC_RATE)) {
-                try {
-                    //noinspection BusyWait
-                    sleep((1000 / LOGIC_RATE) - logicTime);
-                } catch (Exception e) {
-                    GameEngine.getInstance().getLogger().log(e);
-                }
-            }
-            lastFinished = System.currentTimeMillis();
+            long runtime = 0;
             game.processInput();
             if (!paused) {
+                long frameStart = System.currentTimeMillis();
                 try {
                     game.loop();
                 } catch (Exception e) {
                     GameEngine.getInstance().getLogger().log(e);
                 }
+                runtime = System.currentTimeMillis() - frameStart;
             }
+            try {
+                long toWait = Math.round(((1000.0 - ((System.currentTimeMillis() - startTime) % 1000)) / (frameRate - (frames % frameRate) )) - runtime);
+                if (toWait < 0) toWait = 0;
+                //noinspection BusyWait
+                sleep(toWait);
+            } catch (InterruptedException e) {
+                GameEngine.getInstance().getLogger().log(e);
+            }
+            frames++;
         }
     }
 }

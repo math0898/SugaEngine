@@ -5,6 +5,8 @@ import suga.engine.game.objects.AIAgent;
 import suga.engine.game.objects.GameObject;
 import suga.engine.graphics.DrawListener;
 import suga.engine.graphics.GraphicsPanel;
+import suga.engine.input.keyboard.GameKeyListener;
+import suga.engine.input.keyboard.KeyValue;
 import suga.engine.input.mouse.BasicMouseListener;
 import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.logger.Level;
@@ -12,8 +14,6 @@ import suga.engine.physics.BasicPhysicsEngine;
 import suga.engine.physics.PhysicsEngine;
 import suga.engine.physics.collidables.Collidable;
 import suga.engine.threads.SugaThread;
-import suga.engine.input.keyboard.GameKeyListener;
-import suga.engine.input.keyboard.KeyValue;
 
 import java.awt.event.MouseEvent;
 import java.util.*;

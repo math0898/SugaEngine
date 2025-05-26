@@ -13,11 +13,11 @@ repositories {
 }
 
 compileJava {
-    options.release = 19
+    options.release = 24
 }
 
 jacoco {
-    toolVersion = "0.8.8"
+    toolVersion = "0.8.13"
 }
 
 jacocoTestReport {
@@ -28,7 +28,7 @@ jacocoTestReport {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(19)
+        languageVersion = JavaLanguageVersion.of(24)
     }
     withSourcesJar()
     withJavadocJar()

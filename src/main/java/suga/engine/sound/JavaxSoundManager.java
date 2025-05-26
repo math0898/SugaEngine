@@ -4,7 +4,10 @@ import suga.engine.GameEngine;
 import suga.engine.logger.Level;
 
 import javax.sound.sampled.*;
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
