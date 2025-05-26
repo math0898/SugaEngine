@@ -53,7 +53,7 @@ public abstract class AbstractThread extends Thread implements SugaThread {
      */
     public void setFrameRate (int val) {
         if (val <= 0) {
-            GameEngine.getLogger().log(this.getClass().toString().replaceAll(".+\\.", "") + ": " + val + ". Only natural numbers (no zero) allowed.", Level.EXCEPTION);
+            GameEngine.getInstance().getLogger().log(this.getClass().toString().replaceAll(".+\\.", "") + ": " + val + ". Only natural numbers (no zero) allowed.", Level.EXCEPTION);
             return;
         }
         this.frameRate = val;

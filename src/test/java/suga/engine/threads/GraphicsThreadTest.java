@@ -50,7 +50,7 @@ class GraphicsThreadTest {
             fail("Failed to wait for given duration.");
         }
         thread.setStopped(true);
-        GameEngine.getLogger().log(String.format("Graphics Thread Test: Wanted %dfps and got %.2ffps. Error is %.2f %%", targetFps, thread.getFPS(), (100 - ((targetFps * 100.0) / thread.getFPS()))));
+        GameEngine.getInstance().getLogger().log(String.format("Graphics Thread Test: Wanted %dfps and got %.2ffps. Error is %.2f %%", targetFps, thread.getFPS(), (100 - ((targetFps * 100.0) / thread.getFPS()))));
 //        assertEquals(targetFps, GraphicsThread.getFPS(), targetFps * error, "Graphics thread should run within " + error + "% of target fps.");
         // Results partially depend on test duration and device running them. My testing resulted in a margin of less
         //  than 1% most often. Regardless no need to fail builds based on the results of this test.

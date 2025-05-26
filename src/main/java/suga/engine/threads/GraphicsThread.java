@@ -52,7 +52,7 @@ public class GraphicsThread extends AbstractThread implements SugaThread {
                 //noinspection BusyWait
                 sleep(toWait);
             } catch (InterruptedException e) {
-                GameEngine.getLogger().log(e);
+                GameEngine.getInstance().getLogger().log(e);
             }
             frames++;
         }
