@@ -159,7 +159,7 @@ public class BasicGame implements Game {
     @Override
     public void processInput () {
         if (loadedScene == null) {
-            GameEngine.getLogger().log("BasicGame: No loaded scene. Cannot process inputs.", Level.WARNING);
+            GameEngine.getInstance().getLogger().log("BasicGame: No loaded scene. Cannot process inputs.", Level.WARNING);
             return;
         }
         Stack<MouseEvent> mice = mouseListener.getEvents();
@@ -231,8 +231,19 @@ public class BasicGame implements Game {
         agents = new ArrayList<>();
         objects = new HashMap<>();
         if (panel != null) panel.clearListeners();
-        else GameEngine.getLogger().log("A clear of game objects was requested but this game does not have an active panel.", Level.WARNING);
-        GameEngine.getLogger().log("Cleared game objects.", Level.INFO);
+        else GameEngine.getInstance().getLogger().log("A clear of game objects was requested but this game does not have an active panel.", Level.WARNING);
+        GameEngine.getInstance().getLogger().log("Cleared game objects.", Level.INFO);
+    }
+
+    /**
+     * Attempts to load the starting scene for this game. If successful will return true, if un-found or loading fails,
+     * will return false.
+     *
+     * @return True on a successful first scene load.
+     */
+    @Override
+    public boolean loadStartScene () {
+        return loadScene("start");
     }
 
     /**

@@ -1,6 +1,10 @@
 name: Build and Test
 on:
   - push
+env:
+    CC_TEST_REPORTER_ID: 9ab019679aa4ac9becd37c68e24183f7c0e86a7a73a3ab4e9943aae06372939e
+    JACOCO_SOURCE_PATH: src/main/java
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,3 +38,24 @@ jobs:
       - run: java --version
       - run: gradle --version --no-daemon
       - run: gradle check --no-daemon
+  coverage:
+    needs: [ test ]
+    name: coverage
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/setup-java@master
+      with:
+        distribution: 'temurin'
+        java-version: '16'
+        cache: gradle
+    - name: Validate Gradle wrapper
+      uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+    - run: curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+    - run: chmod +x ./cc-test-reporter
+    - run: ./cc-test-reporter before-build
+    - run: java --version
+    - run: gradle --version --no-daemon
+    - run: gradle check --no-daemon
+    - run: ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml -d -t jacoco
+    - run: ./cc-test-reporter upload-coverage

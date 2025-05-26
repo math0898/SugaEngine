@@ -42,7 +42,7 @@ public class GraphicsThread extends AbstractThread implements SugaThread {
                 try {
                     panel.repaint();
                 } catch (Exception e) {
-                    GameEngine.getLogger().log(e);
+                    GameEngine.getInstance().getLogger().log(e);
                 }
                 runtime = System.currentTimeMillis() - frameStart;
             }

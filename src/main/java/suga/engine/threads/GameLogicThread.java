@@ -42,7 +42,7 @@ public class GameLogicThread extends AbstractThread implements SugaThread {
                 try {
                     game.loop();
                 } catch (Exception e) {
-                    GameEngine.getLogger().log(e);
+                    GameEngine.getInstance().getLogger().log(e);
                 }
                 runtime = System.currentTimeMillis() - frameStart;
             }

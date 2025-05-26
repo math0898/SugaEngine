@@ -43,10 +43,20 @@ public interface HitBox {
 
     /**
      * Tests whether the given point is touching this hit box or not.
-     *
+     * 
      * @param test The point to test. Represented in vector form.
      * @return True if and only if the test point is on the boundary of this hit box.
      */
+    boolean isTouching (Vector test);
+    
+    /**
+     * Tests whether the given point is touching this hit box or not.
+     *
+     * @see #isTouching(Vector) 
+     * @param test The point to test. Represented in vector form.
+     * @return True if and only if the test point is on the boundary of this hit box.
+     */
+    @Deprecated
     boolean touching (Vector test);
 
     /**

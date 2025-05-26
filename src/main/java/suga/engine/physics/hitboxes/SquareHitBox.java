@@ -81,9 +81,8 @@ public class SquareHitBox implements HitBox { // todo equals method.
      */
     @Override
     public boolean isInside (Vector test) {
-        if (test.getX() > pos.getX() - (width / 2.0) && test.getX() < pos.getX() + (width / 2.0))
-            return test.getY() > pos.getY() - (height / 2.0) && test.getY() < pos.getY() + (height / 2.0);
-        return false;
+        return Math.abs(test.getX() - pos.getX()) < width / 2.0 &&
+                Math.abs(test.getY() - pos.getY()) < height / 2.0;
     }
 
     /**
@@ -93,12 +92,25 @@ public class SquareHitBox implements HitBox { // todo equals method.
      * @return True if and only if the test point is on the boundary of this HitBox.
      */
     @Override
-    public boolean touching (Vector test) {
-        if (test.getX() == pos.getX() - (width / 2.0) || test.getX() == pos.getX() + (width / 2.0))
-            return test.getY() >= pos.getY() - (height / 2.0) && test.getY() <= pos.getY() + (height / 2.0);
-        else if (test.getY() == pos.getY() - (height / 2.0) || test.getY() == pos.getY() + (height / 2.0))
-            return test.getX() >= pos.getX() - (width / 2.0) && test.getX() <= pos.getX() + (width / 2.0);
+    public boolean isTouching (Vector test) {
+        if (Math.abs(test.getX() - pos.getX()) == width / 2.0)
+            return Math.abs(test.getY() - pos.getY()) <= height / 2.0;
+        else if (Math.abs(test.getY() - pos.getY()) == height / 2.0)
+            return Math.abs(test.getX() - pos.getX()) <= width / 2.0;
         return false;
+    }
+
+    /**
+     * Tests whether the given point is touching this hit box or not.
+     *
+     * @see #isTouching(Vector)
+     * @param test The point to test. Represented in vector form.
+     * @return True if and only if the test point is on the boundary of this hit box.
+     */
+    @Override
+    @Deprecated
+    public boolean touching (Vector test) {
+        return isTouching(test);
     }
 
     /**
@@ -109,10 +121,9 @@ public class SquareHitBox implements HitBox { // todo equals method.
     @Override
     public Collection<Vector> getTestPoints () {
         List<Vector> vectors = new ArrayList<>();
-        vectors.add(new Vector(pos.getX() + (width / 2.0), pos.getY() + (height / 2.0), pos.getZ()));
-        vectors.add(new Vector(pos.getX() + (width / 2.0), pos.getY() - (height / 2.0), pos.getZ()));
-        vectors.add(new Vector(pos.getX() - (width / 2.0), pos.getY() + (height / 2.0), pos.getZ()));
-        vectors.add(new Vector(pos.getX() - (width / 2.0), pos.getY() - (height / 2.0), pos.getZ()));
+        for (double dx : new double[]{ width / 2.0, - width / 2.0 })
+            for (double dy : new double[]{ height / 2.0, - height / 2.0 })
+                vectors.add(new Vector(pos.getX() + dx, pos.getY() + dy, pos.getZ()));
         return  vectors;
     }
 
@@ -143,13 +154,8 @@ public class SquareHitBox implements HitBox { // todo equals method.
      */
     @Override
     public void drawHitBox (GraphicsPanelInterface panel) {
-        int y = (int) (pos.getY() + (height / 2.0));
-        int x = (int) (pos.getX() - (width / 2.0));
-        for (int i = x; i <= (int) (pos.getX() + (width / 2.0)); i++) panel.setPixel(i, y, Color.BLUE.brighter());
-        for (int i = (int) (pos.getY() - (height / 2.0)); i <= y; i++) panel.setPixel(x, i, Color.BLUE.brighter());
-        y = (int) (pos.getY() - (height / 2.0));
-        x = (int) (pos.getX() + (width / 2.0));
-        for (int i = (int) (pos.getX() - (width / 2.0)); i <= x; i++) panel.setPixel(i, y, Color.BLUE.brighter());
-        for (int i = y; i <= (int) (pos.getY() + (height / 2.0)); i++) panel.setPixel(x, i, Color.BLUE.brighter());
+        panel.setRectangle((int) (pos.getX() - (width / 2.0)) , (int) (pos.getY() - (height / 2.0)), (int) width, (int) height, Color.BLUE.brighter());
+        for (Vector v : getTestPoints())
+            panel.setPixel((int) v.getX(), (int) v.getY(), Color.red.brighter());
     }
 }
