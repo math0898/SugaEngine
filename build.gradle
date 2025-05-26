@@ -11,12 +11,12 @@ repositories {
 }
 
 compileJava {
-    options.release = 18
+    options.release = 24
 }
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(18)
+        languageVersion = JavaLanguageVersion.of(24)
     }
     withSourcesJar()
     withJavadocJar()
