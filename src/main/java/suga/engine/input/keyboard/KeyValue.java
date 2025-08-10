@@ -2,7 +2,7 @@ package suga.engine.input.keyboard;
 
 /**
  * Gives an enum value to the different key values.
- * Thank you to @see <a href="https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list">StackOverflow</>
+ * Thank you to @see <a href="https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list">StackOverflow</a>
  * for listing all these key codes.
  *
  * @author Sugaku
