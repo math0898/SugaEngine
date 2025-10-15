@@ -36,7 +36,7 @@ public class BasicKeyMapper implements KeyMapper {
     @Override
     public KeyValue convert (int keycode) {
         if (keycode < 0 || keycode > 255) {
-            getLogger().log("BasicKeyMapper: Pressed keycode " + keycode + " not supported [0,255]: " + keycode, Level.DEBUG);
+            getLogger().log("BasicKeyMapper: Pressed keycode is not supported [0,255]: " + keycode, Level.DEBUG);
             return null;
         }
         KeyValue toReturn = values[keycode];
@@ -54,7 +54,7 @@ public class BasicKeyMapper implements KeyMapper {
     @Override
     public void set (int keycode, KeyValue key) {
         if (keycode < 0 || keycode > 255) {
-            getLogger().log("BasicKeyMapper: Given keycode " + keycode + " not supported [0,255]: " + keycode, Level.EXCEPTION);
+            getLogger().log("BasicKeyMapper: Given keycode is not supported [0,255]: " + keycode, Level.EXCEPTION);
             return;
         }
         getLogger().log("BasicKeyMapper: Remapped key " + KeyValue.toEnum(keycode) + " to " + key + ".", Level.DEBUG);
