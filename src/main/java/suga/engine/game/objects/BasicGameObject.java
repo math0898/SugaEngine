@@ -80,6 +80,87 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
     }
 
     /**
+     * Adds the given attribute with the given name to this GameObject. This will override any attributes present with
+     * the given name.
+     *
+     * @param attribute The attribute to add to this GameObject.
+     * @param name      The name of this attribute.
+     */
+    @Override
+    public void addAttribute (Object attribute, String name) {
+        // todo: Implement.
+    }
+
+    /**
+     * Removes any attributes with the given name from this GameObject.
+     *
+     * @param name The name of the attribute to remove.
+     */
+    @Override
+    public void removeAttribute (String name) {
+        // todo: Implement.
+    }
+
+    /**
+     * Accessor method for attributes on this GameObject. This will preform no null checks nor type checking.
+     *
+     * @param name The name of the attribute you want to get.
+     * @return The requested attribute, or null if not present or type-mismatched.
+     */
+    @Override
+    public Object getAttribute (String name) {
+        return null; // todo: Implement.
+    }
+
+    /**
+     * Accessor method specially for integer attributes. This will check typing and return null if the requested
+     * attribute does not match the requested type.
+     *
+     * @param name The name of the attribute you want to get.
+     * @return The requested attribute, or null if not present or type-mismatched.
+     */
+    @Override
+    public int getIntAttribute (String name) {
+        return 0; // todo: Implement.
+    }
+
+    /**
+     * Accessor method specially for string attributes. This will check typing and return null if the requested
+     * attribute does not match the requested type.
+     *
+     * @param name The name of the attribute you want to get.
+     * @return The requested attribute, or null if not present or type-mismatched.
+     */
+    @Override
+    public String getStrAttribute (String name) {
+        return ""; // todo: Implement.
+    }
+
+    /**
+     * Accessor method specially for double attributes. This will check typing and return null if the requested
+     * attribute does not match the requested type.
+     *
+     * @param name The name of the attribute you want to get.
+     * @return The requested attribute, or null if not present or type-mismatched.
+     */
+    @Override
+    public double getDoubleAttribute (String name) {
+        return 0; // todo: Implement.
+    }
+
+    /**
+     * Accessor method specially for {@link Vector} attributes. This will check typing and return
+     * null if the requested attribute does not match the requested type.
+     *
+     * @param name The name of the attribute you want to get.
+     * @return The requested attribute, or null if not present or type-mismatched.
+     */
+    @Override
+    public Vector getVectorAttribute (String name) {
+        return Vector.ZERO.clone(); // todo: Implement.
+    }
+
+    /**
      * Called every drawing frame so programs have a chance to make their voices heard on what gets drawn.
      *
      * @param width  The width of the pixel map.
