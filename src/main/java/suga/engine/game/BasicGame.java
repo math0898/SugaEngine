@@ -5,6 +5,8 @@ import suga.engine.game.objects.AIAgent;
 import suga.engine.game.objects.GameObject;
 import suga.engine.graphics.DrawListener;
 import suga.engine.graphics.GraphicsPanel;
+import suga.engine.input.keyboard.GameKeyListener;
+import suga.engine.input.keyboard.KeyValue;
 import suga.engine.input.mouse.BasicMouseListener;
 import suga.engine.input.mouse.GameMouseListener;
 import suga.engine.logger.Level;
@@ -12,8 +14,6 @@ import suga.engine.physics.BasicPhysicsEngine;
 import suga.engine.physics.PhysicsEngine;
 import suga.engine.physics.collidables.Collidable;
 import suga.engine.threads.SugaThread;
-import suga.engine.input.keyboard.GameKeyListener;
-import suga.engine.input.keyboard.KeyValue;
 
 import java.awt.event.MouseEvent;
 import java.util.*;
@@ -159,7 +159,7 @@ public class BasicGame implements Game {
     @Override
     public void processInput () {
         if (loadedScene == null) {
-            GameEngine.getLogger().log("BasicGame: No loaded scene. Cannot process inputs.", Level.WARNING);
+            GameEngine.getInstance().getLogger().log("BasicGame: No loaded scene. Cannot process inputs.", Level.WARNING);
             return;
         }
         Stack<MouseEvent> mice = mouseListener.getEvents();
@@ -231,8 +231,8 @@ public class BasicGame implements Game {
         agents = new ArrayList<>();
         objects = new HashMap<>();
         if (panel != null) panel.clearListeners();
-        else GameEngine.getLogger().log("A clear of game objects was requested but this game does not have an active panel.", Level.WARNING);
-        GameEngine.getLogger().log("Cleared game objects.", Level.INFO);
+        else GameEngine.getInstance().getLogger().log("A clear of game objects was requested but this game does not have an active panel.", Level.WARNING);
+        GameEngine.getInstance().getLogger().log("Cleared game objects.", Level.INFO);
     }
 
     /**

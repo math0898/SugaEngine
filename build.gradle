@@ -5,7 +5,8 @@ plugins {
 }
 
 group 'io.github.math0898'
-version '2.5.2'
+version '3.0.0'
+var isSnapshot = false
 
 def secrets = new Properties()
 file("secrets.properties").withInputStream { secrets.load(it) }
@@ -15,11 +16,11 @@ repositories {
 }
 
 compileJava {
-    options.release = 19
+    options.release = 24
 }
 
 jacoco {
-    toolVersion = "0.8.8"
+    toolVersion = "0.8.13"
 }
 
 jacocoTestReport {
@@ -30,7 +31,7 @@ jacocoTestReport {
 
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(19)
+        languageVersion = JavaLanguageVersion.of(24)
     }
     withSourcesJar()
     withJavadocJar()
@@ -51,7 +52,10 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId(group)
-            artifactId('suga-engine')
+            if (isSnapshot)
+                artifactId('suga-engine-snapshot')
+            else
+                artifactId('suga-engine')
             version(version) // Pulls version from Gradle root
             from components.java
 

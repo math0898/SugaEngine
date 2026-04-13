@@ -59,7 +59,7 @@ class SquareHitBoxTest {
      * Checks if the given point is along the boundary of the hit box or not. Should return false for interior points.
      */
     @ParameterizedTest
-    @CsvFileSource(resources = "/suga/engine/physics/hitboxes/SquareHitBox/touching.csv", numLinesToSkip = 2, delimiter = ',')
+    @CsvFileSource(resources = "/suga/engine/physics/hitboxes/SquareHitBox/touching.csv", numLinesToSkip = 1, delimiter = ',')
     void touching (int width, int height, int cx, int cy, int cz, int x, int y, int z, boolean expected, String reason) {
         HitBox hitBox = new SquareHitBox(width, height, new Vector(cx, cy, cz));
         Vector testPoint = new Vector(x, y, z);
