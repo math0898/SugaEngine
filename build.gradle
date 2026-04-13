@@ -5,8 +5,11 @@ plugins {
 }
 
 group 'io.github.math0898'
-version '3.0.0-zeta5'
-var isSnapshot = true
+version '3.0.0'
+var isSnapshot = false
+
+def secrets = new Properties()
+file("secrets.properties").withInputStream { secrets.load(it) }
 
 repositories {
     mavenCentral()
@@ -67,8 +70,8 @@ publishing {
             name = "GitHubPackages"
             url = "https://maven.pkg.github.com/math0898/SugaEngine"
             credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+                username = System.getenv("GITHUB_ACTOR") ?: secrets.getProperty("USERNAME")
+                password = System.getenv("GITHUB_TOKEN") ?: secrets.getProperty("TOKEN")
             }
         }
     }

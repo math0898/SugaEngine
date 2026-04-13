@@ -34,6 +34,10 @@ public class BasicKeyMapper implements KeyMapper {
      */
     @Override
     public KeyValue convert (int keycode) {
+        if (keycode < 0 || keycode > 255) {
+            GameEngine.getInstance().getLogger().log("BasicKeyMapper: Pressed keycode is not supported [0,255]: " + keycode, Level.DEBUG);
+            return null;
+        }
         KeyValue toReturn = values[keycode];
         if (keycode != toReturn.getValue())
             GameEngine.getInstance().getLogger().log("BasicKeyMapper: Converted: " + KeyValue.toEnum(keycode) + " => " + toReturn, Level.VERBOSE);
