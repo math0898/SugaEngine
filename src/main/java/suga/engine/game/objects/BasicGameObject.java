@@ -6,12 +6,20 @@ import suga.engine.physics.BasicPhysical;
 import suga.engine.physics.Vector;
 import suga.engine.physics.collidables.Collidable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * A game object has its own physical position within the world, and a DrawListener to draw it each frame.
  *
  * @author Sugaku
  */
 public class BasicGameObject extends BasicPhysical implements DrawListener, GameObject {
+
+    /**
+     * Any attributes currently present on this GameObject.
+     */
+    private final Map<String, Object> attributes = new HashMap<>();
 
     /**
      * Creates a new BasicGameObject with zero vectors and a mass of 1.
@@ -88,7 +96,7 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
      */
     @Override
     public void addAttribute (Object attribute, String name) {
-        // todo: Implement.
+        attributes.put(name, attribute);
     }
 
     /**
@@ -98,7 +106,7 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
      */
     @Override
     public void removeAttribute (String name) {
-        // todo: Implement.
+        attributes.remove(name);
     }
 
     /**
@@ -109,7 +117,7 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
      */
     @Override
     public Object getAttribute (String name) {
-        return null; // todo: Implement.
+        return attributes.get(name);
     }
 
     /**
@@ -120,8 +128,11 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
      * @return The requested attribute, or null if not present or type-mismatched.
      */
     @Override
-    public int getIntAttribute (String name) {
-        return 0; // todo: Implement.
+    public Integer getIntAttribute (String name) {
+        Object obj = attributes.get(name);
+        if (obj == null) return null;
+        else if (obj instanceof Integer) return (Integer) obj;
+        else return null;
     }
 
     /**
@@ -133,7 +144,10 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
      */
     @Override
     public String getStrAttribute (String name) {
-        return ""; // todo: Implement.
+        Object obj = attributes.get(name);
+        if (obj == null) return null;
+        else if (obj instanceof String) return (String) obj;
+        else return null;
     }
 
     /**
@@ -144,8 +158,11 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
      * @return The requested attribute, or null if not present or type-mismatched.
      */
     @Override
-    public double getDoubleAttribute (String name) {
-        return 0; // todo: Implement.
+    public Double getDoubleAttribute (String name) {
+        Object obj = attributes.get(name);
+        if (obj == null) return null;
+        else if (obj instanceof Double) return (Double) obj;
+        else return null;
     }
 
     /**
@@ -157,7 +174,10 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
      */
     @Override
     public Vector getVectorAttribute (String name) {
-        return Vector.ZERO.clone(); // todo: Implement.
+        Object obj = attributes.get(name);
+        if (obj == null) return null;
+        else if (obj instanceof Vector) return (Vector) obj;
+        else return null;
     }
 
     /**

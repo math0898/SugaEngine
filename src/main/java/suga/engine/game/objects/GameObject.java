@@ -75,7 +75,7 @@ public interface GameObject {
      * @param name The name of the attribute you want to get.
      * @return The requested attribute, or null if not present or type-mismatched.
      */
-    int getIntAttribute (String name);
+    Integer getIntAttribute (String name);
 
     /**
      * Accessor method specially for string attributes. This will check typing and return null if the requested
@@ -93,7 +93,7 @@ public interface GameObject {
      * @param name The name of the attribute you want to get.
      * @return The requested attribute, or null if not present or type-mismatched.
      */
-    double getDoubleAttribute (String name);
+    Double getDoubleAttribute (String name);
 
     /**
      * Accessor method specially for {@link suga.engine.physics.Vector} attributes. This will check typing and return
