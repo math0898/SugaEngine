@@ -1,13 +1,14 @@
 package suga.engine.game.objects;
 
+import suga.engine.GameEngine;
 import suga.engine.graphics.DrawListener;
 import suga.engine.graphics.GraphicsPanel;
+import suga.engine.logger.Level;
 import suga.engine.physics.BasicPhysical;
 import suga.engine.physics.Vector;
 import suga.engine.physics.collidables.Collidable;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * A game object has its own physical position within the world, and a DrawListener to draw it each frame.
@@ -20,6 +21,12 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
      * Any attributes currently present on this GameObject.
      */
     private final Map<String, Object> attributes = new HashMap<>();
+
+    /**
+     * Attributes that should be blocked from being written to with {@link #addAttribute(Object, String)}, and
+     * {@link #removeAttribute(String)}.
+     */
+    private static final List<String> READ_ONLY_ATTRIBUTES = Arrays.asList("POSITION", "ACCELERATION", "VELOCITY", "MASS");
 
     /**
      * Creates a new BasicGameObject with zero vectors and a mass of 1.
@@ -38,6 +45,10 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
      */
     public BasicGameObject (Vector pos, Vector vel, Vector accel, double mass) {
         super(pos, vel, accel, mass);
+        attributes.put("POSITION", getPos());
+        attributes.put("ACCELERATION", getAcceleration());
+        attributes.put("VELOCITY", getVelocity());
+        attributes.put("MASS", mass);
     }
 
     /**
@@ -96,6 +107,10 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
      */
     @Override
     public void addAttribute (Object attribute, String name) {
+        if (READ_ONLY_ATTRIBUTES.contains(name)) {
+            GameEngine.getInstance().getLogger().log("[BasicGameObject] Attempted to overwrite read-only attribute: " + name, Level.WARNING);
+            return;
+        }
         attributes.put(name, attribute);
     }
 
@@ -106,6 +121,10 @@ public class BasicGameObject extends BasicPhysical implements DrawListener, Game
      */
     @Override
     public void removeAttribute (String name) {
+        if (READ_ONLY_ATTRIBUTES.contains(name)) {
+            GameEngine.getInstance().getLogger().log("[BasicGameObject] Attempted to remove read-only attribute: " + name, Level.WARNING);
+            return;
+        }
         attributes.remove(name);
     }
 
