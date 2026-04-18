@@ -70,12 +70,24 @@ public interface Game {
     void addGameObject (String name, GameObject object);
 
     /**
+     * Removes a GameObject with the given name.
+     *
+     * @param name The name of the game object to remove.
+     */
+    void removeGameObject (String name);
+
+    /**
      * Accessor method for game objects.
      *
      * @param name The name of the object to attempt to get.
      * @return The found object or null.
      */
     GameObject getGameObject (String name);
+
+    /**
+     * Clears all GameObjects from this Game.
+     */
+    void clearGameObjects ();
 
     /**
      * Registers a new AI agent so that it can be called every tick after collisions but before object logic.
@@ -85,7 +97,19 @@ public interface Game {
     void addAgent (AIAgent agent);
 
     /**
-     * Registers a new DrawingListener. This will not register anything beyond the draw method. Usually used by UI,
+     * Attempts to remove the given AIAgent from this Game.
+     *
+     * @param agent The AIAgent to remove from the list of agents.
+     */
+    void removeAgent (AIAgent agent);
+
+    /**
+     * Clears all AIAgents from this Game.
+     */
+    void clearAgents ();
+
+    /**
+     * Registers a new DrawListener. This will not register anything beyond the draw method. Usually used by UI,
      * hence the name.
      *
      * @param listener The draw listener that should be registered to this panel.
@@ -93,7 +117,19 @@ public interface Game {
     void addDrawingListener (DrawListener listener);
 
     /**
-     * Clears all AIAgents, physics managers, GameObjects, and PanelListeners.
+     * Attempts to remove the given DrawListener from this Game.
+     *
+     * @param listener The DrawListener that should be unregistered/removed from this panel.
+     */
+    void removeDrawingListener (DrawListener listener);
+
+    /**
+     * Clears all DrawListeners from the active display Panel.
+     */
+    void clearDrawingListeners ();
+
+    /**
+     * Clears all AIAgents, physics managers, GameObjects, and DrawListeners.
      */
     void clear ();
 

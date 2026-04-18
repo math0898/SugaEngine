@@ -191,6 +191,16 @@ public class BasicGame implements Game {
     }
 
     /**
+     * Removes a GameObject with the given name.
+     *
+     * @param name The name of the game object to remove.
+     */
+    @Override
+    public void removeGameObject (String name) {
+        // todo: Implement.
+    }
+
+    /**
      * Accessor method for game objects.
      *
      * @param name The name of the object to attempt to get.
@@ -202,6 +212,14 @@ public class BasicGame implements Game {
     }
 
     /**
+     * Clears all GameObjects from this Game.
+     */
+    @Override
+    public void clearGameObjects () {
+        // todo: Implement.
+    }
+
+    /**
      * Registers a new AI agent so that it can be called every tick after collisions but before object logic.
      *
      * @param agent The AIAgent to add into the list of agents.
@@ -209,6 +227,24 @@ public class BasicGame implements Game {
     @Override
     public void addAgent (AIAgent agent) {
         agents.add(agent);
+    }
+
+    /**
+     * Attempts to remove the given AIAgent from this Game.
+     *
+     * @param agent The AIAgent to remove from the list of agents.
+     */
+    @Override
+    public void removeAgent (AIAgent agent) {
+        // todo: Implement.
+    }
+
+    /**
+     * Clears all AIAgents from this Game.
+     */
+    @Override
+    public void clearAgents () {
+        // todo: Implement.
     }
 
     /**
@@ -223,7 +259,25 @@ public class BasicGame implements Game {
     }
 
     /**
-     * Clears all AIAgents, physics managers, GameObjects, and PanelListeners.
+     * Attempts to remove the given DrawListener from this Game.
+     *
+     * @param listener The DrawListener that should be unregistered/removed from this panel.
+     */
+    @Override
+    public void removeDrawingListener (DrawListener listener) {
+        // todo: Implement.
+    }
+
+    /**
+     * Clears all DrawListeners from the active display Panel.
+     */
+    @Override
+    public void clearDrawingListeners () {
+        // todo: Implement.
+    }
+
+    /**
+     * Clears all AIAgents, physics managers, GameObjects, and DrawListeners.
      */
     @Override
     public void clear () {
